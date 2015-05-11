@@ -23,6 +23,6 @@ Run jeremy
 
     node server.js
 
-Jeremy should now be accessible at http://localhost:1234
+Jeremy should now be accessible at [localhost:1234/](http://localhost:1234/) .
 
-You can now start adding mappings for custom types in @config/types/@ and by implementing a custom user interface with AngularJS in @public@.
+You can now start adding mappings for custom types in `config/types/` and by implementing a custom user interface with AngularJS in `public/`.
