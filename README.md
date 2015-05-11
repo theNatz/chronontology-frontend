@@ -1,4 +1,4 @@
-# Arachne 4 Frontend
+# Jeremy
 
 Jeremy provides a framework for storing, searching and making accessible linked data objects in JSON format. It is based on elasticsearch as a datastore and search engine and provides a flexible type system for defining custom object types.
 
