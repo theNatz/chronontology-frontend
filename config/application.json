@@ -1,0 +1,6 @@
+{
+	"users": {
+		"admin": "s3cr3t"
+	},
+	"types": [ "person" ]
+}

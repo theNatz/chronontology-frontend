@@ -1,0 +1,23 @@
+{
+    "person": {
+        "properties": {
+        	
+            "@id": {
+                "type": "string"
+            },
+        	"created": {
+	            "type": "date",
+	            "format": "dateOptionalTime"
+	        },
+	        "modified": {
+	            "type": "date",
+	            "format": "dateOptionalTime"
+	        },
+
+	        "name": {
+	        	"type": "string"
+	        }
+
+	    }
+    }
+}
