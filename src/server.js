@@ -11,6 +11,9 @@ app.use(bodyParser.json());
 app.use(require('./middleware/auth'));
 app.use(require('./controllers'));
 app.use(express.static('public'));
+app.all('/*', function(req, res) {
+	res.sendfile('public/index.html');
+});
 
 console.log("Setting up elasticsearch indices");
 es.indices.setup(function(err, res) {

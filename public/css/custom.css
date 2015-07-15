@@ -1,3 +1,52 @@
 body {
 	padding-top: 70px;
 }
+
+.timeline {
+	width: 100%;
+}
+
+.timeline ul {
+	padding: 5px;
+	display: inline-block;
+	vertical-align: top;
+}
+
+.timeline li {
+	list-style: none;
+	padding: 5px;
+	margin-bottom: 1px;
+}
+
+.timeline .label {
+	display: inline-block;
+	width: 150px;
+	color: black;
+	text-align: left;
+	font-size: 100%;
+	font-weight: normal;
+}
+
+.timeline li {
+	background-color: #7B9588;
+}
+
+.timeline li li {
+	background-color: #C1D1BE;
+}
+
+.timeline li li li {
+	background-color: #D1E1D4;
+}
+
+.timeline li li li li {
+	background-color: #FFFAE6;
+}
+
+.timeline li li li li li {
+	background-color: #FEDCB6;
+}
+
+.timeline li li li li li li {
+	background-color: #FFDDE3;
+}

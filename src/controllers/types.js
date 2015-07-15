@@ -8,17 +8,25 @@ types.forEach(function(type) {
 	
 	// handle GETs
 	router.get('/' + type + '/:id', function(req, res) {
-		es.get(type, req.params.id, function(err, esRes) {
-			if (err) {
-				var status = esRes.status;
-				if (!status) status = 404;
-				console.error(err.stack);
-				res.status(status).send({ success: false, error: err.message });
-			} else {
-				res.status = 200;
-				res.send(esRes);
+		res.format({
+			'application/json': function() {
+				es.get(type, req.params.id, function(err, esRes) {
+					if (err) {
+						var status = esRes.status;
+						if (!status) status = 404;
+						console.error(err.stack);
+						res.status(status).send({ success: false, error: err.message });
+					} else {
+						res.status = 200;
+						res.send(esRes);
+					}
+				});
+			},
+			'text/html': function() {
+				res.sendfile('public/index.html');
 			}
-		});
+		})
+		
 	});
 
 	// handle PUTs
@@ -37,7 +45,6 @@ types.forEach(function(type) {
 
 	// handle POSTs
 	router.post('/' + type + '/?', function(req, res) {
-		console.log(req.body);
 		es.create(type, req.body, function(err, esRes) {
 			if (err) {
 				console.error(err.stack);
@@ -71,7 +78,11 @@ types.forEach(function(type) {
 				res.status(esRes.status).send({ success: false, error: err.message });
 			} else {
 				res.status = 200;
-				res.send(esRes);
+				var response = { results: [], total: esRes.hits.total };
+				for (var i = 0; i < esRes.hits.hits.length; i++) {					
+					response.results.push(esRes.hits.hits[i]._source);
+				};
+				res.send(response);
 			}
 		});
 	});

@@ -1,10 +1,11 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" ng-app="chronontology">
   <head>
+    <base id="baseLink" href="/">
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>Jeremy</title>
+    <title>Chronontology</title>
     <link href="components/bootstrap-css-only/css/bootstrap.min.css" rel="stylesheet">
     <link href="css/custom.css" rel="stylesheet">
   </head>
@@ -12,21 +13,41 @@
 
     <nav class="navbar navbar-default navbar-fixed-top">
       <div class="container-fluid">
+
         <div class="navbar-header">
-          <a class="navbar-brand" href="#">Jeremy</a>
+          <a class="navbar-brand" href="#">Chronontology</a>
         </div>
+
+        <div class="collapse navbar-collapse" collapse="isCollapsed" style="padding-left:10px">
+      
+        <form ng-controller="SearchFormController"
+            ng-submit="search()"
+            ng-hide="currentPath == '/'"
+            class="navbar-left navbar-form input-group form-inline"
+            role="search">
+              <input autofocus type="text" class="form-control" placeholder="neue Suche" ng-model="q" name="q">
+              <span class="navbar-left input-group-btn">
+                <button type="submit" class="btn btn-default"><span class="glyphicon glyphicon-search"></span></button>
+              </span>
+          </form>
+
       </div>
     </nav>
 
-    <div class="container-fluid">
-      <div class="jumbotron">
-      <h1>Welcome to Jeremy!</h1>
-      <p>Jeremy provides a framework for storing, searching and making accessible linked data objects in JSON format. It is based on elasticsearch as a datastore and search engine and provides a flexible type system for defining custom object types. You can use this template as a starting point for developing a custom user inferface.</p>
-    </div>
+    <div class="container">
+      <div ng-view></div>
     </div>
 
+    <script src="components/d3/d3.min.js"></script>
     <script src="components/angular/angular.min.js"></script>
     <script src="components/angular-bootstrap/ui-bootstrap.min.js"></script>
+    <script src="components/angular-route/angular-route.min.js"></script>
+    <script src="components/angular-resource/angular-resource.min.js"></script>
+
+    <script src="js/services.js"></script>
+    <script src="js/directives.js"></script>
+    <script src="js/controllers.js"></script>
+    <script src="js/app.js"></script>
 
   </body>
 </html>
