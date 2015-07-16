@@ -60,10 +60,10 @@
 					</dd>
 
 					<dt>Erstellt</dt>
-					<dd>{{ period.created }}</dd>
+					<dd>{{ period.created | isoDate | date:'medium' }}</dd>
 
 					<dt>Geändert</dt>
-					<dd ng-repeat="m in period.modified">{{ m }}</dd>
+					<dd ng-repeat="m in period.modified">{{ m | isoDate | date:'medium' }}</dd>
 
 				</dl>
 			</div>

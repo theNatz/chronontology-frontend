@@ -6,7 +6,8 @@ angular.module('chronontology',[
 	'ngResource',
 	'chronontology.services',
 	'chronontology.directives',
-	'chronontology.controllers'
+	'chronontology.controllers',
+	'chronontology.filters'
 ])
 .config(['$routeProvider', '$locationProvider', '$compileProvider', '$httpProvider',
 	function($routeProvider, $locationProvider, $compileProvider, $httpProvider) {
