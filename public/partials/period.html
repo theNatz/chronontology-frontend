@@ -45,7 +45,12 @@
 
 		<div class="col-md-8">
 
-			<div class="well">
+			<ul class="nav nav-tabs">
+				<li ng-class="{ 'active': !edit }"><a href="#" ng-click="edit = false">Anzeigen</a></li>
+				<li ng-class="{ 'active': edit }"><a href="#" ng-click="edit = true">Bearbeiten</a></li>
+			</ul>
+
+			<div ng-show="!edit">
 
 				<h4>Informationen zur Epoche</h4>
 				
@@ -66,6 +71,24 @@
 					<dd ng-repeat="m in period.modified">{{ m | isoDate | date:'medium' }}</dd>
 
 				</dl>
+			</div>
+
+			<div ng-show="edit">
+
+				<h4>Informationen zur Epoche</h4>
+				
+				<dl class="dl-horizontal">
+
+					<dt>Namen</dt>
+					<dd></dd>
+
+					<dt>Provenienz</dt>
+					<dd>
+						
+					</dd>
+
+				</dl>
+
 			</div>
 
 			<pre>{{ period | json }}</pre>
