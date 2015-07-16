@@ -50,48 +50,75 @@
 				<li ng-class="{ 'active': edit }"><a href="#" ng-click="edit = true">Bearbeiten</a></li>
 			</ul>
 
-			<div ng-show="!edit">
+			<div ng-show="!edit" style="margin: 30px 0;">
 
 				<h4>Informationen zur Epoche</h4>
 				
 				<dl class="dl-horizontal">
 
+					<br>
+
 					<dt>Namen</dt>
 					<dd>{{ period.prefLabel.de }}</dd>
+					<br>
 
 					<dt>Provenienz</dt>
 					<dd ng-repeat="p in period.provenance">
 						<a ng-href="/thesaurus/{{ p }}">{{ p }}</a>
 					</dd>
+					<br>
 
 					<dt>Erstellt</dt>
 					<dd>{{ period.created | isoDate | date:'medium' }}</dd>
+					<br>
 
 					<dt>Geändert</dt>
 					<dd ng-repeat="m in period.modified">{{ m | isoDate | date:'medium' }}</dd>
+					<br>
 
 				</dl>
 			</div>
 
-			<div ng-show="edit">
+			<div ng-show="edit" style="margin: 30px 0;">
 
 				<h4>Informationen zur Epoche</h4>
+
+				<br>
 				
-				<dl class="dl-horizontal">
+				<form class="form-horizontal">
 
-					<dt>Namen</dt>
-					<dd></dd>
+					<div class="form-group">
+						<label class="col-sm-3 control-label">Namen</label>
+						<div class="col-sm-9">
+							<input class="form-control" ng-model="period.prefLabel.de"></input>
+						</div>
+					</div>
 
-					<dt>Provenienz</dt>
-					<dd>
-						
-					</dd>
+					<div class="form-group">
+						<label class="col-sm-3 control-label">Provenienz</label>
+						<div class="col-sm-9">
+							<input class="form-control" ng-model="period.provenance"></input>
+						</div>
+					</div>
+
+					<div class="form-group">
+					    <div class="col-sm-offset-3 col-sm-9">
+							<button ng-click="save()" class="btn btn-primary">Speichern</button>
+					    </div>
+					</div>
 
 				</dl>
 
 			</div>
 
-			<pre>{{ period | json }}</pre>
+			<div class="panel panel-default">
+				<div class="panel-heading">
+					<h4 class="panel-title">JSON</h3>
+				</div>
+				<div class="panel-body">
+					<pre>{{ period | json }}</pre>
+				</div>
+			</div>
 
 		</div>
 

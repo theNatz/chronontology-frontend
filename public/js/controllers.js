@@ -52,6 +52,12 @@ angular.module('chronontology.controllers', [])
 
 	});
 
+	$scope.save = function() {
+		$http.put($scope.period['@id'], $scope.period).success(function(result) {
+			$scope.period = result;
+		});
+	};
+
 })
 
 .controller("ThesaurusController", function($scope, $routeParams, $http) {
