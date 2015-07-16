@@ -1,0 +1,75 @@
+<div ng-controller="PeriodController">
+
+	<h2>{{ period.prefLabel.de }} <small>http://chronontology.dainst.org{{ period['@id'] }}</small></h2>
+
+	<div class="btn-group btn-group-justified">		
+		<a class="btn btn-default" ng-disabled="!fallsWithin"
+				ng-href="{{ fallsWithin['@id'] }}">
+			<span class="glyphicon glyphicon-arrow-up"></span> {{ fallsWithin.prefLabel.de }}
+		</a>
+	</div>
+
+	<div class="btn-group btn-group-justified">
+		<a class="btn btn-default" ng-disabled="!isMetInTimeBy"
+				ng-href="{{ isMetInTimeBy['@id'] }}">
+			<span class="glyphicon glyphicon-arrow-left"></span> {{ isMetInTimeBy.prefLabel.de }}
+		</a>
+		<a class="btn btn-primary" disabled="disabled">
+			{{ period.prefLabel.de }}
+		</a>
+		<a class="btn btn-default" ng-disabled="!meetsInTimeWith"
+				ng-href="{{ meetsInTimeWith['@id'] }}">
+			{{ meetsInTimeWith.prefLabel.de }} <span class="glyphicon glyphicon-arrow-right"></span> 
+		</a>
+	</div>
+
+	<div class="row">
+		&nbsp;
+	</div>
+
+	<div class="row">
+
+		<div class="col-md-4">
+
+			<div class="text-right">
+				<div class="btn-group-vertical" style="display:block;" ng-show="contains.length > 0">
+					<a ng-repeat="period in contains"
+							ng-href="{{ period['@id'] }}"
+							class="btn btn-default">
+						<span class="glyphicon glyphicon-arrow-down"></span> {{ period.prefLabel.de }}
+					</a>
+				</div>
+			</div>
+
+		</div>
+
+		<div class="col-md-8">
+
+			<div class="well">
+
+				<h4>Informationen zur Epoche</h4>
+				
+				<dl class="dl-horizontal">
+
+					<dt>Namen</dt>
+					<dd>{{ period.prefLabel.de }}</dd>
+
+					<dt>Provenienz</dt>
+					<dd ng-repeat="p in period.provenance">
+						<a ng-href="/thesaurus/{{ p }}">{{ p }}</a>
+					</dd>
+
+					<dt>Erstellt</dt>
+					<dd>{{ period.created }}</dd>
+
+					<dt>Geändert</dt>
+					<dd ng-repeat="m in period.modified">{{ m }}</dd>
+
+				</dl>
+			</div>
+
+			<pre>{{ period | json }}</pre>
+
+		</div>
+
+</div>

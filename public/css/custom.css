@@ -28,25 +28,25 @@ body {
 }
 
 .timeline li {
-	background-color: #7B9588;
+	background-color: #E5EAE7;
 }
 
 .timeline li li {
-	background-color: #C1D1BE;
+	background-color: #F3F6F2;
 }
 
 .timeline li li li {
-	background-color: #D1E1D4;
+	background-color: #F6F9F6;
 }
 
 .timeline li li li li {
-	background-color: #FFFAE6;
+	background-color: #FFFEF8;
 }
 
 .timeline li li li li li {
-	background-color: #FEDCB6;
+	background-color: #FFF8F0;
 }
 
 .timeline li li li li li li {
-	background-color: #FFDDE3;
+	background-color: #FFF8F9;
 }
