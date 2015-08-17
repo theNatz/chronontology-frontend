@@ -4,6 +4,8 @@ angular.module('chronontology',[
 	'ui.bootstrap',
 	'ngRoute',
 	'ngResource',
+	'idai.templates',
+    'idai.components',
 	'chronontology.services',
 	'chronontology.directives',
 	'chronontology.controllers',

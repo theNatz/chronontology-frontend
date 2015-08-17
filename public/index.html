@@ -12,32 +12,14 @@
   </head>
   <body>
 
-    <nav class="navbar navbar-default navbar-fixed-top">
-      <div class="container-fluid">
-
-        <div class="navbar-header">
-          <a class="navbar-brand" href="/">iDAI.chronontology</a>
-        </div>
-
-        <div class="collapse navbar-collapse" collapse="isCollapsed" style="padding-left:10px">
-      
-        <form ng-controller="SearchFormController"
-            ng-submit="search()"
-            ng-hide="currentPath == '/'"
-            class="navbar-left navbar-form input-group form-inline"
-            role="search">
-              <input autofocus type="text" class="form-control" placeholder="neue Suche" ng-model="q" name="q">
-              <span class="navbar-left input-group-btn">
-                <button type="submit" class="btn btn-default"><span class="glyphicon glyphicon-search"></span></button>
-              </span>
-          </form>
-
-      </div>
-    </nav>
+    <idai-navbar 
+      project-id="chronontology"></idai-navbar>
 
     <div class="container">
       <div ng-view></div>
     </div>
+
+    <idai-footer mailto="idai.chrontology@dainst.org"></idai-footer>
 
     <script src="components/d3/d3.min.js"></script>
     <script src="components/angular/angular.min.js"></script>
@@ -45,7 +27,7 @@
     <script src="components/angular-route/angular-route.min.js"></script>
     <script src="components/angular-resource/angular-resource.min.js"></script>
     <script src="components/angular-i18n/angular-locale_de-de.js"></script>
-    <script src="components/idai-components/idai-components.js"></script>
+    <script src="components/idai-components/idai-components.min.js"></script>
 
     <script src="js/services.js"></script>
     <script src="js/directives.js"></script>
