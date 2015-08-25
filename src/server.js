@@ -1,6 +1,7 @@
 var express = require('express');
 var bodyParser = require('body-parser');
 var morgan = require('morgan');
+var path = require('path');
 var es = require('./services/elasticsearch');
 
 var app = express();
@@ -12,7 +13,8 @@ app.use(require('./middleware/auth'));
 app.use(require('./controllers'));
 app.use(express.static('public'));
 app.all('/*', function(req, res) {
-	res.sendfile('public/index.html');
+	console.log("dirname", __dirname);
+	res.sendFile(path.resolve('public/index.html'));
 });
 
 console.log("Setting up elasticsearch indices");
