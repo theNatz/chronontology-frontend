@@ -23,7 +23,7 @@ es.indices.setup(function(err, res) {
 	else console.log("Successfully set up indices");
 });
 
-var port = process.env.PORT || 1234;
+var port = process.env.PORT || 8080;
 app.listen(port);
 
 console.log('Jeremy listens on port ' + port);
