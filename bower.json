@@ -22,7 +22,6 @@
     "angular-route": "~1.4.3",
     "angular-resource": "~1.4.3",
     "angular-i18n": "~1.4.3",
-    "idai-components": "codarchlab/bower-idai-components#~0.9.0",
-    "idai-bootstrap-theme": "codarchlab/bower-idai-bootstrap-theme#~0.1.0"
+    "idai-components": "codarchlab/idai-components#~0.9.3"
   }
 }
