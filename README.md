@@ -21,7 +21,7 @@ Install frontend dependencies
 
 Run jeremy
 
-    node server.js
+    node src/server.js
 
 Jeremy should now be accessible at [localhost:1234/](http://localhost:1234/) .
 
