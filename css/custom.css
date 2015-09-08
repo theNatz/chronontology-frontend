@@ -1,0 +1,52 @@
+body {
+	padding-top: 70px;
+}
+
+.timeline {
+	width: 100%;
+}
+
+.timeline ul {
+	padding: 5px;
+	display: inline-block;
+	vertical-align: top;
+}
+
+.timeline li {
+	list-style: none;
+	padding: 5px;
+	margin-bottom: 1px;
+}
+
+.timeline .label {
+	display: inline-block;
+	width: 150px;
+	color: black;
+	text-align: left;
+	font-size: 100%;
+	font-weight: normal;
+}
+
+.timeline li {
+	background-color: #E5EAE7;
+}
+
+.timeline li li {
+	background-color: #F3F6F2;
+}
+
+.timeline li li li {
+	background-color: #F6F9F6;
+}
+
+.timeline li li li li {
+	background-color: #FFFEF8;
+}
+
+.timeline li li li li li {
+	background-color: #FFF8F0;
+}
+
+.timeline li li li li li li {
+	background-color: #FFF8F9;
+}

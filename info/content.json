@@ -1,0 +1,11 @@
+{
+  "children": [{
+    "id": "navbar",
+    "children": [
+    ]
+  }, {
+    "id": "footer",
+    "children": [{
+    }]
+  }]
+}

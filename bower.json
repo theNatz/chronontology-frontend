@@ -2,7 +2,7 @@
   "name": "jeremy",
   "version": "0.0.1",
   "description": "Just another linked data repository (but with JSON-LD)",
-  "main": "public/index.html",
+  "main": "index.html",
   "moduleType": [
     "globals"
   ],
