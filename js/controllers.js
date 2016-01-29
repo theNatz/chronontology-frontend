@@ -46,14 +46,14 @@ angular.module('chronontology.controllers', [])
 			});
 		}
 		
-		$http.get('/data/period', { params: { q: "fallsWithin:\"" + result['@id'] + "\"", size: 1000 } }).success( function(result) {
+		$http.get('/data/period/', { params: { q: "fallsWithin:\"" + result['@id'] + "\"", size: 1000 } }).success( function(result) {
 			$scope.contains = periodUtils.buildTree(result.results);
 		});
 
 	});
 
 	$scope.save = function() {
-		$http.put($scope.period['@id'], $scope.period).success(function(result) {
+		$http.put('/data' + $scope.period['@id'], $scope.period).success(function(result) {
 			$scope.period = result;
 		});
 	};
