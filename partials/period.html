@@ -69,11 +69,11 @@
 					<br>
 
 					<dt>Erstellt</dt>
-					<dd>{{ period.created | isoDate | date:'medium' }}</dd>
+					<dd>{{ period.created.date | isoDate | date:'medium' }}</dd>
 					<br>
 
 					<dt>Geändert</dt>
-					<dd ng-repeat="m in period.modified">{{ m | isoDate | date:'medium' }}</dd>
+					<dd ng-repeat="m in period.modified">{{ m.date | isoDate | date:'medium' }}</dd>
 					<br>
 
 				</dl>
