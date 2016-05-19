@@ -4,17 +4,12 @@
 
 The following components need to be installed:
 * node
-* bower
 
 ## Install
 
-Install development dependencies:
+Install development and production dependencies with
 
     npm install
-
-Install production dependencies
-
-    bower install
 
 Run frontend 
 
