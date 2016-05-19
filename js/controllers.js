@@ -16,7 +16,7 @@ angular.module('chronontology.controllers', [])
 
 .controller("SearchController", function($scope, $location, $http) {
 
-	$http.get('/data/period/?q=' + $location.search()['q']).success(function(result) {
+	$http.get('/data/period/?' + $location.search()['q']).success(function(result) {
 		$scope.periods = result.results;
 	});
 
