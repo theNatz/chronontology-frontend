@@ -39,7 +39,7 @@ module.exports = function(grunt) {
                 },
                 proxies: [{
                     context: '/data',
-                    host: '0.0.0.0',
+                    host: 'localhost',
                     port: '4567',
                     rewrite: {
                         '^/data': '/'
