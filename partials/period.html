@@ -15,7 +15,7 @@
 			<span class="glyphicon glyphicon-arrow-left"></span> {{ isMetInTimeBy.prefLabel.de }}
 		</a>
 		<a class="btn btn-primary" disabled="disabled">
-			{{ period.prefLabel.de }}
+			{{ period.resource.prefLabel.de }}
 		</a>
 		<a class="btn btn-default" ng-disabled="!meetsInTimeWith"
 				ng-href="{{ meetsInTimeWith['@id'] }}">
@@ -36,7 +36,7 @@
 					<a ng-repeat="period in contains"
 							ng-href="{{ period['@id'] }}"
 							class="btn btn-default">
-						<span class="glyphicon glyphicon-arrow-down"></span> {{ period.prefLabel.de }}
+						<span class="glyphicon glyphicon-arrow-down"></span> {{ period.resource.prefLabel.de }}
 					</a>
 				</div>
 			</div>
@@ -59,11 +59,11 @@
 					<br>
 
 					<dt>Namen</dt>
-					<dd>{{ period.prefLabel.de }}</dd>
+					<dd>{{ period.resource.prefLabel.de }}</dd>
 					<br>
 
 					<dt>Provenienz</dt>
-					<dd ng-repeat="p in period.provenance">
+					<dd ng-repeat="p in period.resource.provenance">
 						<a ng-href="/thesaurus/{{ p }}">{{ p }}</a>
 					</dd>
 					<br>
@@ -90,14 +90,7 @@
 					<div class="form-group">
 						<label class="col-sm-3 control-label">Namen</label>
 						<div class="col-sm-9">
-							<input class="form-control" ng-model="period.prefLabel.de"></input>
-						</div>
-					</div>
-
-					<div class="form-group">
-						<label class="col-sm-3 control-label">Provenienz</label>
-						<div class="col-sm-9">
-							<input class="form-control" ng-model="period.provenance"></input>
+							<input class="form-control" ng-model="period.resource.prefLabel.de"></input>
 						</div>
 					</div>
 
@@ -107,7 +100,7 @@
 					    </div>
 					</div>
 
-				</dl>
+				</form>
 
 			</div>
 
