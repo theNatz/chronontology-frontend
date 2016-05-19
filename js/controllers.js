@@ -28,20 +28,20 @@ angular.module('chronontology.controllers', [])
 		
 		$scope.period = result;
 		
-		if (result.fallsWithin) {
-			$http.get('/data/'+result.fallsWithin).success(function(result) {
+		if (result.resource.fallsWithin) {
+			$http.get('/data/'+result.resource.fallsWithin).success(function(result) {
 				$scope.fallsWithin = result;
 			});
 		}
 
-		if (result.meetsInTimeWith) {
-			$http.get('/data/'+result.meetsInTimeWith).success(function(result) {
+		if (result.resource.meetsInTimeWith) {
+			$http.get('/data/'+result.resource.meetsInTimeWith).success(function(result) {
 				$scope.meetsInTimeWith = result;
 			});
 		}
 
-		if (result.isMetInTimeBy) {
-			$http.get('/data/'+result.isMetInTimeBy).success(function(result) {
+		if (result.resource.isMetInTimeBy) {
+			$http.get('/data/'+result.resource.isMetInTimeBy).success(function(result) {
 				$scope.isMetInTimeBy = result;
 			});
 		}
