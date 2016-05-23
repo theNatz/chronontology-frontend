@@ -1,6 +1,6 @@
 <script type="text/ng-template" id="node">
 	<span class="label">
-		<a ng-href="{{ node['@id'] }}">{{ node.prefLabel.de }}</a>
+		<a ng-href="{{ node['@id'] }}">{{ node.resource.prefLabel.de }}</a>
 	</span>
 	<ul ng-if="node.children">
 		<li ng-repeat="node in node.children" ng-include="'node'"></li>

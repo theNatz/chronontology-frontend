@@ -1,25 +1,25 @@
 <div ng-controller="PeriodController">
 
-	<h2>{{ period.prefLabel.de }} <small>http://chronontology.dainst.org{{ period['@id'] }}</small></h2>
+	<h2>{{ period.resource.prefLabel.de }} <small>http://chronontology.dainst.org{{ period['@id'] }}</small></h2>
 
 	<div class="btn-group btn-group-justified">		
 		<a class="btn btn-default" ng-disabled="!fallsWithin"
 				ng-href="{{ fallsWithin['@id'] }}">
-			<span class="glyphicon glyphicon-arrow-up"></span> {{ fallsWithin.prefLabel.de }}
+			<span class="glyphicon glyphicon-arrow-up"></span> {{ fallsWithin.resource.prefLabel.de }}
 		</a>
 	</div>
 
 	<div class="btn-group btn-group-justified">
 		<a class="btn btn-default" ng-disabled="!isMetInTimeBy"
 				ng-href="{{ isMetInTimeBy['@id'] }}">
-			<span class="glyphicon glyphicon-arrow-left"></span> {{ isMetInTimeBy.prefLabel.de }}
+			<span class="glyphicon glyphicon-arrow-left"></span> {{ isMetInTimeBy.resource.prefLabel.de }}
 		</a>
 		<a class="btn btn-primary" disabled="disabled">
 			{{ period.resource.prefLabel.de }}
 		</a>
 		<a class="btn btn-default" ng-disabled="!meetsInTimeWith"
 				ng-href="{{ meetsInTimeWith['@id'] }}">
-			{{ meetsInTimeWith.prefLabel.de }} <span class="glyphicon glyphicon-arrow-right"></span> 
+			{{ meetsInTimeWith.resource.prefLabel.de }} <span class="glyphicon glyphicon-arrow-right"></span> 
 		</a>
 	</div>
 
@@ -63,8 +63,8 @@
 					<br>
 
 					<dt>Provenienz</dt>
-					<dd ng-repeat="p in period.resource.provenance">
-						<a ng-href="/thesaurus/{{ p }}">{{ p }}</a>
+					<dd>
+						<a ng-href="/thesaurus/{{ period.resource.provenance }}">{{ period.resource.provenance }}</a>
 					</dd>
 					<br>
 
@@ -90,7 +90,14 @@
 					<div class="form-group">
 						<label class="col-sm-3 control-label">Namen</label>
 						<div class="col-sm-9">
-							<input class="form-control" ng-model="period.resource.prefLabel.de"></input>
+							<input class="form-control" ng-model="period.resource.prefLabel.de" />
+						</div>
+					</div>
+
+					<div class="form-group">
+						<label class="col-sm-3 control-label">Provenienz</label>
+						<div class="col-sm-9">
+							<input class="form-control" ng-model="period.resource.provenance" />
 						</div>
 					</div>
 
@@ -106,7 +113,7 @@
 
 			<div class="panel panel-default">
 				<div class="panel-heading">
-					<h4 class="panel-title">JSON</h3>
+					<h4 class="panel-title">JSON</h4>
 				</div>
 				<div class="panel-body">
 					<pre>{{ period | json }}</pre>
@@ -114,5 +121,7 @@
 			</div>
 
 		</div>
+
+	</div>
 
 </div>
