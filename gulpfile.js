@@ -118,7 +118,13 @@ gulp.task('copy-imgs', function () {
         .pipe(gulp.dest(paths.build + '/img'));
 });
 
-gulp.task('copy-resources', ['copy-fonts', 'copy-imgs', 'copy-index', 'copy-info', 'copy-config']);
+gulp.task('copy-partials', function () {
+
+    return gulp.src('partials/**/*', {base: 'partials'})
+        .pipe(gulp.dest(paths.build + '/partials'));
+});
+
+gulp.task('copy-resources', ['copy-fonts', 'copy-imgs', 'copy-index', 'copy-info', 'copy-config', 'copy-partials']);
 
 // copy index.html to dist and set version
 gulp.task('copy-index', function () {
