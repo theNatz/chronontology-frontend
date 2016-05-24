@@ -6,11 +6,11 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>Chronontology</title>
-    <link href="css/chronontology-frontend.css" rel="stylesheet">
+    <link href="css/jeremy.css?build=BUILD_NO" rel="stylesheet">
   </head>
   <body>
 
-    <idai-navbar project-id="chronontology"
+    <idai-navbar project-id="jeremy"
                  hide-register-button="true"
                  hide-contact-button="true"></idai-navbar>
 
@@ -18,10 +18,13 @@
       <div ng-view></div>
     </div>
 
-    <idai-footer ng-hide="$root.hideFooter" institutions="{'dai': 'http://www.dainst.de/', 'i3': 'http://i3mainz.hs-mainz.de/'}" mailto="idai.objects@dainst.org"></idai-footer>
+    <idai-footer ng-hide="$root.hideFooter"
+                 institutions="{'dai': 'http://www.dainst.de/', 'i3': 'http://i3mainz.hs-mainz.de/'}"
+                 mailto="idai.objects@dainst.org"
+                 version="-VERSION-STRING-"></idai-footer>
 
-    <script src="js/chronontology-frontend-deps.js"></script>
-    <script src="js/chronontology-frontend.js"></script>
+    <script src="js/jeremy-deps.js?build=BUILD_NO"></script>
+    <script src="js/jeremy.js?build=BUILD_NO"></script>
 
   </body>
 </html>

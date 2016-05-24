@@ -12,18 +12,17 @@ var sort = require('gulp-sort');
 var addSrc = require('gulp-add-src');
 var minifyCss = require('gulp-minify-css');
 var uglify = require('gulp-uglify');
+var argv = require('yargs').argv;
 var ngHtml2Js = require("gulp-ng-html2js");
 var minifyHtml = require("gulp-minify-html");
+var replace = require('gulp-replace');
 
 var paths = {
     "build": 'dist/',
     "lib": "node_modules/"
 };
 
-var pkg = {
-    "name": "chronontology-frontend"
-};
-
+var pkg = require('./package.json');
 
 var cssDeps = [
     //paths.lib + 'bootstrap-css-only/css/bootstrap.min.css'
@@ -89,7 +88,7 @@ gulp.task('html2js', function () {
 
     return gulp.src('partials/**/*.html')
         .pipe(minifyHtml())
-        .pipe(ngHtml2Js({moduleName: 'chronontology.templates', prefix: 'partials/'}))
+        .pipe(ngHtml2Js({moduleName: pkg.name + '.templates', prefix: 'partials/'}))
         .pipe(concat(pkg.name + '-tpls.js'))
         .pipe(gulp.dest('dist/js'));
 });
@@ -121,15 +120,15 @@ gulp.task('copy-imgs', function () {
 
 gulp.task('copy-resources', ['copy-fonts', 'copy-imgs', 'copy-index', 'copy-info', 'copy-config']);
 
-// copy index.html to dist [and set version]
+// copy index.html to dist and set version
 gulp.task('copy-index', function () {
 
-    //var buildNo = "SNAPSHOT";
-    //if (argv.build) buildNo = argv.build;
-    //var versionString = pkg.version + " (build #" + buildNo + ")";
+    var buildNo = "SNAPSHOT";
+    if (argv.build) buildNo = argv.build;
+    var versionString = pkg.version + " (build #" + buildNo + ")";
     gulp.src(['index.html'])
-        //.pipe(replace(/version="[^"]*"/g, 'version="v' + versionString + '"'))
-        //.pipe(replace(/build=BUILD_NO/g, 'build=' + buildNo))
+        .pipe(replace(/version="[^"]*"/g, 'version="v' + versionString + '"'))
+        .pipe(replace(/build=BUILD_NO/g, 'build=' + buildNo))
         .pipe(gulp.dest(paths.build));
 });
 
