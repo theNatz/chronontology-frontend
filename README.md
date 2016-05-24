@@ -1,4 +1,4 @@
-# Chronontology (frontend)
+# Chronontology (Frontend)
 
 ## Prerequisites
 
@@ -10,6 +10,10 @@ The following components need to be installed:
 Install development and production dependencies with
 
     npm install
+
+To build Chronontology Frontend, gulp has to be installed globally:
+ 
+    sudo npm install -g gulp
 
 Run frontend 
 
