@@ -181,5 +181,5 @@ gulp.task('server', ['compile-css', 'minify-js', 'concat-deps', 'copy-resources'
 });
 
 gulp.task('default', function () {
-    runSequence('clean', 'test', 'build');
+    runSequence('clean', 'build');
 });
