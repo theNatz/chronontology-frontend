@@ -30,8 +30,8 @@ angular.module('chronontology.services', [])
 	            if (node) {
 		            parent.children = [node];
 		            if (children.hasOwnProperty(node['@id'])) populateNode(node);
-		            while (node.resource.hasOwnProperty('meetsInTimeWith')) {
-		            	node = map[node.resource['meetsInTimeWith']];
+		            while (node.hasOwnProperty('meetsInTimeWith')) {
+		            	node = map[node['meetsInTimeWith']];
 		            	parent.children.push(node);
 		            	if (children.hasOwnProperty(node['@id'])) populateNode(node);
 		            }
@@ -45,11 +45,11 @@ angular.module('chronontology.services', [])
 			// build index and determine root
 			periods.forEach(function(p) {
 				map[p['@id']] = p;
-				if (!p.resource.hasOwnProperty('fallsWithin') && !p.resource.hasOwnProperty('isMetInTimeBy')) {
+				if (!p.hasOwnProperty('fallsWithin') && !p.hasOwnProperty('isMetInTimeBy')) {
 					roots.push(p);
 				}
-				if (p.resource.hasOwnProperty('fallsWithin') && !p.resource.hasOwnProperty('isMetInTimeBy')) {
-					children[p.resource['fallsWithin']] = p;
+				if (p.hasOwnProperty('fallsWithin') && !p.hasOwnProperty('isMetInTimeBy')) {
+					children[p['fallsWithin']] = p;
 				}
 			});
 
@@ -70,8 +70,8 @@ angular.module('chronontology.services', [])
 				console.log("node", node);
 				populateNode(node);
 				tree.push(node);
-				while (node.resource.hasOwnProperty('meetsInTimeWith')) {
-					node = map[node.resource['meetsInTimeWith']];
+				while (node.hasOwnProperty('meetsInTimeWith')) {
+					node = map[node['meetsInTimeWith']];
 					if (node) {
 						populateNode(node);
 						tree.push(node);

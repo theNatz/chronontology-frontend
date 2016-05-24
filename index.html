@@ -6,14 +6,13 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>Chronontology</title>
-    <link href="node_modules/bootstrap-css-only/css/bootstrap.min.css" rel="stylesheet">
-    <link href="node_modules/idai-components/dist/css/idai-components.min.css" rel="stylesheet">
-    <link href="css/custom.css" rel="stylesheet">
+    <link href="css/chronontology-frontend.css" rel="stylesheet">
   </head>
   <body>
 
-    <idai-navbar 
-      project-id="chronontology" hide-register-button="true" hide-contact-button="true"></idai-navbar>
+    <idai-navbar project-id="chronontology"
+                 hide-register-button="true"
+                 hide-contact-button="true"></idai-navbar>
 
     <div class="container">
       <div ng-view></div>
@@ -21,19 +20,8 @@
 
     <idai-footer ng-hide="$root.hideFooter" institutions="{'dai': 'http://www.dainst.de/', 'i3': 'http://i3mainz.hs-mainz.de/'}" mailto="idai.objects@dainst.org"></idai-footer>
 
-    <script src="node_modules/d3/d3.min.js"></script>
-    <script src="node_modules/angular/angular.min.js"></script>
-    <script src="node_modules/angular-route/angular-route.min.js"></script>
-    <script src="node_modules/angular-ui-bootstrap/dist/ui-bootstrap.js"></script>
-    <script src="node_modules/angular-resource/angular-resource.min.js"></script>
-    <script src="node_modules/angular-i18n/angular-locale_de-de.js"></script>
-    <script src="node_modules/idai-components/dist/idai-components.min.js"></script>
-
-    <script src="js/services.js"></script>
-    <script src="js/directives.js"></script>
-    <script src="js/controllers.js"></script>
-    <script src="js/filters.js"></script>
-    <script src="js/app.js"></script>
+    <script src="js/chronontology-frontend-deps.js"></script>
+    <script src="js/chronontology-frontend.js"></script>
 
   </body>
 </html>
