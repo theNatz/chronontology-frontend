@@ -25,11 +25,13 @@ angular.module('chronontology.controllers', [])
 .controller("PeriodController", function($scope, $location, $routeParams, $http, periodUtils) {
 
 	$http.get('/data/period/' + $routeParams.id).success( function(result) {
-		
+
 		$scope.period = result;
+
+		console.log(result.resource)
 		
 		if (result.resource.fallsWithin) {
-			$http.get('/data/'+result.resource.fallsWithin).success(function(result) {
+			$http.get('/data'+result.resource.fallsWithin).success(function(result) {
 				$scope.fallsWithin = result;
 			});
 		}

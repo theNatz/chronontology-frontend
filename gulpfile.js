@@ -166,10 +166,14 @@ gulp.task('clean', function () {
 // runs the development server and sets up browser reloading
 gulp.task('server', ['compile-css', 'minify-js', 'concat-deps', 'copy-resources'], function () {
 
+    var proxyOptions = url.parse('http://localhost:4567/');
+    proxyOptions.route = '/data';
+
     browserSync({
         server: {
             baseDir: 'dist',
             middleware: [
+                proxy(proxyOptions),
                 // rewrite for AngularJS HTML5 mode, redirect all non-file urls to index.html
                 modRewrite(['!\\.html|\\.js|\\.svg|\\.css|\\.png|\\.jpg|\\.gif|\\.json|\\.woff2|\\.woff|\\.ttf$ /index.html [L]']),
             ]
