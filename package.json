@@ -37,6 +37,7 @@
     "passport": "^0.3.2",
     "passport-http": "^0.3.0",
     "proxy-middleware": "^0.15.0",
-    "run-sequence": "^1.1.4"
+    "run-sequence": "^1.1.4",
+    "yargs": "^4.7.1"
   }
 }
