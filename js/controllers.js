@@ -37,19 +37,27 @@ angular.module('chronontology.controllers', [])
 		}
 
 		if (result.resource.meetsInTimeWith) {
-			$http.get('/data/'+result.resource.meetsInTimeWith).success(function(result) {
+			$http.get('/data'+result.resource.meetsInTimeWith).success(function(result) {
 				$scope.meetsInTimeWith = result;
 			});
 		}
 
 		if (result.resource.isMetInTimeBy) {
-			$http.get('/data/'+result.resource.isMetInTimeBy).success(function(result) {
+			$http.get('/data'+result.resource.isMetInTimeBy).success(function(result) {
 				$scope.isMetInTimeBy = result;
 			});
 		}
-		
+
+<!--
 		$http.get('/data/period/', { params: { q: "fallsWithin:\"" + result['@id'] + "\"", size: 1000 } }).success( function(result) {
 			$scope.contains = periodUtils.buildTree(result.results);
+		});
+-->		
+		$scope.contains = [];
+		angular.forEach(result.resource.contains, function(id, nr) {
+			$http.get('/data' + id).success( function(res) {
+				$scope.contains.push(res);			
+			});
 		});
 
 	});
