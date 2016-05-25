@@ -1,8 +1,7 @@
 {
-  "name": "jeremy",
+  "name": "chronontology",
   "version": "0.0.1",
-  "description": "Just another linked data repository (but with JSON-LD)",
-  "main": "server.js",
+  "description": "",
   "dependencies": {
     "MD5": "^1.2.1",
     "angular": "^1.5.5",
