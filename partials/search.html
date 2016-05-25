@@ -15,7 +15,7 @@
 			<tr ng-repeat="period in periods">
 				<td></td>
 				<td><a ng-href="{{ period['@id'] }}">{{ period.resource.prefLabel.de }}</a></td>
-				<td><a ng-repeat="provenance in period.resource.provenance" ng-href="/thesaurus/{{ provenance }}">{{ provenance }}</a></td>
+				<td><a ng-href="/thesaurus/{{ period.resource.provenance }}">{{ period.resource.provenance }}</a></td>
 			</tr>
 
 		</tbody>
