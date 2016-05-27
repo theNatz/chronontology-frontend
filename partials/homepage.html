@@ -1,0 +1,53 @@
+<header id="teaser"
+        style="background-image: url('/img/frontpage-bgr.jpg'); margin-top: -20px;">
+    <div class="description"></div>
+</header>
+
+<style>
+    #teaser {
+        height: 35vh;
+    }
+
+    #frontpage-logo {
+        margin-bottom: 25px;
+    }
+
+    main h1 {
+        margin-top: -35px;
+        background-color: rgba(255,255,255,0.7);
+        font-size: 2.7em;
+        font-weight: 300;
+        color: #555;
+        padding: 25px;
+    }
+
+    main h1 img {
+        width: 60px;
+        margin-right: 10px;
+    }
+</style>
+
+<div class="container">
+    <main>
+
+        <div class="col-xs-12 col-xs-offset-0 col-sm-8 col-sm-offset-2 col-md-6 col-md-offset-3 text-center"
+             style="margin-top: -25px; height:262px; min-width:358px; margin-bottom: 40px;">
+
+            <h1>
+                <img src="img/chronontology-symbol.jpg" alt="Chronontology Logo">
+                iDAI.chronontology</h1>
+
+            <form ng-controller="SearchFormController" ng-submit="search()" class="input-group form-inline"
+                  role="search" method="GET">
+                <input type="text" ng-model="q" name="q" class="form-control" autofocus placeholder="Suche"/>
+					<span class="input-group-btn">
+						<button type="submit" class="btn btn-primary">
+							&nbsp;<span class="glyphicon glyphicon-search"></span>&nbsp;
+						</button>
+					</span>
+            </form>
+
+        </div>
+
+    </main>
+</div>

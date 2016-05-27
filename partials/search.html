@@ -1,25 +1,27 @@
-<div ng-controller="SearchController">
+<div class="container">
+    <div ng-controller="SearchController">
 
-	<table class="table table-striped">
+        <table class="table table-striped">
 
-		<thead>
-			<tr>
-				<th>#</th>
-				<th>Name</th>
-				<th>Provenienz</th>
-			</tr>
-		</thead>
+            <thead>
+            <tr>
+                <th>#</th>
+                <th>Name</th>
+                <th>Provenienz</th>
+            </tr>
+            </thead>
 
-		<tbody>
+            <tbody>
 
-			<tr ng-repeat="period in periods">
-				<td></td>
-				<td><a ng-href="{{ period['@id'] }}">{{ period.resource.prefLabel.de }}</a></td>
-				<td><a ng-href="/thesaurus/{{ period.resource.provenance }}">{{ period.resource.provenance }}</a></td>
-			</tr>
+            <tr ng-repeat="period in periods">
+                <td></td>
+                <td><a ng-href="{{ period['@id'] }}">{{ period.resource.prefLabel.de }}</a></td>
+                <td><a ng-href="/thesaurus/{{ period.resource.provenance }}">{{ period.resource.provenance }}</a></td>
+            </tr>
 
-		</tbody>
+            </tbody>
 
-	</table>
+        </table>
 
+    </div>
 </div>
