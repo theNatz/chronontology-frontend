@@ -2,6 +2,8 @@
     <div ng-controller="PeriodController">
 
         <h2>{{ period.resource.prefLabel.de }}
+            ({{period.resource.types.join(", ")}})
+            <br />
             <small>http://chronontology.dainst.org{{ period['@id'] }}</small>
         </h2>
 
