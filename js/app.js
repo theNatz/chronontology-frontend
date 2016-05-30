@@ -19,6 +19,7 @@ angular.module('chronontology',[
 		$httpProvider.defaults.cache = true;
 
 		$routeProvider
+			.when('/', { templateUrl: 'partials/homepage.html'})
 			.when('/search', {templateUrl: 'partials/search.html'})
 			.when('/period/:id', {templateUrl: 'partials/period.html'})
 			.when('/thesaurus/:provenance', {templateUrl: 'partials/thesaurus.html'})
