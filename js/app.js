@@ -21,7 +21,7 @@ angular.module('chronontology',[
 		$routeProvider
 			.when('/search', {templateUrl: 'partials/search.html'})
 			.when('/period/:id', {templateUrl: 'partials/period.html'})
-			.when('/thesaurus/:provenance', { templateUrl: 'partials/thesaurus.html' })
+			.when('/thesaurus/:provenance', {templateUrl: 'partials/thesaurus.html'})
 
 	}
 ]).constant('chronontologySettings', {

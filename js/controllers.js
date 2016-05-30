@@ -53,6 +53,10 @@ angular.module('chronontology.controllers', [])
 			});
 		});
 
+		$http.get('/data/period/?size=1000&q=provenance:' + $scope.period.resource.provenance).success( function(result) {
+			$scope.provenancePeriods = result.results;
+		});
+
 	});
 
 	$scope.save = function() {
