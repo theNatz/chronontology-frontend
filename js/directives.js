@@ -8,7 +8,6 @@ angular.module('chronontology.directives', [])
       scope: {
           periods: '=',
           selectedPeriodId: '=',
-          width: '@',
           height: '@'
       },
       templateUrl: 'partials/timeline.html',
@@ -23,6 +22,8 @@ angular.module('chronontology.directives', [])
           var axis, axisElement;
           var zoom, drag;
           var rowMax = -1;
+
+          scope.width = element[0].parentNode.clientWidth - 15;
 
           scope.$watch('periods', function() {
              if (scope.periods) initialize();
