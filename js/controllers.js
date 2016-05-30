@@ -22,14 +22,12 @@ angular.module('chronontology.controllers', [])
 
 })
 
-.controller("PeriodController", function($scope, $location, $routeParams, $http, periodUtils) {
+.controller("PeriodController", function($scope, $location, $routeParams, $http) {
 
 	$http.get('/data/period/' + $routeParams.id).success( function(result) {
 
 		$scope.period = result;
 
-		console.log(result.resource)
-		
 		if (result.resource.fallsWithin) {
 			$http.get('/data'+result.resource.fallsWithin).success(function(result) {
 				$scope.fallsWithin = result;
@@ -48,15 +46,10 @@ angular.module('chronontology.controllers', [])
 			});
 		}
 
-<!--
-		$http.get('/data/period/', { params: { q: "fallsWithin:\"" + result['@id'] + "\"", size: 1000 } }).success( function(result) {
-			$scope.contains = periodUtils.buildTree(result.results);
-		});
--->		
 		$scope.contains = [];
-		angular.forEach(result.resource.contains, function(id, nr) {
-			$http.get('/data' + id).success( function(res) {
-				$scope.contains.push(res);			
+		angular.forEach(result.resource.contains, function(id) {
+			$http.get('/data' + id).success(function(result) {
+				$scope.contains.push(result);
 			});
 		});
 
