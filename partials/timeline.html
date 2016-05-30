@@ -1,16 +1,1 @@
-<div class="container">
-    <script type="text/ng-template" id="node">
-        <span class="label">
-		<a ng-href="{{ node['@id'] }}">{{ node.resource.prefLabel.de }}</a>
-	</span>
-        <ul ng-if="node.children">
-            <li ng-repeat="node in node.children" ng-include="'node'"></li>
-        </ul>
-    </script>
-
-    <div class="timeline">
-        <ul>
-            <li ng-repeat="node in tree" ng-include="'node'"></li>
-        </ul>
-    </div>
-</div>
+<div id="timeline"/>
