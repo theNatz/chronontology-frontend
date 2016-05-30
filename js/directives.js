@@ -14,7 +14,8 @@ angular.module('chronontology.directives', [])
       link: function(scope, element, attrs) {
 
           var barHeight = 20;
-          var bars, barTexts;
+          var bars, barRects, barTexts;
+          var tooltip;
           var x, y;
           var startXDomain = [];
           var timeline;
@@ -87,14 +88,18 @@ angular.module('chronontology.directives', [])
 
               timeline.call(zoom).call(drag);
 
+              tooltip = d3.select('body')
+                  .append('div')
+                  .classed('timeline-tooltip', true);
+
               bars = canvas.selectAll('rect').data(periodsData).enter();
-              bars.append('rect')
+              barRects = bars.append('rect')
                   .classed('bar', true)
                   .on('click', showPeriod);
+              addTooltipBehavior(barRects);
 
               if (scope.selectedPeriodId) {
-                      canvas.selectAll('rect')
-                      .filter(function (d) {
+                  barRects.filter(function (d) {
                           return d.id == scope.selectedPeriodId;
                       })
                       .classed('selected', true);
@@ -103,20 +108,20 @@ angular.module('chronontology.directives', [])
               barTexts = bars.append('text')
                   .classed('text', true)
                   .on('click', showPeriod);
+              addTooltipBehavior(barTexts, tooltip);
 
               updateBars();
           }
 
           function updateBars() {
-              canvas.selectAll('rect')
-                  .attr('width', function(data) {
+              barRects.attr('width', function(data) {
                       return x(data.to) - x(data.from);
                   })
                   .attr('height', barHeight)
                   .attr('x', function(data) {
                       return x(data.from);
                   })
-                  .attr('y', function(data, i) {
+                  .attr('y', function(data) {
                       return y(data.row * 15);
                   });
 
@@ -130,10 +135,14 @@ angular.module('chronontology.directives', [])
                       return data.name;
                   })
                   .text(function(data) {
-                      if (this.getComputedTextLength() > x(data.to) - x(data.from))
+                      if (this.getComputedTextLength() > x(data.to) - x(data.from)) {
+                          data.textVisible = false;
                           return "";
-                      else
+                      }
+                      else {
+                          data.textVisible = true;
                           return data.name;
+                      }
                   });
 
               axisElement.selectAll('.tick text')
@@ -141,6 +150,7 @@ angular.module('chronontology.directives', [])
           }
 
           function showPeriod(period) {
+              tooltip.style("visibility", "hidden");
               $location.path(period.id);
               scope.$apply();
           }
@@ -262,6 +272,19 @@ angular.module('chronontology.directives', [])
               }
 
               return text;
+          }
+
+          function addTooltipBehavior(selection) {
+              selection.on("mouseover", function(period) {
+                  if (period.textVisible) return;
+                  tooltip.text(period.name);
+                  return tooltip.style("visibility", "visible");
+              })
+              .on("mousemove", function() {
+                  return tooltip.style("top", (d3.event.pageY - 10) + "px")
+                      .style("left", (d3.event.pageX + 10) + "px");
+              })
+              .on("mouseout", function() { return tooltip.style("visibility", "hidden"); });
           }
       }
     };

@@ -25,3 +25,12 @@ body {
 	text-anchor: middle;
 	cursor: pointer;
 }
+
+.timeline-tooltip {
+	border-style: solid;
+	border-width: 1px;
+	background-color: white;
+	position: absolute;
+	z-index: 10;
+	visibility: hidden;
+}
