@@ -41,7 +41,8 @@ angular.module('chronontology.directives', [])
 
               timeline = d3.select('#timeline').append('svg')
                   .attr('width', parseInt(scope.width))
-                  .attr('height', parseInt(scope.height));
+                  .attr('height', parseInt(scope.height))
+                  .classed('timeline', true);
 
               canvas = timeline.append('svg')
                   .attr('width', parseInt(scope.width))
@@ -87,25 +88,19 @@ angular.module('chronontology.directives', [])
 
               bars = canvas.selectAll('rect').data(periodsData).enter();
               bars.append('rect')
-                  .style({
-                      'fill': '#ABCDEF',
-                      'stroke': 'black',
-                      'stroke-width': '2',
-                      'cursor': 'pointer'})
+                  .classed('bar', true)
                   .on('click', showPeriod);
 
               if (scope.selectedPeriodId) {
-                  canvas.selectAll('rect')
-                      .filter(function (d, i) {
+                      canvas.selectAll('rect')
+                      .filter(function (d) {
                           return d.id == scope.selectedPeriodId;
                       })
-                      .style({'fill': 'yellow'});
+                      .classed('selected', true);
               }
 
               barTexts = bars.append('text')
-                  .attr('font-size', '15')
-                  .attr('text-anchor', 'middle')
-                  .style({'cursor': 'pointer'})
+                  .classed('text', true)
                   .on('click', showPeriod);
 
               updateBars();
