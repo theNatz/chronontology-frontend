@@ -161,13 +161,15 @@ angular.module('chronontology.directives', [])
 
               for (var i in scope.periods) {
                   if (scope.periods[i].resource.hasTimespan && scope.periods[i].resource.hasTimespan[0]
-                      && !isNaN(scope.periods[i].resource.hasTimespan[0].from)
-                      && !isNaN(scope.periods[i].resource.hasTimespan[0].to)) {
+                      && scope.periods[i].resource.hasTimespan[0].begin
+                      && scope.periods[i].resource.hasTimespan[0].end
+                      && !isNaN(scope.periods[i].resource.hasTimespan[0].begin.at)
+                      && !isNaN(scope.periods[i].resource.hasTimespan[0].end.at)) {
                       var period = {
                           id: scope.periods[i]['@id'],
                           name: scope.periods[i].resource.prefLabel.de,
-                          from: getYearDate(parseInt(scope.periods[i].resource.hasTimespan[0].from), false),
-                          to: getYearDate(parseInt(scope.periods[i].resource.hasTimespan[0].to), true),
+                          from: getYearDate(parseInt(scope.periods[i].resource.hasTimespan[0].begin.at), false),
+                          to: getYearDate(parseInt(scope.periods[i].resource.hasTimespan[0].end.at), true),
                           successor: scope.periods[i].resource.isMetInTimeBy,
                           children: scope.periods[i].resource.contains,
                           row: -1
