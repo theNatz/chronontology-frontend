@@ -122,14 +122,14 @@ angular.module('chronontology.directives', [])
                       return x(data.from);
                   })
                   .attr('y', function(data) {
-                      return y(data.row * 15);
+                      return y(data.row) + data.row * (barHeight + 5);
                   });
 
               barTexts.attr('x', function(data) {
                       return x(data.from) + (x(data.to) - x(data.from)) / 2;
                   })
                   .attr('y', function(data) {
-                      return y(data.row * 15) + barHeight / 2 + 5;
+                      return y(data.row) + data.row * (barHeight + 5) + barHeight / 2 + 5;
                   })
                   .text(function(data) {
                       return data.name;
