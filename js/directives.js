@@ -225,6 +225,7 @@ angular.module('chronontology.directives', [])
           }
 
           function setSelectionStartDomain(selectedPeriod) {
+              if (!selectedPeriod) return;
               var offset = (selectedPeriod.to.getTime() - selectedPeriod.from.getTime()) / 2;
               var from = selectedPeriod.from.getTime() - offset;
               var to = selectedPeriod.to.getTime() + offset;
