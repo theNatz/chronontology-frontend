@@ -168,8 +168,8 @@ angular.module('chronontology.directives', [])
                       var period = {
                           id: scope.periods[i]['@id'],
                           name: scope.periods[i].resource.prefLabel.de,
-                          from: getYearDate(parseInt(scope.periods[i].resource.hasTimespan[0].begin.at), false),
-                          to: getYearDate(parseInt(scope.periods[i].resource.hasTimespan[0].end.at), true),
+                          from: getYearDate(parseInt(scope.periods[i].resource.hasTimespan[0].begin.at)),
+                          to: getYearDate(parseInt(scope.periods[i].resource.hasTimespan[0].end.at)),
                           successor: scope.periods[i].resource.isMetInTimeBy,
                           children: scope.periods[i].resource.contains,
                           row: -1
@@ -231,12 +231,9 @@ angular.module('chronontology.directives', [])
               startXDomain = [from, to ];
           }
 
-          function getYearDate(value, endOfYear) {
+          function getYearDate(value) {
               var date = new Date();
-              if (endOfYear)
-                date.setFullYear(value, 11, 30);
-              else
-                  date.setFullYear(value, 0, 0);
+              date.setFullYear(value, 0, 1);
 
               return date;
           }

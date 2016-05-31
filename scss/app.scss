@@ -12,8 +12,9 @@ body {
 .timeline .bar{
 	fill: #ABCDEF;
 	stroke: black;
-	stroke-width: 2;
+	stroke-width: 1;
 	cursor: pointer;
+	shape-rendering: crispEdges;
 }
 
 .timeline .bar.selected {
