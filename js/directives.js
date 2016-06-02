@@ -59,14 +59,13 @@ angular.module('chronontology.directives', [])
                   .scale(x)
                   .orient("bottom")
                   .ticks(5)
-                  .tickPadding(5)
-                  .tickSize(3)
+                  .tickSize(10, 0)
                   .tickFormat(format);
 
               axisElement = timeline.append('svg')
                   .attr('y', parseInt(scope.height) - 30)
                   .attr('width', parseInt(scope.width))
-                  .attr('height', 30)
+                  .classed('axis', true)
                   .call(axis);
 
               zoom = d3.behavior.zoom()

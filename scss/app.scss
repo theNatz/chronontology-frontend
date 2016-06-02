@@ -27,6 +27,25 @@ body {
 	cursor: pointer;
 }
 
+.timeline .axis path {
+	stroke: black;
+	stroke-width: 2px;
+	fill: none;
+	shape-rendering: crispEdges;
+}
+
+.timeline .axis line {
+	stroke: black;
+	stroke-width: 1px;
+	fill: none;
+	shape-rendering: crispEdges;
+}
+
+.timeline .axis text {
+	font-family: sans-serif;
+	font-size: 11px;
+}
+
 .timeline-tooltip {
 	border-style: solid;
 	border-width: 1px;
