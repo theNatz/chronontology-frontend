@@ -70,6 +70,7 @@ angular.module('chronontology.directives', [])
 
               zoom = d3.behavior.zoom()
                   .x(x)
+                  .scaleExtent([0.1, 6000])
                   .on("zoom", function () {
                       axisElement.call(axis);
                       updateBars();
