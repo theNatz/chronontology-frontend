@@ -160,11 +160,7 @@ angular.module('chronontology.directives', [])
               var periodsMap = {};
 
               for (var i in scope.periods) {
-                  if (scope.periods[i].resource.hasTimespan && scope.periods[i].resource.hasTimespan[0]
-                      && scope.periods[i].resource.hasTimespan[0].begin
-                      && scope.periods[i].resource.hasTimespan[0].end
-                      && !isNaN(scope.periods[i].resource.hasTimespan[0].begin.at)
-                      && !isNaN(scope.periods[i].resource.hasTimespan[0].end.at)) {
+                  if (validatePeriod(scope.periods[i])) {
                       var period = {
                           id: scope.periods[i]['@id'],
                           name: scope.periods[i].resource.prefLabel.de,
@@ -186,6 +182,33 @@ angular.module('chronontology.directives', [])
               if (scope.selectedPeriodId) setSelectionStartDomain(periodsMap[scope.selectedPeriodId]);
 
               return periodsToDisplay;
+          }
+
+          function validatePeriod(period) {
+              // Check if the timespan of the period is defined
+              if (!period.resource.hasTimespan || !period.resource.hasTimespan[0])
+                  return false;
+
+              // Check if the begin and end values of the timespan are defined
+              if (!period.resource.hasTimespan[0].begin || !period.resource.hasTimespan[0].end)
+                  return false;
+
+              // Check if the values of the timespan are numeric
+              if (isNaN(period.resource.hasTimespan[0].begin.at)
+                    || isNaN(period.resource.hasTimespan[0].end.at))
+                  return false;
+
+              // Don't show periods with start year before 5000 until the timeline has been adjusted to properly support
+              // those values
+              if (parseInt(period.resource.hasTimespan[0].begin.at) < -5000)
+                  return false;
+
+              // Check if the values of the timespan are set properly
+              if (parseInt(period.resource.hasTimespan[0].end.at)
+                    < parseInt(period.resource.hasTimespan[0].begin.at))
+                  return false;
+
+              return true;
           }
 
           function determinePeriodRows(periods, periodsMap) {
