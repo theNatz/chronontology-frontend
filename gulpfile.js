@@ -29,6 +29,7 @@ var cssDeps = [
 ];
 
 var jsDeps = [
+    paths.lib + 'file-saver/FileSaver.min.js',
     paths.lib + 'd3/d3.min.js',
     paths.lib + 'angular/angular.min.js',
     paths.lib + 'angular-route/angular-route.min.js',
