@@ -55,6 +55,7 @@
                 <ul class="nav nav-tabs">
                     <li ng-class="{ 'active': !edit }"><a href="#" ng-click="edit = false">Anzeigen</a></li>
                     <li ng-class="{ 'active': edit }"><a href="#" ng-click="edit = true">Bearbeiten</a></li>
+                    <li><a target='_blank' href="http://localhost:8084/#/edit/{{period['@id'].replace('/period/','')}}" ng-click="edit = true">Gehe zum Editor</a></li>
                 </ul>
 
                 <div ng-show="!edit" style="margin: 30px 0;">
