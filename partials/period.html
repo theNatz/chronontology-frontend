@@ -3,7 +3,7 @@
 
         <h2>{{ period.resource.prefLabel.de }}
             ({{period.resource.types.join(", ")}})
-            <br />
+            <br/>
             <small>http://chronontology.dainst.org{{ period['@id'] }}</small>
         </h2>
 
@@ -122,6 +122,12 @@
                 <div class="panel panel-default">
                     <div class="panel-heading">
                         <h4 class="panel-title">JSON</h4>
+                        <button type="button"
+                                class="btn btn-success btn-xs"
+                                style="margin-top: 5px;"
+                                ng-click="exportJSON()">
+                            <span class="glyphicon glyphicon-floppy-disk" aria-hidden="true"></span> JSON exportieren
+                        </button>
                     </div>
                     <div class="panel-body">
                         <pre>{{ period | json }}</pre>

@@ -64,6 +64,12 @@ angular.module('chronontology.controllers', [])
 			$scope.period = result;
 		});
 	};
+	
+	$scope.exportJSON = function() {
+		var JSONexport = JSON.stringify($scope.period, null, "\t");
+		var blob = new Blob([JSONexport], {type: "text/plain;charset=utf-8"});
+		saveAs(blob, $scope.period['@id'] + ".json");
+	}
 
 })
 
