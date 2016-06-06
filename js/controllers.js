@@ -66,7 +66,7 @@ angular.module('chronontology.controllers', [])
 	};
 	
 	$scope.exportJSON = function() {
-		var JSONexport = JSON.stringify($scope.period, null, "\t");
+		var JSONexport = angular.toJson($scope.period, true);
 		var blob = new Blob([JSONexport], {type: "text/plain;charset=utf-8"});
 		saveAs(blob, $scope.period['@id'] + ".json");
 	}
