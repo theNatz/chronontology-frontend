@@ -17,6 +17,7 @@ angular.module('chronontology.directives', [])
           var bars, barRects, barTexts;
           var tooltip;
           var x, y;
+          var totalXDomain = [];
           var startXDomain = [];
           var timeline;
           var canvas;
@@ -33,7 +34,7 @@ angular.module('chronontology.directives', [])
           function initialize() {
               var periodsData = prepareData();
 
-              x = d3.time.scale()
+              x = d3.scale.linear()
                   .domain(startXDomain)
                   .range([0, parseInt(scope.width)]);
 
@@ -50,17 +51,11 @@ angular.module('chronontology.directives', [])
                   .attr('width', parseInt(scope.width))
                   .attr('height', parseInt(scope.height) - 30);
 
-              var format = d3.time.format.multi([
-                  ["%B %Y", function(d) { return d.getMonth(); }],
-                  ["%Y", function() { return true; }]
-              ]);
-
               axis = d3.svg.axis()
                   .scale(x)
                   .orient("bottom")
                   .ticks(5)
-                  .tickSize(10, 0)
-                  .tickFormat(format);
+                  .tickSize(10, 0);
 
               axisElement = timeline.append('svg')
                   .attr('y', parseInt(scope.height) - 30)
@@ -68,9 +63,12 @@ angular.module('chronontology.directives', [])
                   .classed('axis', true)
                   .call(axis);
 
+              var minZoom = (startXDomain[1] - startXDomain[0]) / (totalXDomain[1] - totalXDomain[0]);
+              var maxZoom = startXDomain[1] - startXDomain[0];
+
               zoom = d3.behavior.zoom()
                   .x(x)
-                  .scaleExtent([0.1, 6000])
+                  .scaleExtent([minZoom, maxZoom])
                   .on("zoom", function () {
                       axisElement.call(axis);
                       updateBars();
@@ -164,14 +162,14 @@ angular.module('chronontology.directives', [])
                       var period = {
                           id: scope.periods[i]['@id'],
                           name: scope.periods[i].resource.prefLabel.de,
-                          from: getYearDate(parseInt(scope.periods[i].resource.hasTimespan[0].begin.at)),
-                          to: getYearDate(parseInt(scope.periods[i].resource.hasTimespan[0].end.at)),
+                          from: parseInt(scope.periods[i].resource.hasTimespan[0].begin.at),
+                          to: parseInt(scope.periods[i].resource.hasTimespan[0].end.at),
                           successor: scope.periods[i].resource.isMetInTimeBy,
                           children: scope.periods[i].resource.contains,
                           row: -1
                       };
-                      if (!startXDomain[0] || period.from < startXDomain[0]) startXDomain[0] = period.from;
-                      if (!startXDomain[1] || period.to > startXDomain[1]) startXDomain[1] = period.to;
+                      if (!totalXDomain[0] || period.from < totalXDomain[0]) totalXDomain[0] = period.from;
+                      if (!totalXDomain[1] || period.to > totalXDomain[1]) totalXDomain[1] = period.to;
                       periodsToDisplay.push(period);
                       periodsMap[period.id] = period;
                   }
@@ -179,7 +177,13 @@ angular.module('chronontology.directives', [])
 
               determinePeriodRows(periodsToDisplay, periodsMap);
 
-              if (scope.selectedPeriodId) setSelectionStartDomain(periodsMap[scope.selectedPeriodId]);
+              var selectedPeriod;
+              if (scope.selectedPeriodId && (selectedPeriod = periodsMap[scope.selectedPeriodId]))
+                  setStartDomain(selectedPeriod);
+              else {
+                  startXDomain[0] = totalXDomain[0];
+                  startXDomain[1] = totalXDomain[1];
+              }
 
               return periodsToDisplay;
           }
@@ -196,11 +200,6 @@ angular.module('chronontology.directives', [])
               // Check if the values of the timespan are numeric
               if (isNaN(period.resource.hasTimespan[0].begin.at)
                     || isNaN(period.resource.hasTimespan[0].end.at))
-                  return false;
-
-              // Don't show periods with start year before 5000 until the timeline has been adjusted to properly support
-              // those values
-              if (parseInt(period.resource.hasTimespan[0].begin.at) < -5000)
                   return false;
 
               // Check if the values of the timespan are set properly
@@ -240,59 +239,24 @@ angular.module('chronontology.directives', [])
           function setSuccessorRow(period, periodsMap) {
               if (period.successor && period.successor in periodsMap && period.id != period.successor) {
                   var successor = periodsMap[period.successor];
-                  if (!successor.row) {
+                  if (successor.row == -1) {
                       successor.row = period.row;
                       setSuccessorRow(successor, periodsMap);
                   }
               }
           }
 
-          function setSelectionStartDomain(selectedPeriod) {
-              if (!selectedPeriod) return;
-              var offset = (selectedPeriod.to.getTime() - selectedPeriod.from.getTime()) / 2;
-              var from = selectedPeriod.from.getTime() - offset;
-              var to = selectedPeriod.to.getTime() + offset;
-              startXDomain = [from, to ];
-          }
-
-          function getYearDate(value) {
-              var date = new Date();
-              date.setFullYear(value, 0, 1);
-
-              return date;
+          function setStartDomain(selectedPeriod) {
+              var offset = (selectedPeriod.to - selectedPeriod.from) / 2;
+              var from = selectedPeriod.from - offset;
+              var to = selectedPeriod.to + offset;
+              if (from < totalXDomain[0]) from = totalXDomain[0];
+              if (to > totalXDomain[1]) to = totalXDomain[1];
+              startXDomain = [from, to];
           }
 
           function formatTickText(text) {
-              var months = [
-                  [ "January", "Januar" ],
-                  [ "February", "Februar" ],
-                  [ "March", "März" ],
-                  [ "April", "April" ],
-                  [ "May", "Mai" ],
-                  [ "June", "Juni" ],
-                  [ "July", "Juli" ],
-                  [ "August", "August" ],
-                  [ "September", "September" ],
-                  [ "October", "Oktober" ],
-                  [ "November", "November" ],
-                  [ "December", "Dezember" ]
-              ];
-
-              for (var i in months) {
-                  if (text.indexOf(months[i][0]) > -1)
-                      text = text.replace(months[i][0], months[i][1]);
-              }
-
-              var finished = false;
-              while (!finished) {
-                  var index = text.indexOf("0");
-                  if (index == 0 && text != "0")
-                      text = text.substr(1);
-                  else if (index > 0 && (text[index - 1] == " ") || text[index - 1] == "-")
-                      text = text.substr(0, index) + text.substr(index + 1);
-                  else
-                      finished = true;
-              }
+              text = text.split(",").join(".");
 
               return text;
           }
