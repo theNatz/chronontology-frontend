@@ -2,6 +2,10 @@
   "name": "chronontology",
   "version": "0.0.1",
   "description": "",
+  "scripts": {
+    "build": "gulp build",
+    "server": "gulp server"
+  },
   "dependencies": {
     "MD5": "^1.2.1",
     "angular": "^1.5.6",
