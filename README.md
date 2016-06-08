@@ -4,7 +4,6 @@
 
 The following components need to be installed:
 * [NodeJS](https://nodejs.org/)
-* [gulp](https://github.com/gulpjs/gulp/blob/master/docs/getting-started.md)
 
 ## Installation of Dependencies
 
