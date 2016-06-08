@@ -23,7 +23,7 @@ npm run build
 npm run server
 ```
 
-Chronontology frontend will access the backend on port 4567 and is accessible at [localhost:1238/](http://localhost:1238/). You can use a different background by setting `backendUri` in `dev-config.json` (for example to http://chronontology.dainst.org/data in order to use the production backend).
+Chronontology frontend will access the backend on port 4567 and is accessible at [localhost:1238/](http://localhost:1238/). You can use a different backend instance by setting `backendUri` in `dev-config.json` (for example to http://chronontology.dainst.org/data in order to use the production backend).
 
 Any changes made to HTML, SCSS or JS files should automatically trigger a browser reload.
 
