@@ -17,12 +17,11 @@ var ngHtml2Js = require("gulp-ng-html2js");
 var minifyHtml = require("gulp-minify-html");
 var replace = require('gulp-replace');
 
-var paths = {
-    "build": 'dist/',
-    "lib": "node_modules/"
-};
-
 var pkg = require('./package.json');
+
+var cfg = require('./dev-config.json');
+
+var paths = cfg.paths;
 
 var cssDeps = [
     //paths.lib + 'bootstrap-css-only/css/bootstrap.min.css'
@@ -167,7 +166,7 @@ gulp.task('clean', function () {
 // runs the development server and sets up browser reloading
 gulp.task('server', ['compile-css', 'minify-js', 'concat-deps', 'copy-resources'], function () {
 
-    var proxyOptions = url.parse('http://localhost:4567/');
+    var proxyOptions = url.parse(cfg.backendUri);
     proxyOptions.route = '/data';
 
     browserSync({
