@@ -7,13 +7,13 @@ The following components need to be installed:
 * [gulp](https://github.com/gulpjs/gulp/blob/master/docs/getting-started.md)
 
 ## Installation of Dependencies
-`
+
 Install development and production dependencies with the following commands within your chronontology-frontend directory
 
 ```
 npm install
 npm install -g bower gulp
-``
+```
 
 ##  Running the development server
 
@@ -23,7 +23,7 @@ npm run build
 npm run server
 ```
 
-Chronontology frontend will access the backend on port 8080 and is accessible at [localhost:1238/](http://localhost:1238/) .
+Chronontology frontend will access the backend on port 4567 and is accessible at [localhost:1238/](http://localhost:1238/). You can use a different background by setting `backendUri` in `dev-config.json` (for example to http://chronontology.dainst.org/data in order to use the production backend).
 
 Any changes made to HTML, SCSS or JS files should automatically trigger a browser reload.
 
@@ -35,4 +35,4 @@ Build the application by running
 npm run build
 ```
 
-After running "gulp build", chronontology-frontend lies inside the dist directory. 
+After building, chronontology-frontend lies inside the dist directory. 
