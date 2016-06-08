@@ -2,8 +2,12 @@
 
 angular.module('chronontology',[
 	'ui.bootstrap',
+	'ui.scroll.jqlite',
+	'ui.scroll',
 	'ngRoute',
 	'ngResource',
+	'ui.scroll.jqlite',
+	'ui.scroll',
 	'idai.templates',
     'idai.components',
 	'chronontology.services',

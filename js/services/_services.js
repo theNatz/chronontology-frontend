@@ -8,12 +8,6 @@ angular.module('chronontology.services', [])
 
 })
 
-.factory('Backend', function($resource) {
-
-	return $resource(':id', { id: '@id' }, { query: { isArray: false } });
-
-})
-
 .factory('periodUtils', function() {
 
 	var periodUtils = {

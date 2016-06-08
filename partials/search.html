@@ -1,21 +1,19 @@
 <div class="container">
     <div ng-controller="SearchController">
 
-        <table class="table table-striped">
+        <table class="table table-striped" style="height:300px">
 
             <thead>
             <tr>
-                <th>#</th>
-                <th>Name</th>
-                <th>Type</th>
-                <th>Provenienz</th>
+                <th style="width: 60%">Name</th>
+                <th style="width: 20%">Type</th>
+                <th style="width: 20%">Provenienz</th>
             </tr>
             </thead>
 
             <tbody>
 
-            <tr ng-repeat="period in periods">
-                <td></td>
+            <tr ui-scroll="period in dataSource">
                 <td><a ng-href="{{ period['@id'] }}">{{ period.resource.prefLabel.de }}</a></td>
                 <td>{{period.resource.types.join(", ")}}</td>
                 <td><a ng-href="/thesaurus/{{ period.resource.provenance }}">{{ period.resource.provenance }}</a></td>

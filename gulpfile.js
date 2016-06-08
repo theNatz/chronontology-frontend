@@ -35,6 +35,8 @@ var jsDeps = [
     paths.lib + 'angular-ui-bootstrap/dist/ui-bootstrap.js',
     paths.lib + 'angular-resource/angular-resource.min.js',
     paths.lib + 'angular-i18n/angular-locale_de-de.js',
+    paths.lib + 'angular-ui-scroll/dist/ui-scroll-jqlite.js',
+    paths.lib + 'angular-ui-scroll/dist/ui-scroll.js',
     paths.lib + 'idai-components/dist/idai-components.min.js'
 ];
 

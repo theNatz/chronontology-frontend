@@ -1,5 +1,5 @@
 {
-	"backendUri": "http://localhost:4567/",
+	"backendUri": "http://chronontology.dainst.org/data",
 	"paths": {
 		"build": "dist/",
 		"lib": "node_modules/"
