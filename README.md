@@ -12,15 +12,13 @@ Install development and production dependencies with the following commands with
 
 ```
 npm install
-npm install -g bower gulp
 ```
 
 ##  Running the development server
 
 In order to run the frontend in the development server use the following command:
 ```
-npm run build
-npm run server
+npm start
 ```
 
 Chronontology frontend will access the backend on port 4567 and is accessible at [localhost:1238/](http://localhost:1238/). You can use a different backend instance by setting `backendUri` in `dev-config.json` (for example to http://chronontology.dainst.org/data in order to use the production backend).
