@@ -13,6 +13,12 @@ Install development and production dependencies with the following commands with
 npm install
 ```
 
+## Configuration
+
+```
+cp dev-config.json.template dev-config.json
+```
+
 ##  Running the development server
 
 In order to run the frontend in the development server use the following command:
