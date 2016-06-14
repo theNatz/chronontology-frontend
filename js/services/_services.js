@@ -39,11 +39,11 @@ angular.module('chronontology.services', [])
 			// build index and determine root
 			periods.forEach(function(p) {
 				map[p['@id']] = p;
-				if (!p.resource.hasOwnProperty('fallsWithin') && !p.resource.derived.hasOwnProperty('isMetInTimeBy')) {
+				if (!p.resource.hasOwnProperty('isPartOf') && !p.resource.derived.hasOwnProperty('isMetInTimeBy')) {
 					roots.push(p);
 				}
-				if (p.resource.hasOwnProperty('fallsWithin') && !p.resource.derived.hasOwnProperty('isMetInTimeBy')) {
-					children[p.resource['fallsWithin']] = p;
+				if (p.resource.hasOwnProperty('isPartOf') && !p.resource.derived.hasOwnProperty('isMetInTimeBy')) {
+					children[p.resource['isPartOf']] = p;
 				}
 			});
 

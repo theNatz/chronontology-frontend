@@ -24,9 +24,9 @@ angular.module('chronontology.controllers', [])
 
 		$scope.period = result;
 
-		if (result.resource.fallsWithin) {
-			$http.get('/data'+result.resource.fallsWithin).success(function(result) {
-				$scope.fallsWithin = result;
+		if (result.resource.isPartOf) {
+			$http.get('/data'+result.resource.isPartOf).success(function(result) {
+				$scope.isPartOf = result;
 			});
 		}
 
@@ -42,10 +42,10 @@ angular.module('chronontology.controllers', [])
 			});
 		}
 
-		$scope.contains = [];
-		angular.forEach(result.resource.contains, function(id) {
+		$scope.hasPart = [];
+		angular.forEach(result.resource.hasPart, function(id) {
 			$http.get('/data' + id).success(function(result) {
-				$scope.contains.push(result);
+				$scope.hasPart.push(result);
 			});
 		});
 
