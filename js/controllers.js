@@ -30,14 +30,14 @@ angular.module('chronontology.controllers', [])
 			});
 		}
 
-		if (result.resource.meetsInTimeWith) {
-			$http.get('/data'+result.resource.meetsInTimeWith).success(function(result) {
+		if (result.resource.derived.meetsInTimeWith) {
+			$http.get('/data'+result.resource.derived.meetsInTimeWith).success(function(result) {
 				$scope.meetsInTimeWith = result;
 			});
 		}
 
-		if (result.resource.isMetInTimeBy) {
-			$http.get('/data'+result.resource.isMetInTimeBy).success(function(result) {
+		if (result.resource.derived.isMetInTimeBy) {
+			$http.get('/data'+result.resource.derived.isMetInTimeBy).success(function(result) {
 				$scope.isMetInTimeBy = result;
 			});
 		}
