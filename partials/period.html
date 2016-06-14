@@ -15,16 +15,16 @@
         </div>
 
         <div class="btn-group btn-group-justified">
-            <a class="btn btn-default" ng-disabled="!isMetInTimeBy"
-               ng-href="{{ isMetInTimeBy['@id'] }}">
-                <span class="glyphicon glyphicon-arrow-left"></span> {{ isMetInTimeBy.resource.prefLabel.de }}
+            <a class="btn btn-default" ng-disabled="!follows"
+               ng-href="{{ follows['@id'] }}">
+                <span class="glyphicon glyphicon-arrow-left"></span> {{ follows.resource.prefLabel.de }}
             </a>
             <a class="btn btn-primary" disabled="disabled">
                 {{ period.resource.prefLabel.de }}
             </a>
-            <a class="btn btn-default" ng-disabled="!meetsInTimeWith"
-               ng-href="{{ meetsInTimeWith['@id'] }}">
-                {{ meetsInTimeWith.resource.prefLabel.de }} <span class="glyphicon glyphicon-arrow-right"></span>
+            <a class="btn btn-default" ng-disabled="!isFollowedBy"
+               ng-href="{{ isFollowedBy['@id'] }}">
+                {{ isFollowedBy.resource.prefLabel.de }} <span class="glyphicon glyphicon-arrow-right"></span>
             </a>
         </div>
 
