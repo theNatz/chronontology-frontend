@@ -18,11 +18,16 @@ angular.module('chronontology.controllers', [])
 
 })
 
-.controller("PeriodController", function($scope, $location, $routeParams, $http) {
+.controller("PeriodController", function($scope, $location, $routeParams, $http, $sce, chronontologySettings) {
 
 	$http.get('/data/period/' + $routeParams.id).success( function(result) {
 
+		console.log(chronontologySettings);
+
 		$scope.period = result;
+
+		var geoFrameUrl = chronontologySettings.geoFrameBaseUri + "?uri=" + chronontologySettings.baseUri;
+		$scope.geoFrameUrl = $sce.trustAsResourceUrl(geoFrameUrl + result['@id']);
 
 		if (result.resource.fallsWithin) {
 			$http.get('/data'+result.resource.fallsWithin).success(function(result) {

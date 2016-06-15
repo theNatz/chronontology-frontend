@@ -38,6 +38,10 @@
 
                 <timeline periods="provenancePeriods" selected-period-id="period['@id']" height="300"></timeline>
 
+                <div class="embed-responsive embed-responsive-4by3">
+                    <iframe id="geo" ng-src="{{ geoFrameUrl }}" allowfullscreen></iframe>
+                </div>
+
                 <div class="text-right">
                     <div class="btn-group-vertical" style="display:block;" ng-show="contains.length > 0">
                         <a ng-repeat="period in contains"
