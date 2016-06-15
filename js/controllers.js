@@ -26,31 +26,32 @@ angular.module('chronontology.controllers', [])
 
 		$scope.period = result;
 
+
 		var geoFrameUrl = chronontologySettings.geoFrameBaseUri + "?uri=" + chronontologySettings.baseUri;
 		$scope.geoFrameUrl = $sce.trustAsResourceUrl(geoFrameUrl + result['@id']);
 
-		if (result.resource.fallsWithin) {
-			$http.get('/data'+result.resource.fallsWithin).success(function(result) {
-				$scope.fallsWithin = result;
+		if (result.resource.isPartOf) {
+			$http.get('/data'+result.resource.isPartOf).success(function(result) {
+				$scope.isPartOf = result;
 			});
 		}
 
-		if (result.resource.meetsInTimeWith) {
-			$http.get('/data'+result.resource.meetsInTimeWith).success(function(result) {
-				$scope.meetsInTimeWith = result;
+		if (result.resource.isFollowedBy) {
+			$http.get('/data'+result.resource.isFollowedBy).success(function(result) {
+				$scope.isFollowedBy = result;
 			});
 		}
 
-		if (result.resource.isMetInTimeBy) {
-			$http.get('/data'+result.resource.isMetInTimeBy).success(function(result) {
-				$scope.isMetInTimeBy = result;
+		if (result.resource.follows) {
+			$http.get('/data'+result.resource.follows).success(function(result) {
+				$scope.follows = result;
 			});
 		}
 
-		$scope.contains = [];
-		angular.forEach(result.resource.contains, function(id) {
+		$scope.hasPart = [];
+		angular.forEach(result.resource.hasPart, function(id) {
 			$http.get('/data' + id).success(function(result) {
-				$scope.contains.push(result);
+				$scope.hasPart.push(result);
 			});
 		});
 

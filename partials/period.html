@@ -8,23 +8,23 @@
         </h2>
 
         <div class="btn-group btn-group-justified">
-            <a class="btn btn-default" ng-disabled="!fallsWithin"
-               ng-href="{{ fallsWithin['@id'] }}">
-                <span class="glyphicon glyphicon-arrow-up"></span> {{ fallsWithin.resource.prefLabel.de }}
+            <a class="btn btn-default" ng-disabled="!isPartOf"
+               ng-href="{{ isPartOf['@id'] }}">
+                <span class="glyphicon glyphicon-arrow-up"></span> {{ isPartOf.resource.prefLabel.de }}
             </a>
         </div>
 
         <div class="btn-group btn-group-justified">
-            <a class="btn btn-default" ng-disabled="!isMetInTimeBy"
-               ng-href="{{ isMetInTimeBy['@id'] }}">
-                <span class="glyphicon glyphicon-arrow-left"></span> {{ isMetInTimeBy.resource.prefLabel.de }}
+            <a class="btn btn-default" ng-disabled="!follows"
+               ng-href="{{ follows['@id'] }}">
+                <span class="glyphicon glyphicon-arrow-left"></span> {{ follows.resource.prefLabel.de }}
             </a>
             <a class="btn btn-primary" disabled="disabled">
                 {{ period.resource.prefLabel.de }}
             </a>
-            <a class="btn btn-default" ng-disabled="!meetsInTimeWith"
-               ng-href="{{ meetsInTimeWith['@id'] }}">
-                {{ meetsInTimeWith.resource.prefLabel.de }} <span class="glyphicon glyphicon-arrow-right"></span>
+            <a class="btn btn-default" ng-disabled="!isFollowedBy"
+               ng-href="{{ isFollowedBy['@id'] }}">
+                {{ isFollowedBy.resource.prefLabel.de }} <span class="glyphicon glyphicon-arrow-right"></span>
             </a>
         </div>
 
@@ -43,8 +43,8 @@
                 </div>
 
                 <div class="text-right">
-                    <div class="btn-group-vertical" style="display:block;" ng-show="contains.length > 0">
-                        <a ng-repeat="period in contains"
+                    <div class="btn-group-vertical" style="display:block;" ng-show="hasPart.length > 0">
+                        <a ng-repeat="period in hasPart"
                            ng-href="{{ period['@id'] }}"
                            class="btn btn-default">
                             <span class="glyphicon glyphicon-arrow-down"></span> {{ period.resource.prefLabel.de }}
@@ -124,7 +124,6 @@
 
                 </div>
 
-                <!--
                 <div class="panel panel-default">
                     <div class="panel-heading">
                         <h4 class="panel-title">JSON</h4>
@@ -135,11 +134,12 @@
                             <span class="glyphicon glyphicon-floppy-disk" aria-hidden="true"></span> JSON exportieren
                         </button>
                     </div>
+                <!--
                     <div class="panel-body">
                         <pre>{{ period | json }}</pre>
                     </div>
-                </div>
                 -->
+                </div>
 
             </div>
 
