@@ -19,6 +19,7 @@ angular.module('chronontology.directives', [])
           var x, y;
           var totalXDomain = [];
           var startXDomain = [];
+          var startYDomain = [];
           var timeline;
           var canvas;
           var axis, axisElement;
@@ -32,15 +33,17 @@ angular.module('chronontology.directives', [])
           });
 
           function initialize() {
+              y = d3.scale.linear()
+                  .domain([0, barHeight * 20])
+                  .range([0, parseInt(scope.height) - 30]);
+
               var periodsData = prepareData();
 
               x = d3.scale.linear()
                   .domain(startXDomain)
                   .range([0, parseInt(scope.width)]);
 
-              y = d3.scale.linear()
-                  .domain([0, 200])
-                  .range([0, parseInt(scope.height) - 30]);
+              y.domain(startYDomain);
 
               timeline = d3.select('#timeline').append('svg')
                   .attr('width', parseInt(scope.width))
@@ -54,7 +57,7 @@ angular.module('chronontology.directives', [])
               axis = d3.svg.axis()
                   .scale(x)
                   .orient("bottom")
-                  .ticks(5)
+                  .ticks(7)
                   .tickSize(10, 0);
 
               axisElement = timeline.append('svg')
@@ -145,6 +148,8 @@ angular.module('chronontology.directives', [])
 
               axisElement.selectAll('.tick text')
                   .text(function() { return formatTickText(d3.select(this).text()); });
+
+              removeOverlappingTicks(axisElement.selectAll('.tick'));
           }
 
           function showPeriod(period) {
@@ -179,10 +184,11 @@ angular.module('chronontology.directives', [])
 
               var selectedPeriod;
               if (scope.selectedPeriodId && (selectedPeriod = periodsMap[scope.selectedPeriodId]))
-                  setStartDomain(selectedPeriod);
+                  setStartDomains(selectedPeriod);
               else {
                   startXDomain[0] = totalXDomain[0];
                   startXDomain[1] = totalXDomain[1];
+                  startYDomain = [0, barHeight * 20];
               }
 
               return periodsToDisplay;
@@ -246,17 +252,22 @@ angular.module('chronontology.directives', [])
               }
           }
 
-          function setStartDomain(selectedPeriod) {
+          function setStartDomains(selectedPeriod) {
               var offset = (selectedPeriod.to - selectedPeriod.from) / 2;
               var from = selectedPeriod.from - offset;
               var to = selectedPeriod.to + offset;
               if (from < totalXDomain[0]) from = totalXDomain[0];
               if (to > totalXDomain[1]) to = totalXDomain[1];
               startXDomain = [from, to];
+
+              var yPos = selectedPeriod.row + y.invert(selectedPeriod.row * (barHeight + 5));
+              startYDomain = [yPos - barHeight * 10, yPos + barHeight * 10];
           }
 
           function formatTickText(text) {
+              text = text.split(".").join("$");
               text = text.split(",").join(".");
+              text = text.split("$").join(",");
 
               return text;
           }
@@ -272,6 +283,22 @@ angular.module('chronontology.directives', [])
                       .style("left", (d3.event.pageX + 10) + "px");
               })
               .on("mouseout", function() { return tooltip.style("visibility", "hidden"); });
+          }
+
+          function removeOverlappingTicks(ticksSelection) {
+              for (var i = 0; i < ticksSelection[0].length; i++) {
+                  var currentTick = ticksSelection[0][i];
+                  var nextTick = ticksSelection[0][i+1];
+                  if (!currentTick || !nextTick || !currentTick.getBoundingClientRect() || !nextTick.getBoundingClientRect())
+                      continue;
+                  while (currentTick.getBoundingClientRect().right > nextTick.getBoundingClientRect().left) {
+                      d3.select(nextTick).remove();
+                      i++;
+                      nextTick = ticksSelection[0][i+1];
+                      if (!nextTick)
+                          break;
+                  }
+              }
           }
       }
     };
