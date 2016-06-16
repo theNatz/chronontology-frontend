@@ -31,19 +31,19 @@ angular.module('chronontology.controllers', [])
 		$scope.geoFrameUrl = $sce.trustAsResourceUrl(geoFrameUrl + result['@id']);
 
 		if (result.resource.isPartOf) {
-			$http.get('/data'+result.resource.isPartOf).success(function(result) {
+			$http.get('/data'+result.resource.isPartOf[0]).success(function(result) {
 				$scope.isPartOf = result;
 			});
 		}
 
 		if (result.resource.isFollowedBy) {
-			$http.get('/data'+result.resource.isFollowedBy).success(function(result) {
+			$http.get('/data'+result.resource.isFollowedBy[0]).success(function(result) {
 				$scope.isFollowedBy = result;
 			});
 		}
 
 		if (result.resource.follows) {
-			$http.get('/data'+result.resource.follows).success(function(result) {
+			$http.get('/data'+result.resource.follows[0]).success(function(result) {
 				$scope.follows = result;
 			});
 		}

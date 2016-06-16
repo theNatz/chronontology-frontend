@@ -25,7 +25,7 @@ angular.module('chronontology.services', [])
 		            parent.children = [node];
 		            if (children.hasOwnProperty(node['@id'])) populateNode(node);
 		            while (node.resource.hasOwnProperty('isFollowedBy')) {
-		            	node = map[node.resource['isFollowedBy']];
+		            	node = map[node.resource['isFollowedBy'][0]];
 		            	parent.children.push(node);
 		            	if (children.hasOwnProperty(node['@id'])) populateNode(node);
 		            }
@@ -43,7 +43,7 @@ angular.module('chronontology.services', [])
 					roots.push(p);
 				}
 				if (p.resource.hasOwnProperty('isPartOf') && !p.resource.hasOwnProperty('follows')) {
-					children[p.resource['isPartOf']] = p;
+					children[p.resource['isPartOf'][0]] = p;
 				}
 			});
 
@@ -65,7 +65,7 @@ angular.module('chronontology.services', [])
 				populateNode(node);
 				tree.push(node);
 				while (node.resource.hasOwnProperty('isFollowedBy')) {
-					node = map[node.resource['isFollowedBy']];
+					node = map[node.resource['isFollowedBy'][0]];
 					if (node) {
 						populateNode(node);
 						tree.push(node);
