@@ -169,8 +169,8 @@ angular.module('chronontology.directives', [])
                           name: scope.periods[i].resource.prefLabel.de,
                           from: parseInt(scope.periods[i].resource.hasTimespan[0].begin.at),
                           to: parseInt(scope.periods[i].resource.hasTimespan[0].end.at),
-                          successor: scope.periods[i].resource.isMetInTimeBy,
-                          children: scope.periods[i].resource.contains,
+                          successor: scope.periods[i].resource.follows[0],
+                          children: scope.periods[i].resource.hasPart,
                           row: -1
                       };
                       if (!totalXDomain[0] || period.from < totalXDomain[0]) totalXDomain[0] = period.from;

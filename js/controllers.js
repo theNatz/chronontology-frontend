@@ -14,42 +14,44 @@ angular.module('chronontology.controllers', [])
 
 })
 
-.controller("SearchController", function($scope, $location, $http) {
-
-	$http.get('/data/period/?' + $location.search()['q']).success(function(result) {
-		$scope.periods = result.results;
-	});
+.controller("SearchController", function($scope, $location) {
 
 })
 
-.controller("PeriodController", function($scope, $location, $routeParams, $http) {
+.controller("PeriodController", function($scope, $location, $routeParams, $http, $sce, chronontologySettings) {
 
 	$http.get('/data/period/' + $routeParams.id).success( function(result) {
 
+		console.log(chronontologySettings);
+
 		$scope.period = result;
 
-		if (result.resource.fallsWithin) {
-			$http.get('/data'+result.resource.fallsWithin).success(function(result) {
-				$scope.fallsWithin = result;
+
+		var geoFrameUrl = chronontologySettings.geoFrameBaseUri + "?uri=" + chronontologySettings.baseUri;
+		$scope.geoFrameUrl = $sce.trustAsResourceUrl(geoFrameUrl + result['@id']);
+
+		if (result.resource.isPartOf) {
+			$http.get('/data'+result.resource.isPartOf[0]).success(function(result) {
+				$scope.isPartOf = result;
 			});
 		}
 
-		if (result.resource.meetsInTimeWith) {
-			$http.get('/data'+result.resource.meetsInTimeWith).success(function(result) {
-				$scope.meetsInTimeWith = result;
+		if (result.resource.isFollowedBy) {
+			$http.get('/data'+result.resource.isFollowedBy[0]).success(function(result) {
+				$scope.isFollowedBy = result;
 			});
 		}
 
-		if (result.resource.isMetInTimeBy) {
-			$http.get('/data'+result.resource.isMetInTimeBy).success(function(result) {
-				$scope.isMetInTimeBy = result;
+		if (result.resource.follows) {
+			$http.get('/data'+result.resource.follows[0]).success(function(result) {
+				$scope.follows = result;
 			});
 		}
 
-		$scope.contains = [];
-		angular.forEach(result.resource.contains, function(id) {
+		$scope.hasPart = [];
+		angular.forEach(result.resource.hasPart, function(id) {
 			$http.get('/data' + id).success(function(result) {
-				$scope.contains.push(result);
+				$scope.hasPart.push(result);
 			});
 		});
 
