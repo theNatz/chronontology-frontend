@@ -37,7 +37,7 @@ angular.module('chronontology.controllers', [])
 		for(var relation in $scope.relations) {
 			var label = $scope.relations[relation];
 			$scope.relatedDocuments[relation] = [];
-			result.resource[relation].forEach(function(periodUri) {
+			if(result.resource[relation]) result.resource[relation].forEach(function(periodUri) {
 				(function(relation) {
 					$http.get('/data'+periodUri).success(function(result) {
 						$scope.relatedDocuments[relation].push(result);

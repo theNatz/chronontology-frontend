@@ -163,7 +163,6 @@ angular.module('chronontology.directives', [])
               var periodsMap = {};
 
               for (var i in scope.periods) {
-                console.log(scope.periods[i]);
                   if (validatePeriod(scope.periods[i])) {
                       var label = "";
                       if (scope.periods[i].resource.prefLabel && scope.periods[i].resource.prefLabel.de)
