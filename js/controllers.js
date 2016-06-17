@@ -34,8 +34,6 @@ angular.module('chronontology.controllers', [])
 		var geoFrameUrl = chronontologySettings.geoFrameBaseUri + "?uri=" + chronontologySettings.baseUri;
 		$scope.geoFrameUrl = $sce.trustAsResourceUrl(geoFrameUrl + result['@id']);
 
-		console.log($scope.relations);
-
 		for(var relation in $scope.relations) {
 			var label = $scope.relations[relation];
 			$scope.relatedDocuments[relation] = [];
