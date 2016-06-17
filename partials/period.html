@@ -1,32 +1,11 @@
-<div class="container">
+<div class="container-fluid">
     <div ng-controller="PeriodController">
 
-        <h2>{{ period.resource.prefLabel.de }}
-            ({{period.resource.types.join(", ")}})
+        <h2>{{ period.prefLabel.de }}
+            <small>{{ period.types.join(", ") }}</small>
             <br/>
-            <small>http://chronontology.dainst.org{{ period['@id'] }}</small>
+            <small>http://chronontology.dainst.org{{ document['@id'] }}</small>
         </h2>
-
-        <div class="btn-group btn-group-justified">
-            <a class="btn btn-default" ng-disabled="!isPartOf"
-               ng-href="{{ isPartOf['@id'] }}">
-                <span class="glyphicon glyphicon-arrow-up"></span> {{ isPartOf.resource.prefLabel.de }}
-            </a>
-        </div>
-
-        <div class="btn-group btn-group-justified">
-            <a class="btn btn-default" ng-disabled="!follows"
-               ng-href="{{ follows['@id'] }}">
-                <span class="glyphicon glyphicon-arrow-left"></span> {{ follows.resource.prefLabel.de }}
-            </a>
-            <a class="btn btn-primary" disabled="disabled">
-                {{ period.resource.prefLabel.de }}
-            </a>
-            <a class="btn btn-default" ng-disabled="!isFollowedBy"
-               ng-href="{{ isFollowedBy['@id'] }}">
-                {{ isFollowedBy.resource.prefLabel.de }} <span class="glyphicon glyphicon-arrow-right"></span>
-            </a>
-        </div>
 
         <div class="row">
             &nbsp;
@@ -34,111 +13,135 @@
 
         <div class="row">
 
-            <div class="col-md-4">
+            <div class="col-md-5">
 
-                <timeline periods="provenancePeriods" selected-period-id="period['@id']" height="300"></timeline>
+                <div class="well well-sm">
+                    <timeline periods="provenancePeriods" selected-period-id="document['@id']" height="300"></timeline>
+                </div>
 
                 <div class="embed-responsive embed-responsive-4by3">
                     <iframe id="geo" ng-src="{{ geoFrameUrl }}" allowfullscreen></iframe>
                 </div>
 
-                <div class="text-right">
-                    <div class="btn-group-vertical" style="display:block;" ng-show="hasPart.length > 0">
-                        <a ng-repeat="period in hasPart"
-                           ng-href="{{ period['@id'] }}"
-                           class="btn btn-default">
-                            <span class="glyphicon glyphicon-arrow-down"></span> {{ period.resource.prefLabel.de }}
-                        </a>
-                    </div>
-                </div>
-
             </div>
 
-            <div class="col-md-8">
+            <div class="col-md-7">
 
                 <ul class="nav nav-tabs">
-                    <li ng-class="{ 'active': !edit }"><a href="#" ng-click="edit = false">Anzeigen</a></li>
-                    <!--<li ng-class="{ 'active': edit }"><a href="#" ng-click="edit = true">Bearbeiten</a></li>-->
-                    <li><a target='_blank' href="http://localhost:8084/#/edit/{{period['@id'].replace('/period/','')}}" ng-click="edit = true">Gehe zum Editor</a></li>
+                    <li ng-class="{ 'active': !activeTab }">
+                        <a href="#" ng-click="activeTab = false">Informationen</a>
+                    </li>
+                    <li ng-class="{ 'active': (activeTab == 'json') }">
+                        <a hreg="#" ng-click="activeTab = 'json'">JSON</a>
+                    </li>
+                    <li>
+                        <a target='_blank' href="http://localhost:8084/#/edit/{{period['@id'].replace('/period/','')}}">
+                            <span class="glyphicon glyphicon-edit"></span> Bearbeiten
+                        </a>
+                    </li>
                 </ul>
 
-                <div ng-show="!edit" style="margin: 30px 0;">
+                <div ng-show="!activeTab" style="margin: 30px 0;">
 
                     <h4>Informationen zur Epoche</h4>
 
                     <dl class="dl-horizontal">
 
+                        <dt>Namen</dt>
+                        <span ng-repeat="(lang, names) in period.names">
+                            <dd ng-repeat="name in names">
+                                {{ name }} <i>({{lang}})</i>
+                            </dd>
+                        </span>
                         <br>
 
-                        <dt>Namen</dt>
-                        <dd>{{ period.resource.prefLabel.de }}</dd>
+                        <dt>Epochentyp</dt>
+                        <dd ng-repeat="type in period.types">{{ type }}</dd>
                         <br>
+
+                        <span ng-show="period.description">
+                            <dt>Beschreibung</dt>
+                            <dd>{{ period.description }}</dd>
+                            <br>
+                        </span>
+
+                        <span ng-show="period.hasTimespan">
+                            <dt>Zeitliche Ausdehnung</dt>
+                            <dd ng-repeat="timespan in period.hasTimespan">
+                                {{ timespan.timeOriginal }}
+                            </dd>
+                            <br>
+                        </span>
 
                         <dt>Provenienz</dt>
                         <dd>
-                            <a ng-href="/thesaurus/{{ period.resource.provenance }}">{{ period.resource.provenance
+                            <a ng-href="/thesaurus/{{ period.provenance }}">{{ period.provenance
                                 }}</a>
                         </dd>
                         <br>
 
+                    </dl>
+
+                    <dl class="dl-horizontal">
+
+                        <h4>Beziehungen</h4>
+
+                        <span ng-repeat="(relation,label) in relations">
+                            <span ng-if="period[relation]">
+                                <dt>{{label}}</dt>
+                                <dd ng-repeat="document in relatedDocuments[relation]">
+                                    <a ng-href="{{document['@id']}}">{{document.resource.prefLabel.de}}</a>
+                                </dd>
+                                <br>
+                            </span>
+                        </span>
+
+                        <span ng-show="period.spatiallyPartOfRegion">
+                        <dt>Räumlich Teil von</dt>
+                            <dd ng-repeat="region in period.spatiallyPartOfRegion">
+                                <a ng-href="{{region}}" target="_blank">
+                                    {{region}} <span class="glyphicon glyphicon-new-window"></span>
+                                </a>
+                            </dd>
+                            <br>
+                        </span>
+
+                    </dl>
+
+                    <h4>Dokumentmetadaten</h4>
+
+                    <dl class="dl-horizontal">                        
+
                         <dt>Erstellt</dt>
-                        <dd>{{ period.created.date | isoDate | date:'medium' }}</dd>
+                        <dd>
+                            {{ document.created.date | isoDate | date:'medium' }}
+                            ({{document.created.user}})
+                        </dd>
                         <br>
 
                         <dt>Geändert</dt>
-                        <dd ng-repeat="m in period.modified">{{ m.date | isoDate | date:'medium' }}</dd>
+                        <dd ng-repeat="m in document.modified">
+                            {{ m.date | isoDate | date:'medium' }}
+                            ({{ m.user }})
+                        </dd>
                         <br>
 
                     </dl>
-                </div>
-
-                <div ng-show="edit" style="margin: 30px 0;">
-
-                    <h4>Informationen zur Epoche</h4>
-
-                    <br>
-
-                    <form class="form-horizontal">
-
-                        <div class="form-group">
-                            <label class="col-sm-3 control-label">Namen</label>
-                            <div class="col-sm-9">
-                                <input class="form-control" ng-model="period.resource.prefLabel.de"/>
-                            </div>
-                        </div>
-
-                        <div class="form-group">
-                            <label class="col-sm-3 control-label">Provenienz</label>
-                            <div class="col-sm-9">
-                                <input class="form-control" ng-model="period.resource.provenance"/>
-                            </div>
-                        </div>
-
-                        <div class="form-group">
-                            <div class="col-sm-offset-3 col-sm-9">
-                                <button ng-click="save()" class="btn btn-primary">Speichern</button>
-                            </div>
-                        </div>
-
-                    </form>
 
                 </div>
 
-                <div class="panel panel-default">
-                    <div class="panel-heading">
-                        <h4 class="panel-title">JSON</h4>
-                        <button type="button"
-                                class="btn btn-success btn-xs"
-                                style="margin-top: 5px;"
-                                ng-click="exportJSON()">
-                            <span class="glyphicon glyphicon-floppy-disk" aria-hidden="true"></span> JSON exportieren
-                        </button>
-                    </div>
-                <!--
-                    <div class="panel-body">
-                        <pre>{{ period | json }}</pre>
-                    </div>
-                -->
+                <div ng-show="activeTab == 'json'" style="margin: 30px 0;">
+
+                    <h4>JSON Daten</h4>
+
+                    <button type="button"
+                            class="btn btn-primary btn-xs"
+                            style="margin-top: 5px;"
+                            ng-click="exportJSON()">
+                        <span class="glyphicon glyphicon-floppy-disk" aria-hidden="true"></span> Herunterladen
+                    </button>
+
+                    <pre>{{ document | json }}</pre>
                 </div>
 
             </div>

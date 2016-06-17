@@ -20,52 +20,39 @@ angular.module('chronontology.controllers', [])
 
 .controller("PeriodController", function($scope, $location, $routeParams, $http, $sce, chronontologySettings) {
 
+	// possible relations mapped to labels
+	$scope.relations = chronontologySettings.relations;
+
+	// store related periods, should be a central app-wide cache
+	$scope.relatedDocuments = {};
+
 	$http.get('/data/period/' + $routeParams.id).success( function(result) {
 
-		console.log(chronontologySettings);
-
-		$scope.period = result;
-
+		$scope.document = result;
+		$scope.period = result.resource;
 
 		var geoFrameUrl = chronontologySettings.geoFrameBaseUri + "?uri=" + chronontologySettings.baseUri;
 		$scope.geoFrameUrl = $sce.trustAsResourceUrl(geoFrameUrl + result['@id']);
 
-		if (result.resource.isPartOf) {
-			$http.get('/data'+result.resource.isPartOf[0]).success(function(result) {
-				$scope.isPartOf = result;
+		console.log($scope.relations);
+
+		for(var relation in $scope.relations) {
+			var label = $scope.relations[relation];
+			$scope.relatedDocuments[relation] = [];
+			result.resource[relation].forEach(function(periodUri) {
+				(function(relation) {
+					$http.get('/data'+periodUri).success(function(result) {
+						$scope.relatedDocuments[relation].push(result);
+					})
+				}(relation));
 			});
 		}
 
-		if (result.resource.isFollowedBy) {
-			$http.get('/data'+result.resource.isFollowedBy[0]).success(function(result) {
-				$scope.isFollowedBy = result;
-			});
-		}
-
-		if (result.resource.follows) {
-			$http.get('/data'+result.resource.follows[0]).success(function(result) {
-				$scope.follows = result;
-			});
-		}
-
-		$scope.hasPart = [];
-		angular.forEach(result.resource.hasPart, function(id) {
-			$http.get('/data' + id).success(function(result) {
-				$scope.hasPart.push(result);
-			});
-		});
-
-		$http.get('/data/period/?size=1000&q=provenance:' + $scope.period.resource.provenance).success( function(result) {
+		$http.get('/data/period/?size=1000&q=provenance:' + $scope.period.provenance).success( function(result) {
 			$scope.provenancePeriods = result.results;
 		});
 
 	});
-
-	$scope.save = function() {
-		$http.put('/data' + $scope.period['@id'], $scope.period).success(function(result) {
-			$scope.period = result;
-		});
-	};
 	
 	$scope.exportJSON = function() {
 		var JSONexport = angular.toJson($scope.period, true);
