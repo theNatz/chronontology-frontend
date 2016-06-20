@@ -32,6 +32,12 @@ angular.module('chronontology',[
 ]).constant('chronontologySettings', {
 	baseUri: "http://chronontology.dainst.org",
 	geoFrameBaseUri: "http://chronontology.i3mainz.hs-mainz.de/stc/W_ChronOntologyGEO",
+	relations: {
+		"follows": "Folgt auf",
+		"isFollowedBy": "Wird gefolgt von",
+		"isPartOf": "Ist Teil von",
+		"hasPart": "Hat Unterteilungen"
+	}
 }).constant('componentsSettings', {
 	transl8Uri: "http://bogusman01.dai-cloud.uni-koeln.de/transl8/translation/jsonp?application=arachne4_frontend&lang={LANG}&callback=JSON_CALLBACK"
 }).run(['$rootScope', function($rootScope) {
