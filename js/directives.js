@@ -13,7 +13,9 @@ angular.module('chronontology.directives', [])
       templateUrl: 'partials/timeline.html',
       link: function(scope, element, attrs) {
 
-          var barHeight = 20;
+          const barHeight = 20;
+          const minYear = -10000;
+          const maxYear = new Date().getFullYear();
           var bars, barRects, barTexts;
           var tooltip;
           var x, y;
@@ -38,6 +40,7 @@ angular.module('chronontology.directives', [])
                   .range([0, parseInt(scope.height) - 30]);
 
               var periodsData = prepareData();
+              adjustStartXDomain();
 
               x = d3.scale.linear()
                   .domain(startXDomain)
@@ -300,6 +303,13 @@ angular.module('chronontology.directives', [])
                           break;
                   }
               }
+          }
+
+          function adjustStartXDomain() {
+              if (startXDomain[0] < minYear)
+                  startXDomain[0] = minYear;
+              if (startXDomain[1] > maxYear)
+                  startXDomain[1] = maxYear;
           }
       }
     };
