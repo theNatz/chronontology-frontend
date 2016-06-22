@@ -13,7 +13,7 @@ var DataSource = function($location, $http) {
 				size = size + from;
 				from = 0;
 			}
-			var uri = '/data/period/?' + query + '&from=' + from + '&size=' + size;
+			var uri = '/data/period/?q=' + query + '&from=' + from + '&size=' + size;
 			$http.get(uri).success(function(result) {
 				success(result.results);
 			});
