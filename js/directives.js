@@ -177,7 +177,7 @@ angular.module('chronontology.directives', [])
                           to: parseInt(scope.periods[i].resource.hasTimespan[0].end.at),
                           successor: scope.periods[i].resource.follows
                               ? scope.periods[i].resource.follows[0] : undefined,
-                          children: scope.periods[i].resource.hasPart,
+                          children: scope.periods[i].resource.contains,
                           row: -1
                       };
                       if (!totalXDomain[0] || period.from < totalXDomain[0]) totalXDomain[0] = period.from;
@@ -224,39 +224,103 @@ angular.module('chronontology.directives', [])
           }
 
           function determinePeriodRows(periods, periodsMap) {
+              var periodGroups = assignPeriodsToGroups(periods, periodsMap);
+
+              periodGroups.sort(function(a, b) {
+                  return a.from - b.from;
+              });
+
+              var currentRowPositions = [];
+
+              for (var i in periodGroups) {
+                    for (var row = 0; row < 1000; row++) {
+                        if (doesPeriodGroupFitInRow(periodGroups[i], row, currentRowPositions)) {
+                            putPeriodGroupToRow(periodGroups[i], row, currentRowPositions);
+                            break;
+                        }
+                    }
+              }
+          }
+
+          function doesPeriodGroupFitInRow(group, row, currentRowPositions) {
+              for (var i = row; i < row + group.rows.length; i++) {
+                  if (currentRowPositions[i] != undefined && group.from < currentRowPositions[i]) return false;
+              }
+              return true;
+          }
+
+          function putPeriodGroupToRow(group, row, currentRowPositions) {
+              for (var i = 0; i < group.rows.length; i++) {
+                  for (var j in group.rows[i]) {
+                      group.rows[i][j].row = row + i;
+                      if (currentRowPositions[row + i] == undefined || currentRowPositions[row + i] < group.rows[i][j].to)
+                          currentRowPositions[row + i] = group.rows[i][j].to;
+                  }
+              }
+          }
+
+          function assignPeriodsToGroups(periods, periodsMap) {
               periods.sort(function(a, b) {
                   if (a.children && a.children.indexOf(b.id) > -1) return -1;
                   if (b.children && b.children.indexOf(a.id) > -1) return 1;
                   return a.from - b.from;
               });
 
+              var periodGroups = [];
+
               for (var i in periods) {
-                  if (periods[i].row > -1) continue;
-                  setRow(periods[i], periodsMap, rowMax + 2);
+                  addToGroup(periods[i], periodsMap, null, 0);
+                  if (periodGroups.indexOf(periods[i].periodGroup) == -1)
+                      periodGroups.push(periods[i].periodGroup);
               }
 
               for (var i in periods)
-                setSuccessorRow(periods[i], periodsMap);
+                  addSuccessorToGroup(periods[i], periodsMap, periodGroups);
+
+              return periodGroups;
           }
 
-          function setRow(period, periodsMap, row) {
-              if (period.row > -1) return;
-              period.row = row;
-              if (row > rowMax) rowMax = row;
-              for (var i in period.children) {
-                  if (period.children[i] in periodsMap && period.id != period.children[i])
-                      setRow(periodsMap[period.children[i]], periodsMap, row + 1);
+          function addToGroup(period, periodsMap, group, row) {
+              if (period.periodGroup) return;
+
+              if (!group) {
+                  group = {
+                      rows: [],
+                      periodsCount: 0,
+                      from: NaN,
+                      to: NaN
+                  };
               }
-          }
 
-          function setSuccessorRow(period, periodsMap) {
-              if (period.successor && period.successor in periodsMap && period.id != period.successor) {
-                  var successor = periodsMap[period.successor];
-                  if (successor.row == -1) {
-                      successor.row = period.row;
-                      setSuccessorRow(successor, periodsMap);
+              setPeriodGroup(period, group, row);
+
+              for (var i in period.children) {
+                  if (period.children[i] in periodsMap && period.id != period.children[i]) {
+                      addToGroup(periodsMap[period.children[i]], periodsMap, group, row + 1);
                   }
               }
+          }
+
+          function addSuccessorToGroup(period, periodsMap, periodGroups) {
+              if (period.successor && period.successor in periodsMap && period.id != period.successor) {
+                  var successor = periodsMap[period.successor];
+                  if (successor.periodGroup.periodsCount == 1) {
+                      setPeriodGroup(successor, period.periodGroup, period.groupRow);
+                      periodGroups.splice(periodGroups.indexOf(successor.periodGroup), 0);
+                      addSuccessorToGroup(successor, periodsMap, periodGroups);
+                  }
+              }
+          }
+
+          function setPeriodGroup(period, group, row) {
+              period.periodGroup = group;
+              period.groupRow = row;
+              if (!group.rows[row]) group.rows[row] = [];
+              group.rows[row].push(period);
+              group.periodsCount++;
+
+              if (isNaN(group.from) || group.from > period.from) group.from = period.from;
+              if (isNaN(group.to) || group.to < period.to) group.to = period.to;
           }
 
           function setStartDomains(selectedPeriod) {
