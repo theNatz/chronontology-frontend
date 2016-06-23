@@ -10,7 +10,7 @@ $maxGroups: 10;
     cursor: pointer;
     transition: fill .5s ease;
 
-    &.selected {
+    &.selected rect {
       stroke: black;
     }
 
@@ -18,7 +18,7 @@ $maxGroups: 10;
       &.group#{$i} {
         $baseColor: hsl( 360 / ($maxGroups+1) * $i, 40%, 50%);
         @for $j from 1 to ($maxLevel+1) {
-          &.level#{$j} {
+          &.level#{$j} rect {
             $color: darken($baseColor, percentage(0.3 / $maxLevel * $j));
             fill: rgba($color, 0.7);
             &:hover {

@@ -96,9 +96,10 @@ angular.module('chronontology.directives', [])
                   .append('div')
                   .classed('timeline-tooltip', true);
 
-              bars = canvas.selectAll('rect').data(periodsData).enter();
-              barRects = bars.append('rect')
+              bars = canvas.selectAll('g').data(periodsData).enter();
+              barRects = bars.append('g')
                   .attr("class", function(d) { return "bar group" + d.colorGroup + " level" + (d.groupRow + 1) })
+                  .append('rect')
                   .classed('bar', true)
                   .attr('rx','5')
                   .attr('ry','5')
@@ -112,7 +113,8 @@ angular.module('chronontology.directives', [])
                       .classed('selected', true);
               }
 
-              barTexts = bars.append('text')
+              barTexts = canvas.selectAll('g')
+                  .append('text')
                   .classed('text', true)
                   .on('click', showPeriod);
               addTooltipBehavior(barTexts, tooltip);
