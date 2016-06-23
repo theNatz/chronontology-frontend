@@ -39,7 +39,6 @@ angular.module('chronontology.directives', [])
                   .range([0, parseInt(scope.height) - 30]);
 
               var periodsData = prepareData();
-              adjustStartXDomain();
 
               x = d3.scale.linear()
                   .domain(startXDomain)
@@ -99,7 +98,6 @@ angular.module('chronontology.directives', [])
               barRects = bars.append('g')
                   .attr("class", function(d) { return "bar group" + d.colorGroup + " level" + (d.groupRow + 1) })
                   .append('rect')
-                  .classed('bar', true)
                   .attr('rx','5')
                   .attr('ry','5')
                   .on('click', showPeriod);
@@ -195,12 +193,9 @@ angular.module('chronontology.directives', [])
 
               var selectedPeriod;
               if (scope.selectedPeriodId && (selectedPeriod = periodsMap[scope.selectedPeriodId]))
-                  setStartDomains(selectedPeriod);
-              else {
-                  startXDomain[0] = totalXDomain[0];
-                  startXDomain[1] = totalXDomain[1];
-                  startYDomain = [0, barHeight * 20];
-              }
+                  setStartDomainsToSelection(selectedPeriod);
+              else
+                  setStandardStartDomains();
 
               return periodsToDisplay;
           }
@@ -343,18 +338,6 @@ angular.module('chronontology.directives', [])
               if (isNaN(group.to) || group.to < period.to) group.to = period.to;
           }
 
-          function setStartDomains(selectedPeriod) {
-              var offset = (selectedPeriod.to - selectedPeriod.from) / 2;
-              var from = selectedPeriod.from - offset;
-              var to = selectedPeriod.to + offset;
-              if (from < totalXDomain[0]) from = totalXDomain[0];
-              if (to > totalXDomain[1]) to = totalXDomain[1];
-              startXDomain = [from, to];
-
-              var yPos = selectedPeriod.row + y.invert(selectedPeriod.row * (barHeight + 5));
-              startYDomain = [yPos - barHeight * 10, yPos + barHeight * 10];
-          }
-
           function formatTickText(text) {
               text = text.split(".").join("$");
               text = text.split(",").join(".");
@@ -392,11 +375,27 @@ angular.module('chronontology.directives', [])
               }
           }
 
-          function adjustStartXDomain() {
+          function setStartDomainsToSelection(selectedPeriod) {
+              var offset = (selectedPeriod.to - selectedPeriod.from) / 2;
+              var from = selectedPeriod.from - offset;
+              var to = selectedPeriod.to + offset;
+              if (from < totalXDomain[0]) from = totalXDomain[0];
+              if (to > totalXDomain[1]) to = totalXDomain[1];
+              startXDomain = [from, to];
+
+              var yPos = selectedPeriod.row + y.invert(selectedPeriod.row * (barHeight + 5));
+              startYDomain = [yPos - barHeight * 10, yPos + barHeight * 10];
+          }
+
+          function setStandardStartDomains() {
+              startXDomain[0] = totalXDomain[0];
+              startXDomain[1] = totalXDomain[1];
               if (startXDomain[0] < minYear)
                   startXDomain[0] = minYear;
               if (startXDomain[1] > maxYear)
                   startXDomain[1] = maxYear;
+
+              startYDomain = [0, barHeight * 20];
           }
       }
     };
