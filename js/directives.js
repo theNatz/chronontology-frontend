@@ -236,8 +236,8 @@ angular.module('chronontology.directives', [])
                   for (var rowNumber = 0; rowNumber < 1000; rowNumber++) {
                       if (doesPeriodGroupFitInRow(periodGroups[i], rowNumber, rows)) {
                           putPeriodGroupToRow(periodGroups[i], rowNumber, rows);
+                          colorGroupNumber = getColorGroupNumber(colorGroupNumber, periodGroups[i], rows);
                           setColorGroup(periodGroups[i], colorGroupNumber);
-                          colorGroupNumber = (colorGroupNumber == 10) ? 1 : colorGroupNumber + 1;
                           break;
                       }
                   }
@@ -256,14 +256,70 @@ angular.module('chronontology.directives', [])
               return true;
           }
 
-          function putPeriodGroupToRow(group, row, rows) {
+          function putPeriodGroupToRow(group, rowNumber, rows) {
+              group.startRow = rowNumber;
               for (var i = 0; i < group.rows.length; i++) {
                   for (var j in group.rows[i]) {
-                      group.rows[i][j].row = row + i;
-                      if (!rows[row + i]) rows[row + i] = [];
-                      rows[row + i].push(group.rows[i][j]);
+                      group.rows[i][j].row = rowNumber + i;
+                      if (!rows[rowNumber + i]) rows[rowNumber + i] = [];
+                      rows[rowNumber + i].push(group.rows[i][j]);
+                      rows[rowNumber + i].sort(function(a, b) {
+                          return a.from - b.from;
+                      });
                   }
               }
+          }
+
+          function getColorGroupNumber(currentColorGroupNumber, group, rows) {
+              var colorGroupNumber = currentColorGroupNumber;
+
+              var loops = 0;
+              do {
+                  colorGroupNumber = (colorGroupNumber == 10) ? 1 : colorGroupNumber + 1;
+              } while (doAdjacentPeriodGroupsHaveColorGroup(group, colorGroupNumber, rows) && loops++ < 10)
+
+              return colorGroupNumber;
+          }
+
+          function doAdjacentPeriodGroupsHaveColorGroup(group, colorGroupNumber, rows) {
+              var startRow = (group.startRow == 0) ? 0 : group.startRow - 1;
+              var endRow = (group.startRow == 0) ? startRow + group.rows.length : startRow + group.rows.length + 1;
+              for (var i = startRow; i <= endRow; i++) {
+                  for (var j in rows[i]) {
+                      var period = rows[i][j];
+                      if (period.colorGroup == colorGroupNumber &&
+                            detectIntersection(period.from, period.to, group.from, group.to))
+                          return true;
+                  }
+              }
+
+              for (var i = 0; i < group.rows.length; i++) {
+                  for (var j in group.rows[i]) {
+                      var rowIndex = rows[group.startRow + i].indexOf(group.rows[i][j]);
+                      if (rowIndex > 0) {
+                          var period = rows[group.startRow + i][rowIndex - 1];
+                          if (period.colorGroup == colorGroupNumber &&
+                              detectIntersection(period.from, period.to, group.from, group.to))
+                              return true;
+                      }
+                      if (rowIndex < rows[group.startRow + i].length - 1) {
+                          var period = rows[group.startRow + i][rowIndex + 1];
+                          if (period.colorGroup == colorGroupNumber &&
+                              detectIntersection(period.from, period.to, group.from, group.to))
+                              return true;
+                      }
+                  }
+              }
+
+              return false;
+          }
+
+          function detectIntersection(from1, to1, from2, to2) {
+              if (from1 <= from2 && to1 >= from2) return true;
+              if (from1 <= to2 && to1 >= to2) return true;
+              if (from1 >= from2 && to1 <= to2) return true;
+
+              return false;
           }
 
           function setColorGroup(group, colorGroupNumber) {
