@@ -231,37 +231,42 @@ angular.module('chronontology.directives', [])
               var periodGroups = assignPeriodsToGroups(periods, periodsMap);
 
               periodGroups.sort(function(a, b) {
-                  return a.from - b.from;
+                  return b.periodsCount - a.periodsCount;
               });
 
-              var currentRowPositions = [];
+              var rows = [];
               var colorGroupNumber = 1;
 
               for (var i in periodGroups) {
-                    for (var row = 0; row < 1000; row++) {
-                        if (doesPeriodGroupFitInRow(periodGroups[i], row, currentRowPositions)) {
-                            putPeriodGroupToRow(periodGroups[i], row, currentRowPositions);
-                            setColorGroup(periodGroups[i], colorGroupNumber);
-                            colorGroupNumber = (colorGroupNumber == 10) ? 1 : colorGroupNumber + 1;
-                            break;
-                        }
-                    }
+                  for (var rowNumber = 0; rowNumber < 1000; rowNumber++) {
+                      if (doesPeriodGroupFitInRow(periodGroups[i], rowNumber, rows)) {
+                          putPeriodGroupToRow(periodGroups[i], rowNumber, rows);
+                          setColorGroup(periodGroups[i], colorGroupNumber);
+                          colorGroupNumber = (colorGroupNumber == 10) ? 1 : colorGroupNumber + 1;
+                          break;
+                      }
+                  }
               }
           }
 
-          function doesPeriodGroupFitInRow(group, row, currentRowPositions) {
-              for (var i = row; i < row + group.rows.length; i++) {
-                  if (currentRowPositions[i] != undefined && group.from < currentRowPositions[i]) return false;
+          function doesPeriodGroupFitInRow(group, rowNumber, rows) {
+              for (var i = rowNumber; i < rowNumber + group.rows.length; i++) {
+                  if (!rows[i]) continue;
+                  for (var j in rows[i]) {
+                      var period = rows[i][j];
+                      if (!(period.to <= group.from || period.from >= group.to))
+                          return false;
+                  }
               }
               return true;
           }
 
-          function putPeriodGroupToRow(group, row, currentRowPositions) {
+          function putPeriodGroupToRow(group, row, rows) {
               for (var i = 0; i < group.rows.length; i++) {
                   for (var j in group.rows[i]) {
                       group.rows[i][j].row = row + i;
-                      if (currentRowPositions[row + i] == undefined || currentRowPositions[row + i] < group.rows[i][j].to)
-                          currentRowPositions[row + i] = group.rows[i][j].to;
+                      if (!rows[row + i]) rows[row + i] = [];
+                      rows[row + i].push(group.rows[i][j]);
                   }
               }
           }
