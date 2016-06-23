@@ -26,7 +26,6 @@ angular.module('chronontology.directives', [])
           var canvas;
           var axis, axisElement;
           var zoom, drag;
-          var rowMax = -1;
 
           scope.width = element[0].parentNode.clientWidth - 15;
 
@@ -182,7 +181,7 @@ angular.module('chronontology.directives', [])
                           to: parseInt(scope.periods[i].resource.hasTimespan[0].end.at),
                           successor: scope.periods[i].resource.follows
                               ? scope.periods[i].resource.follows[0] : undefined,
-                          children: scope.periods[i].resource.contains,
+                          children: scope.periods[i].resource.hasPart,
                           row: -1
                       };
                       if (!totalXDomain[0] || period.from < totalXDomain[0]) totalXDomain[0] = period.from;
