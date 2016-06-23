@@ -1,0 +1,73 @@
+$maxLevel: 10;
+$maxGroups: 10;
+
+.timeline {
+  border-style: solid;
+  border-width: 1px;
+  cursor: move;
+
+  .bar {
+    cursor: pointer;
+    transition: fill .5s ease;
+
+    &.selected {
+      stroke: black;
+    }
+
+    @for $i from 1 to ($maxGroups+1) {
+      &.group#{$i} {
+        $baseColor: hsl( 360 / ($maxGroups+1) * $i, 40%, 50%);
+        @for $j from 1 to ($maxLevel+1) {
+          &.level#{$j} {
+            $color: darken($baseColor, percentage(0.3 / $maxLevel * $j));
+            fill: rgba($color, 0.7);
+            &:hover {
+              fill: $color;
+            }
+          }
+        }
+      }
+    }
+
+  }
+
+  .text {
+    font-size: 14px;
+    text-anchor: middle;
+    cursor: pointer;
+    fill: white;
+    font-weight: 200;
+  }
+
+  .axis {
+
+    path {
+      stroke: black;
+      stroke-width: 2px;
+      fill: none;
+    }
+
+    line {
+      stroke: black;
+      stroke-width: 1px;
+      fill: none;
+    }
+
+    text {
+      font-family: sans-serif;
+      font-size: 11px;
+    }
+
+  }
+
+}
+
+.timeline-tooltip {
+  border-style: solid;
+
+  border-width: 1px;
+  background-color: white;
+  position: absolute;
+  z-index: 10;
+  visibility: hidden;
+}

@@ -1,56 +1,8 @@
+@import url(https://fonts.googleapis.com/css?family=Source+Sans+Pro:200&subset=latin,latin-ext);
+
 @import "idai-components";
+@import "timeline";
 
 body {
 	padding-top: 70px;
-}
-
-.timeline {
-	border-style: solid;
-	border-width: 1px;
-}
-
-.timeline .bar{
-	fill: #ABCDEF;
-	stroke: black;
-	stroke-width: 1;
-	cursor: pointer;
-	shape-rendering: crispEdges;
-}
-
-.timeline .bar.selected {
-	fill: yellow;
-}
-
-.timeline .text {
-	font-size: 15px;
-	text-anchor: middle;
-	cursor: pointer;
-}
-
-.timeline .axis path {
-	stroke: black;
-	stroke-width: 2px;
-	fill: none;
-	shape-rendering: crispEdges;
-}
-
-.timeline .axis line {
-	stroke: black;
-	stroke-width: 1px;
-	fill: none;
-	shape-rendering: crispEdges;
-}
-
-.timeline .axis text {
-	font-family: sans-serif;
-	font-size: 11px;
-}
-
-.timeline-tooltip {
-	border-style: solid;
-	border-width: 1px;
-	background-color: white;
-	position: absolute;
-	z-index: 10;
-	visibility: hidden;
 }

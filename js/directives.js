@@ -99,6 +99,9 @@ angular.module('chronontology.directives', [])
               bars = canvas.selectAll('rect').data(periodsData).enter();
               barRects = bars.append('rect')
                   .attr("class", function(d) { return "bar group" + d.colorGroup + " level" + (d.groupRow + 1) })
+                  .classed('bar', true)
+                  .attr('rx','5')
+                  .attr('ry','5')
                   .on('click', showPeriod);
               addTooltipBehavior(barRects);
 
