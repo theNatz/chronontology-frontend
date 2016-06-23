@@ -179,6 +179,7 @@ angular.module('chronontology.directives', [])
                           to: parseInt(scope.periods[i].resource.hasTimespan[0].end.at),
                           successor: scope.periods[i].resource.follows
                               ? scope.periods[i].resource.follows[0] : undefined,
+                          parent: scope.periods[i].resource.isPartOf,
                           children: scope.periods[i].resource.hasPart,
                           row: -1
                       };
@@ -340,9 +341,17 @@ angular.module('chronontology.directives', [])
               var periodGroups = [];
 
               for (var i in periods) {
-                  addToGroup(periods[i], periodsMap, null, 0);
-                  if (periodGroups.indexOf(periods[i].periodGroup) == -1)
-                      periodGroups.push(periods[i].periodGroup);
+                  if (!periods[i].periodGroup) {
+                      var period = periods[i];
+                      while (period.parent && period.parent[0]) {
+                          if (period.parent[0] in periodsMap)
+                            period = periodsMap[period.parent[0]];
+                          else break;
+                      }
+                      addToGroup(period, periodsMap, null, 0, periodGroups);
+                      if (periodGroups.indexOf(period.periodGroup) == -1)
+                          periodGroups.push(period.periodGroup);
+                  }
               }
 
               for (var i in periods)
@@ -351,7 +360,8 @@ angular.module('chronontology.directives', [])
               return periodGroups;
           }
 
-          function addToGroup(period, periodsMap, group, row) {
+          function addToGroup(period, periodsMap, group, row, periodGroups) {
+
               if (period.periodGroup) return;
 
               if (!group) {
@@ -367,7 +377,7 @@ angular.module('chronontology.directives', [])
 
               for (var i in period.children) {
                   if (period.children[i] in periodsMap && period.id != period.children[i]) {
-                      addToGroup(periodsMap[period.children[i]], periodsMap, group, row + 1);
+                      addToGroup(periodsMap[period.children[i]], periodsMap, group, row + 1, periodGroups);
                   }
               }
           }
