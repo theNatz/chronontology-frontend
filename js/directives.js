@@ -83,8 +83,8 @@ angular.module('chronontology.directives', [])
               drag = d3.behavior.drag()
                   .on("drag", function() {
                       var domain = y.domain();
-                      domain[0] += d3.event.dy;
-                      domain[1] += d3.event.dy;
+                      domain[0] -= d3.event.dy;
+                      domain[1] -= d3.event.dy;
                       y.domain(domain);
                       axisElement.call(axis);
                       updateBars();
