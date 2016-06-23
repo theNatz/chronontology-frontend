@@ -2,23 +2,23 @@ $maxLevel: 10;
 $maxGroups: 10;
 
 .timeline {
-  border-style: solid;
-  border-width: 1px;
+  border: 1px solid;
   cursor: move;
 
-  .bar {
+  g.bar {
     cursor: pointer;
     transition: fill .5s ease;
 
-    &.selected rect {
+    rect.selected {
       stroke: black;
+      stroke-width: 1px;
     }
 
     @for $i from 1 to ($maxGroups+1) {
       &.group#{$i} {
         $baseColor: hsl( 360 / ($maxGroups+1) * $i, 40%, 50%);
         @for $j from 1 to ($maxLevel+1) {
-          &.level#{$j} rect {
+          &.level#{$j} {
             $color: darken($baseColor, percentage(0.3 / $maxLevel * $j));
             fill: rgba($color, 0.7);
             &:hover {
@@ -28,7 +28,6 @@ $maxGroups: 10;
         }
       }
     }
-
   }
 
   .text {
@@ -63,9 +62,8 @@ $maxGroups: 10;
 }
 
 .timeline-tooltip {
-  border-style: solid;
-
-  border-width: 1px;
+  border: 1px solid;
+  padding: 2px 6px;
   background-color: white;
   position: absolute;
   z-index: 10;
