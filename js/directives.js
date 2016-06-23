@@ -98,7 +98,7 @@ angular.module('chronontology.directives', [])
 
               bars = canvas.selectAll('rect').data(periodsData).enter();
               barRects = bars.append('rect')
-                  .classed('bar', true)
+                  .attr("class", function(d) { return "bar group" + d.colorGroup + " level" + (d.groupRow + 1) })
                   .on('click', showPeriod);
               addTooltipBehavior(barRects);
 
@@ -231,11 +231,14 @@ angular.module('chronontology.directives', [])
               });
 
               var currentRowPositions = [];
+              var colorGroupNumber = 1;
 
               for (var i in periodGroups) {
                     for (var row = 0; row < 1000; row++) {
                         if (doesPeriodGroupFitInRow(periodGroups[i], row, currentRowPositions)) {
                             putPeriodGroupToRow(periodGroups[i], row, currentRowPositions);
+                            setColorGroup(periodGroups[i], colorGroupNumber);
+                            colorGroupNumber = (colorGroupNumber == 10) ? 1 : colorGroupNumber + 1;
                             break;
                         }
                     }
@@ -255,6 +258,14 @@ angular.module('chronontology.directives', [])
                       group.rows[i][j].row = row + i;
                       if (currentRowPositions[row + i] == undefined || currentRowPositions[row + i] < group.rows[i][j].to)
                           currentRowPositions[row + i] = group.rows[i][j].to;
+                  }
+              }
+          }
+
+          function setColorGroup(group, colorGroupNumber) {
+              for (var i in group.rows) {
+                  for (var j in group.rows[i]) {
+                      group.rows[i][j].colorGroup = colorGroupNumber;
                   }
               }
           }
