@@ -177,8 +177,8 @@ angular.module('chronontology.directives', [])
                           name: label,
                           from: parseInt(scope.periods[i].resource.hasTimespan[0].begin.at),
                           to: parseInt(scope.periods[i].resource.hasTimespan[0].end.at),
-                          successor: scope.periods[i].resource.follows
-                              ? scope.periods[i].resource.follows[0] : undefined,
+                          successor: scope.periods[i].resource.isFollowedBy
+                              ? scope.periods[i].resource.isFollowedBy[0] : undefined,
                           parent: scope.periods[i].resource.isPartOf,
                           children: scope.periods[i].resource.hasPart,
                           row: -1
@@ -300,8 +300,8 @@ angular.module('chronontology.directives', [])
               if (period.successor && period.successor in periodsMap && period.id != period.successor) {
                   var successor = periodsMap[period.successor];
                   if (successor.periodGroup.periodsCount == 1) {
+                      periodGroups.splice(periodGroups.indexOf(successor.periodGroup), 1);
                       setPeriodGroup(successor, period.periodGroup, period.groupRow);
-                      periodGroups.splice(periodGroups.indexOf(successor.periodGroup), 0);
                       addSuccessorToGroup(successor, periodsMap, periodGroups);
                   }
               }
@@ -323,8 +323,9 @@ angular.module('chronontology.directives', [])
                   if (!rows[i]) continue;
                   for (var j in rows[i]) {
                       var period = rows[i][j];
-                      if (!(period.to <= group.from || period.from >= group.to))
+                      if (!(period.to <= group.from || period.from >= group.to)) {
                           return false;
+                      }
                   }
               }
               return true;
