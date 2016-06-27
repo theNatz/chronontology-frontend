@@ -16,6 +16,7 @@ angular.module('chronontology.directives', [])
           const barHeight = 20;
           const minYear = -10000;
           const maxYear = new Date().getFullYear();
+          const maxZoomYears = 5;
           var bars, barRects, barTexts;
           var tooltip;
           var x, y;
@@ -68,7 +69,7 @@ angular.module('chronontology.directives', [])
                   .call(axis);
 
               var minZoom = (startXDomain[1] - startXDomain[0]) / (totalXDomain[1] - totalXDomain[0]);
-              var maxZoom = startXDomain[1] - startXDomain[0];
+              var maxZoom = (startXDomain[1] - startXDomain[0]) / maxZoomYears;
 
               zoom = d3.behavior.zoom()
                   .x(x)
@@ -447,7 +448,8 @@ angular.module('chronontology.directives', [])
           }
 
           function setStartDomainsToSelection(selectedPeriod) {
-              var offset = (selectedPeriod.to - selectedPeriod.from) / 2;
+              var span = selectedPeriod.to - selectedPeriod.from;
+              var offset = (span < maxZoomYears) ? (maxZoomYears - span) / 2 : span / 2;
               var from = selectedPeriod.from - offset;
               var to = selectedPeriod.to + offset;
               if (from < totalXDomain[0]) from = totalXDomain[0];
