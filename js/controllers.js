@@ -32,7 +32,7 @@ angular.module('chronontology.controllers', [])
 		$scope.period = result.resource;
 
 		var geoFrameUrl = chronontologySettings.geoFrameBaseUri + "?uri=" + chronontologySettings.baseUri;
-		$scope.geoFrameUrl = $sce.trustAsResourceUrl(geoFrameUrl + result['@id']);
+		$scope.geoFrameUrl = $sce.trustAsResourceUrl(geoFrameUrl + result.resource['@id']);
 
 		for(var relation in $scope.relations) {
 			var label = $scope.relations[relation];
@@ -55,7 +55,7 @@ angular.module('chronontology.controllers', [])
 	$scope.exportJSON = function() {
 		var JSONexport = angular.toJson($scope.period, true);
 		var blob = new Blob([JSONexport], {type: "text/plain;charset=utf-8"});
-		saveAs(blob, $scope.period['@id'] + ".json");
+		saveAs(blob, $scope.period.resource['@id'] + ".json");
 	}
 
 })
