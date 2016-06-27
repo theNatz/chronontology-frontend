@@ -456,7 +456,9 @@ angular.module('chronontology.directives', [])
               if (to > totalXDomain[1]) to = totalXDomain[1];
               startXDomain = [from, to];
 
-              var yPos = selectedPeriod.row + y.invert(selectedPeriod.row * (barHeight + 5));
+              var centralRow = selectedPeriod.row;
+              if (centralRow < 5) centralRow = 5;
+              var yPos = centralRow + y.invert(centralRow * (barHeight + 5));
               startYDomain = [yPos - barHeight * 10, yPos + barHeight * 10];
           }
 
