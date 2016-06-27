@@ -410,6 +410,10 @@ angular.module('chronontology.directives', [])
               text = text.split(",").join(".");
               text = text.split("$").join(",");
 
+              if (text.length < 6 || (text.indexOf("-") > -1 && text.length < 7)) {
+                  text = text.replace(".", "");
+              }
+
               return text;
           }
 
