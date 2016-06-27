@@ -245,6 +245,79 @@ angular.module('chronontology.directives', [])
               }
           }
 
+          function assignPeriodsToGroups(periods, periodsMap) {
+              periods.sort(function(a, b) {
+                  if (a.children && a.children.indexOf(b.id) > -1) return -1;
+                  if (b.children && b.children.indexOf(a.id) > -1) return 1;
+                  return a.from - b.from;
+              });
+
+              var periodGroups = [];
+
+              for (var i in periods) {
+                  if (!periods[i].periodGroup) {
+                      var period = periods[i];
+                      while (period.parent && period.parent[0]) {
+                          if (period.parent[0] in periodsMap)
+                              period = periodsMap[period.parent[0]];
+                          else break;
+                      }
+                      addToGroup(period, periodsMap, null, 0, periodGroups);
+                      if (periodGroups.indexOf(period.periodGroup) == -1)
+                          periodGroups.push(period.periodGroup);
+                  }
+              }
+
+              for (var i in periods)
+                  addSuccessorToGroup(periods[i], periodsMap, periodGroups);
+
+              return periodGroups;
+          }
+
+          function addToGroup(period, periodsMap, group, row, periodGroups) {
+
+              if (period.periodGroup) return;
+
+              if (!group) {
+                  group = {
+                      rows: [],
+                      periodsCount: 0,
+                      from: NaN,
+                      to: NaN
+                  };
+              }
+
+              setPeriodGroup(period, group, row);
+
+              for (var i in period.children) {
+                  if (period.children[i] in periodsMap && period.id != period.children[i]) {
+                      addToGroup(periodsMap[period.children[i]], periodsMap, group, row + 1, periodGroups);
+                  }
+              }
+          }
+
+          function addSuccessorToGroup(period, periodsMap, periodGroups) {
+              if (period.successor && period.successor in periodsMap && period.id != period.successor) {
+                  var successor = periodsMap[period.successor];
+                  if (successor.periodGroup.periodsCount == 1) {
+                      setPeriodGroup(successor, period.periodGroup, period.groupRow);
+                      periodGroups.splice(periodGroups.indexOf(successor.periodGroup), 0);
+                      addSuccessorToGroup(successor, periodsMap, periodGroups);
+                  }
+              }
+          }
+
+          function setPeriodGroup(period, group, row) {
+              period.periodGroup = group;
+              period.groupRow = row;
+              if (!group.rows[row]) group.rows[row] = [];
+              group.rows[row].push(period);
+              group.periodsCount++;
+
+              if (isNaN(group.from) || group.from > period.from) group.from = period.from;
+              if (isNaN(group.to) || group.to < period.to) group.to = period.to;
+          }
+
           function doesPeriodGroupFitInRow(group, rowNumber, rows) {
               for (var i = rowNumber; i < rowNumber + group.rows.length; i++) {
                   if (!rows[i]) continue;
@@ -329,79 +402,6 @@ angular.module('chronontology.directives', [])
                       group.rows[i][j].colorGroup = colorGroupNumber;
                   }
               }
-          }
-
-          function assignPeriodsToGroups(periods, periodsMap) {
-              periods.sort(function(a, b) {
-                  if (a.children && a.children.indexOf(b.id) > -1) return -1;
-                  if (b.children && b.children.indexOf(a.id) > -1) return 1;
-                  return a.from - b.from;
-              });
-
-              var periodGroups = [];
-
-              for (var i in periods) {
-                  if (!periods[i].periodGroup) {
-                      var period = periods[i];
-                      while (period.parent && period.parent[0]) {
-                          if (period.parent[0] in periodsMap)
-                            period = periodsMap[period.parent[0]];
-                          else break;
-                      }
-                      addToGroup(period, periodsMap, null, 0, periodGroups);
-                      if (periodGroups.indexOf(period.periodGroup) == -1)
-                          periodGroups.push(period.periodGroup);
-                  }
-              }
-
-              for (var i in periods)
-                  addSuccessorToGroup(periods[i], periodsMap, periodGroups);
-
-              return periodGroups;
-          }
-
-          function addToGroup(period, periodsMap, group, row, periodGroups) {
-
-              if (period.periodGroup) return;
-
-              if (!group) {
-                  group = {
-                      rows: [],
-                      periodsCount: 0,
-                      from: NaN,
-                      to: NaN
-                  };
-              }
-
-              setPeriodGroup(period, group, row);
-
-              for (var i in period.children) {
-                  if (period.children[i] in periodsMap && period.id != period.children[i]) {
-                      addToGroup(periodsMap[period.children[i]], periodsMap, group, row + 1, periodGroups);
-                  }
-              }
-          }
-
-          function addSuccessorToGroup(period, periodsMap, periodGroups) {
-              if (period.successor && period.successor in periodsMap && period.id != period.successor) {
-                  var successor = periodsMap[period.successor];
-                  if (successor.periodGroup.periodsCount == 1) {
-                      setPeriodGroup(successor, period.periodGroup, period.groupRow);
-                      periodGroups.splice(periodGroups.indexOf(successor.periodGroup), 0);
-                      addSuccessorToGroup(successor, periodsMap, periodGroups);
-                  }
-              }
-          }
-
-          function setPeriodGroup(period, group, row) {
-              period.periodGroup = group;
-              period.groupRow = row;
-              if (!group.rows[row]) group.rows[row] = [];
-              group.rows[row].push(period);
-              group.periodsCount++;
-
-              if (isNaN(group.from) || group.from > period.from) group.from = period.from;
-              if (isNaN(group.to) || group.to < period.to) group.to = period.to;
           }
 
           function formatTickText(text) {
