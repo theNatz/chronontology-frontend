@@ -17,6 +17,7 @@ $maxGroups: 10;
     @for $i from 1 to ($maxGroups+1) {
       &.group#{$i} {
         $baseColor: hsl( 360 / ($maxGroups+1) * $i, 40%, 20%);
+        fill: lighten($baseColor, 50%);
         @for $j from 1 to ($maxLevel+1) {
           &.level#{$j} {
             $color: lighten($baseColor, percentage(0.5 / $maxLevel * $j));
