@@ -14,7 +14,7 @@
             <tbody>
 
             <tr ui-scroll="period in dataSource">
-                <td><a ng-href="{{ period['@id'] }}">{{ period.resource.prefLabel.de }}</a></td>
+                <td><a ng-href="{{ period.resource['@id'] }}">{{ period.resource.prefLabel.de }}</a></td>
                 <td>{{period.resource.types.join(", ")}}</td>
                 <td><a ng-href="/thesaurus/{{ period.resource.provenance }}">{{ period.resource.provenance }}</a></td>
             </tr>
