@@ -2,7 +2,6 @@ $maxLevel: 6;
 $maxGroups: 10;
 
 .timeline {
-  border: 1px solid;
   cursor: move;
 
   g.bar {
@@ -14,13 +13,17 @@ $maxGroups: 10;
       stroke-width: 1px;
     }
 
-    @for $i from 1 to ($maxGroups+1) {
-      &.group#{$i} {
-        $baseColor: hsl( 360 / ($maxGroups+1) * $i, 40%, 20%);
-        fill: lighten($baseColor, 50%);
+    @for $i from 0 to ($maxGroups) {
+      &.group#{$i+1} {
+        $baseColor: hsl( (360 / $maxGroups) * $i + 60, 60%, 50%);
+        $defaultColor: darken($baseColor, 50%);
+        fill: rgba($defaultColor, 0.7);
+        &:hover {
+          fill: $defaultColor;
+        }
         @for $j from 1 to ($maxLevel+1) {
           &.level#{$j} {
-            $color: lighten($baseColor, percentage(0.5 / $maxLevel * $j));
+            $color: darken($baseColor, percentage(0.5 / $maxLevel * $j));
             fill: rgba($color, 0.7);
             &:hover {
               fill: $color;
