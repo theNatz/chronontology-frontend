@@ -59,26 +59,76 @@
                         <dd ng-repeat="type in period.types">{{ type }}</dd>
                         <br>
 
+                        <dt>Provenienz</dt>
+                        <dd>
+                            <a ng-href="/thesaurus/{{ period.provenance }}">{{ period.provenance }}</a>
+                            <span ng-show="period.externalId">(originale ID: {{ period.externalId }})</span>
+                       </dd>
+                        <br>
+
+                        <span ng-show="period.definition">
+                            <dt>Definition</dt>
+                            <dd class="preserve-linebreaks">{{ period.definition }}</dd>
+                            <br>
+                        </span>
+
                         <span ng-show="period.description">
                             <dt>Beschreibung</dt>
                             <dd class="preserve-linebreaks">{{ period.description }}</dd>
                             <br>
                         </span>
 
-                        <span ng-show="period.hasTimespan">
-                            <dt>Zeitliche Ausdehnung</dt>
-                            <dd ng-repeat="timespan in period.hasTimespan">
-                                {{ timespan.timeOriginal }}
-                            </dd>
+                        <span ng-show="period.tags">
+                            <dt>Tags</dt>
+                        	<dd>{{ period.tags.join(", ") }}</dd>
                             <br>
                         </span>
 
-                        <dt>Provenienz</dt>
-                        <dd>
-                            <a ng-href="/thesaurus/{{ period.provenance }}">{{ period.provenance
-                                }}</a>
-                        </dd>
-                        <br>
+                        <span ng-show="period.note">
+                            <dt>Notiz</dt>
+                            <dd class="preserve-linebreaks">{{ period.note }}</dd>
+                            <br>
+                        </span>
+
+                        <span ng-show="period.hasTimespan">
+                            <dt>Zeitliche Ausdehnung</dt>
+							<span ng-show="period.ongoing">
+								<dd>dauert noch an</dd>
+								<br>
+							</span>
+                            <dd ng-repeat="timespan in period.hasTimespan">
+                                {{ timespan.timeOriginal }}
+                                <br>
+                                <span ng-show="timespan.begin">
+                                	Beginn: 
+                                	<span ng-show="timespan.begin.at">
+                                		{{ timespan.begin.at }}
+                                		<span ng-show="timespan.begin.atPrecision">
+                                			({{ timespan.begin.atPrecision }})
+                                		</span>
+                                	</span>
+                                	<span ng-show="timespan.begin.notBefore">nicht vor {{ timespan.begin.notBefore }}</span>
+                                	<span ng-show="timespan.begin.notAfter">nicht nach {{ timespan.begin.notAfter }}</span>
+                                	<br>
+                                </span>
+                                <span ng-show="timespan.end">
+                                	Ende: 
+                                	<span ng-show="timespan.end.at">
+                                		{{ timespan.end.at }}
+                                		<span ng-show="timespan.end.atPrecision">
+                                			({{ timespan.end.atPrecision }})
+                                		</span>
+                                	</span>
+                                	<span ng-show="timespan.end.notBefore">nicht vor {{ timespan.end.notBefore }}</span>
+                                	<span ng-show="timespan.end.notAfter">nicht nach {{ timespan.end.notAfter }}</span>
+                                	<br>
+                                </span>
+                                <span ng-show="timespan.calendar">Kalender: {{ timespan.calendar }}<br></span>
+                                <span ng-show="timespan.sourceOriginal">Quelle: {{ timespan.sourceOriginal }}<br></span>
+                                <span ng-show="timespan.sourceURL"><a ng-href="{{timespan.sourceURL}}">{{timespan.sourceURL}}</a><br></span>
+                            </dd>
+                            <br>
+                        </span>
 
                     </dl>
 
@@ -91,6 +141,8 @@
                                 <dt>{{label}}</dt>
                                 <dd ng-repeat="document in relatedDocuments[relation]">
                                     <a ng-href="{{document['@id']}}">{{document.resource.prefLabel.de}}</a>
+                                    ({{ document.resource.types.join(", ") }})
+                                    {{ document.resource.provenance }}
                                 </dd>
                                 <br>
                             </span>
