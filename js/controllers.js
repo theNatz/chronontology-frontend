@@ -65,6 +65,17 @@ angular.module('chronontology.controllers', [])
 	$http.get('/data/period/?size=1000&q=provenance:' + $routeParams.provenance).success( function(result) {
 		$scope.periods = result.results;
 	});
-
 })
+
+.controller('ContactController', ['$scope','$http', function($scope, $http) {
+
+	$scope.success = false;
+	$scope.error = "";
+
+	$scope.submit = function () {
+		//console.log($scope.usrData);
+        $http.post('/data/mail', $scope.usrData);
+	}
+
+}])
 ;
