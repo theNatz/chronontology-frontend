@@ -22,6 +22,7 @@ angular.module('chronontology.controllers', [])
 
 	// possible relations mapped to labels
 	$scope.relations = chronontologySettings.relations;
+	$scope.gazetteerRelations = chronontologySettings.gazetteerRelations;
 
 	// store related periods, should be a central app-wide cache
 	$scope.relatedDocuments = {};

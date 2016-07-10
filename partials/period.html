@@ -148,14 +148,16 @@
                             </span>
                         </span>
 
-                        <span ng-show="period.spatiallyPartOfRegion">
-                        <dt>Räumlich Teil von</dt>
-                            <dd ng-repeat="region in period.spatiallyPartOfRegion">
-                                <a ng-href="{{region}}" target="_blank">
-                                    {{region}} <span class="glyphicon glyphicon-new-window"></span>
-                                </a>
-                            </dd>
-                            <br>
+                        <span ng-repeat="(gazetteerRelation,label) in gazetteerRelations">
+                            <span ng-if="period[gazetteerRelation]">
+                                <dt>{{label}}</dt>				
+								<dd ng-repeat="region in period[gazetteerRelation]">
+									<a ng-href="{{region}}" target="_blank">
+										{{region}} <span class="glyphicon glyphicon-new-window"></span>
+									</a>
+								</dd>
+                                <br>
+                            </span>
                         </span>
 
                     </dl>

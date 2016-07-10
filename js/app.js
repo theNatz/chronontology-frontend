@@ -41,6 +41,11 @@ angular.module('chronontology', [
 		"follows": "Folgt auf",
 		"isFollowedBy": "Wird gefolgt von",
 		"sameAs": "Entspricht"
+	},
+	gazetteerRelations: {
+		"isNamedAfter": "Ist benannt nach",
+		"hasCoreArea": "Hat Kerngebiet",
+		"spatiallyPartOfRegion": "Räumlich Teil von"
 	}
 }).constant('componentsSettings', {
 	transl8Uri: "http://bogusman01.dai-cloud.uni-koeln.de/transl8/translation/jsonp?application=arachne4_frontend&lang={LANG}&callback=JSON_CALLBACK"
