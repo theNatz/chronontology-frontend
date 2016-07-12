@@ -7,13 +7,13 @@ angular.module('chronontology.directives', [])
       restrict: 'EA',
       scope: {
           periods: '=',
-          selectedPeriodId: '=',
-          height: '@'
+          selectedPeriodId: '='
       },
       templateUrl: 'partials/timeline.html',
       link: function(scope, element, attrs) {
 
           const barHeight = 20;
+          const margin = 15;
           const minYear = -10000;
           const maxYear = new Date().getFullYear();
           const maxZoomYears = 5;
@@ -28,33 +28,36 @@ angular.module('chronontology.directives', [])
           var axis, axisElement;
           var zoom, drag;
 
-          scope.width = element[0].parentNode.clientWidth - 15;
-
           scope.$watch('periods', function() {
              if (scope.periods) initialize();
           });
 
+          d3.select(window).on('resize', resize);
+
           function initialize() {
+              var width = getWidth();
+              var height = getHeight();
+
               y = d3.scale.linear()
                   .domain([0, barHeight * 20])
-                  .range([0, parseInt(scope.height) - 30]);
+                  .range([0, parseInt(height) - 30]);
 
               var periodsData = prepareData();
 
               x = d3.scale.linear()
                   .domain(startXDomain)
-                  .range([0, parseInt(scope.width)]);
+                  .range([0, parseInt(width)]);
 
               y.domain(startYDomain);
 
               timeline = d3.select('#timeline').append('svg')
-                  .attr('width', parseInt(scope.width))
-                  .attr('height', parseInt(scope.height))
+                  .attr('width', parseInt(width))
+                  .attr('height', parseInt(height))
                   .classed('timeline', true);
 
               canvas = timeline.append('svg')
-                  .attr('width', parseInt(scope.width))
-                  .attr('height', parseInt(scope.height) - 30);
+                  .attr('width', parseInt(width))
+                  .attr('height', parseInt(height) - 30);
 
               axis = d3.svg.axis()
                   .scale(x)
@@ -63,8 +66,8 @@ angular.module('chronontology.directives', [])
                   .tickSize(10, 0);
 
               axisElement = timeline.append('svg')
-                  .attr('y', parseInt(scope.height) - 30)
-                  .attr('width', parseInt(scope.width))
+                  .attr('y', parseInt(height) - 30)
+                  .attr('width', parseInt(width))
                   .classed('axis', true)
                   .call(axis);
 
@@ -118,6 +121,33 @@ angular.module('chronontology.directives', [])
               addTooltipBehavior(barTexts, tooltip);
 
               updateBars();
+          }
+
+          function resize() {
+              var width = getWidth();
+              var height = getHeight();
+
+              y.range([0, parseInt(height) - 30]);
+              x.range([0, parseInt(width)]);
+
+              timeline.attr('width', parseInt(width))
+                  .attr('height', parseInt(height));
+
+              canvas.attr('width', parseInt(width))
+                  .attr('height', parseInt(height) - 30);
+
+              axisElement.attr('width', parseInt(width));
+              axisElement.call(axis);
+
+              updateBars();
+          }
+
+          function getWidth() {
+              return element[0].parentNode.clientWidth - margin;
+          }
+
+          function getHeight() {
+              return element[0].parentNode.clientHeight - margin;
           }
 
           function updateBars() {
