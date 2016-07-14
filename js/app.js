@@ -38,6 +38,8 @@ angular.module('chronontology', [
 		"hasSense": "Hat als eine Bedeutung",
 		"isPartOf": "Ist Teil von",
 		"hasPart": "Hat Unterteilungen",
+		"isListedIn": "Wird aufgelistet in",
+		"lists": "Listet",
 		"follows": "Folgt auf",
 		"isFollowedBy": "Wird gefolgt von",
 		"sameAs": "Entspricht"
