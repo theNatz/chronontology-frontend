@@ -12,11 +12,14 @@ angular.module('chronontology.directives', [])
       templateUrl: 'partials/timeline.html',
       link: function(scope, element, attrs) {
 
-          const barHeight = 20;
-          const margin = 15;
-          const minYear = -10000;
-          const maxYear = new Date().getFullYear();
-          const maxZoomYears = 5;
+          // These variables should be constant variables. Set to var because of an error with safari.
+          var barHeight = 20;
+          var margin = 15;
+          var minYear = -10000;
+          var maxYear = new Date().getFullYear();
+          var maxZoomYears = 5;
+          // / These variables should be constant variables. Set to var because of an error with safari.
+
           var bars, barRects, barTexts;
           var tooltip;
           var x, y;
