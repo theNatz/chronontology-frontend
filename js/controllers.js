@@ -70,13 +70,16 @@ angular.module('chronontology.controllers', [])
 
 .controller('ContactController', ['$scope','$http', function($scope, $http) {
 
-	$scope.success = false;
-	$scope.error = "";
-
 	$scope.submit = function () {
-		//console.log($scope.usrData);
-        $http.post('/data/mail', $scope.usrData);
-	}
+        var userData = $scope.usrData;
+        var userDataJson = {};
 
-}])
-;
+		//create proper json
+		angular.forEach(userData, function(value, key){
+			userDataJson[key] = value;
+		});
+		userDataJson['to'] = "idaiContact";
+
+		$http.post('/data/mail', userDataJson);
+	}
+}]);
