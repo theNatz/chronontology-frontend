@@ -27,6 +27,7 @@ angular.module('chronontology', [
                 .when('/search', {templateUrl: 'partials/search.html'})
                 .when('/period/:id', {templateUrl: 'partials/period.html'})
                 .when('/thesaurus/:provenance', {templateUrl: 'partials/thesaurus.html'})
+                .when('/about', {templateUrl: 'partials/about.html'})
                 .when('/contact', {templateUrl: 'partials/contact.html'})
             
 	}
