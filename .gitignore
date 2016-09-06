@@ -3,3 +3,4 @@ node_modules
 dist
 dev-config.json
 .idea/
+.DS_Store
