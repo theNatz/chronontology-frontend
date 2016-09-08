@@ -34,7 +34,7 @@ angular.module('chronontology', [
 ]).constant('chronontologySettings', {
 	baseUri: "http://chronontology.dainst.org",
 	geoFrameBaseUri: "http://chronontology.i3mainz.hs-mainz.de/stc/W_ChronOntologyGEO",
-	relations: {
+	internalRelations: {
 		"isSenseOf": "Ist eine Bedeutung von",
 		"hasSense": "Hat als eine Bedeutung",
 		"isPartOf": "Ist Teil von",

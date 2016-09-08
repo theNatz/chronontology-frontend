@@ -211,10 +211,10 @@ angular.module('chronontology.directives', [])
                           name: label,
                           from: parseInt(scope.periods[i].resource.hasTimespan[0].begin.at),
                           to: parseInt(scope.periods[i].resource.hasTimespan[0].end.at),
-                          successor: scope.periods[i].resource.isFollowedBy
-                              ? scope.periods[i].resource.isFollowedBy[0] : undefined,
-                          parent: scope.periods[i].resource.isPartOf,
-                          children: scope.periods[i].resource.hasPart,
+                          successor: scope.periods[i].resource.relations.isFollowedBy
+                              ? scope.periods[i].resource.relations.isFollowedBy[0] : undefined,
+                          parent: scope.periods[i].resource.relations.isPartOf,
+                          children: scope.periods[i].resource.relations.hasPart,
                           row: -1
                       };
                       if (!totalXDomain[0] || period.from < totalXDomain[0]) totalXDomain[0] = period.from;

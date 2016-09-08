@@ -21,7 +21,7 @@ angular.module('chronontology.controllers', [])
 .controller("PeriodController", function($scope, $location, $routeParams, $http, $sce, chronontologySettings) {
 
 	// possible relations mapped to labels
-	$scope.relations = chronontologySettings.relations;
+	$scope.internalRelations = chronontologySettings.internalRelations;
 	$scope.gazetteerRelations = chronontologySettings.gazetteerRelations;
 
 	// store related periods, should be a central app-wide cache
@@ -35,10 +35,10 @@ angular.module('chronontology.controllers', [])
 		var geoFrameUrl = chronontologySettings.geoFrameBaseUri + "?uri=" + chronontologySettings.baseUri;
 		$scope.geoFrameUrl = $sce.trustAsResourceUrl(geoFrameUrl + result.resource['@id']);
 
-		for(var relation in $scope.relations) {
-			var label = $scope.relations[relation];
+		for(var relation in $scope.internalRelations) {
+			var label = $scope.internalRelations[relation];
 			$scope.relatedDocuments[relation] = [];
-			if(result.resource[relation]) result.resource[relation].forEach(function(periodUri) {
+			if($scope.period.relations[relation]) $scope.period.relations[relation].forEach(function(periodUri) {
 				(function(relation) {
 					$http.get('/data'+periodUri).success(function(result) {
 						$scope.relatedDocuments[relation].push(result);

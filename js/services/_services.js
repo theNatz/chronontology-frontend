@@ -24,8 +24,8 @@ angular.module('chronontology.services', [])
 	            if (node) {
 		            parent.children = [node];
 		            if (children.hasOwnProperty(node.resource['@id'])) populateNode(node);
-		            while (node.resource.hasOwnProperty('isFollowedBy')) {
-		            	node = map[node.resource['isFollowedBy'][0]];
+		            while (node.resource.relations.hasOwnProperty('isFollowedBy')) {
+		            	node = map[node.resource.relations['isFollowedBy'][0]];
 		            	parent.children.push(node);
 		            	if (children.hasOwnProperty(node.resource['@id'])) populateNode(node);
 		            }
@@ -39,11 +39,11 @@ angular.module('chronontology.services', [])
 			// build index and determine root
 			periods.forEach(function(p) {
 				map[p.resource['@id']] = p;
-				if (!p.resource.hasOwnProperty('isPartOf') && !p.resource.hasOwnProperty('follows')) {
+				if (!p.resource.relations.hasOwnProperty('isPartOf') && !p.resource.relations.hasOwnProperty('follows')) {
 					roots.push(p);
 				}
-				if (p.resource.hasOwnProperty('isPartOf') && !p.resource.hasOwnProperty('follows')) {
-					children[p.resource['isPartOf'][0]] = p;
+				if (p.resource.relations.hasOwnProperty('isPartOf') && !p.resource.relations.hasOwnProperty('follows')) {
+					children[p.resource.relations['isPartOf'][0]] = p;
 				}
 			});
 
@@ -64,8 +64,8 @@ angular.module('chronontology.services', [])
 				console.log("node", node);
 				populateNode(node);
 				tree.push(node);
-				while (node.resource.hasOwnProperty('isFollowedBy')) {
-					node = map[node.resource['isFollowedBy'][0]];
+				while (node.resource.relations.hasOwnProperty('isFollowedBy')) {
+					node = map[node.resource.relations['isFollowedBy'][0]];
 					if (node) {
 						populateNode(node);
 						tree.push(node);

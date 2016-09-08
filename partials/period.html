@@ -136,8 +136,8 @@
 
                         <h4>Beziehungen</h4>
 
-                        <span ng-repeat="(relation,label) in relations">
-                            <span ng-if="period[relation]">
+                        <span ng-repeat="(relation,label) in internalRelations">
+                            <span ng-if="period.relations[relation]">
                                 <dt>{{label}}</dt>
                                 <dd ng-repeat="document in relatedDocuments[relation]">
                                     <a ng-href="{{document.resource['@id']}}">{{document.resource.prefLabel.de}}</a>
