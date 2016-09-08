@@ -40,7 +40,7 @@ angular.module('chronontology.controllers', [])
 			$scope.relatedDocuments[relation] = [];
 			if($scope.period.relations[relation]) $scope.period.relations[relation].forEach(function(periodUri) {
 				(function(relation) {
-					$http.get('/data'+periodUri).success(function(result) {
+					$http.get('/data/period/'+periodUri).success(function(result) {
 						$scope.relatedDocuments[relation].push(result);
 					})
 				}(relation));
