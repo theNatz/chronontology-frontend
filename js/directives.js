@@ -193,7 +193,7 @@ angular.module('chronontology.directives', [])
 
           function showPeriod(period) {
               tooltip.style("visibility", "hidden");
-              $location.path(period.id);
+              $location.path("/period/" + period.id);
               scope.$apply();
           }
 
@@ -207,7 +207,7 @@ angular.module('chronontology.directives', [])
                       if (scope.periods[i].resource.prefLabel && scope.periods[i].resource.prefLabel.de)
                         label = scope.periods[i].resource.prefLabel.de;
                       var period = {
-                          id: scope.periods[i].resource['@id'],
+                          id: scope.periods[i].resource.id,
                           name: label,
                           from: parseInt(scope.periods[i].resource.hasTimespan[0].begin.at),
                           to: parseInt(scope.periods[i].resource.hasTimespan[0].end.at),

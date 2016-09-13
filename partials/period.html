@@ -4,7 +4,7 @@
         <h2>{{ period.prefLabel.de }}
             <small>{{ period.types.join(", ") }}</small>
             <br/>
-            <small>http://chronontology.dainst.org{{ document.resource['@id'] }}</small>
+            <small>http://chronontology.dainst.org/period/{{ document.resource.id }}</small>
         </h2>
 
         <div class="row">
@@ -16,7 +16,7 @@
             <div class="col-md-5">
 
                 <div class="well well-sm timeline-container-small">
-                    <timeline periods="provenancePeriods" selected-period-id="document.resource['@id']"></timeline>
+                    <timeline periods="provenancePeriods" selected-period-id="document.resource.id"></timeline>
                 </div>
 
                 <div class="embed-responsive embed-responsive-4by3">
@@ -35,7 +35,7 @@
                         <a hreg="#" ng-click="activeTab = 'json'">JSON</a>
                     </li>
                     <li>
-                        <a target='_blank' href="http://localhost:8084/#/edit/{{period.resource['@id'].replace('/period/','')}}">
+                        <a target='_blank' href="http://localhost:8084/#/edit/{{document.resource.id}}">
                             <span class="glyphicon glyphicon-edit"></span> Bearbeiten
                         </a>
                     </li>
@@ -140,7 +140,7 @@
                             <span ng-if="period.relations[relation]">
                                 <dt>{{label}}</dt>
                                 <dd ng-repeat="document in relatedDocuments[relation]">
-                                    <a ng-href="{{document.resource['@id']}}">{{document.resource.prefLabel.de}}</a>
+                                    <a ng-href="/period/{{document.resource.id}}">{{document.resource.prefLabel.de}}</a>
                                     ({{ document.resource.types.join(", ") }})
                                     {{ document.resource.provenance }}
                                 </dd>
