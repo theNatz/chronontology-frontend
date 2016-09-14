@@ -70,6 +70,9 @@ angular.module('chronontology.controllers', [])
 
 .controller('ContactController', ['$scope','$http', function($scope, $http) {
 
+	$scope.success = false;
+	$scope.error = "";
+
 	$scope.submit = function () {
         var userData = $scope.usrData;
         var userDataJson = {};
@@ -80,6 +83,11 @@ angular.module('chronontology.controllers', [])
 		});
 		userDataJson['to'] = "idaiContact";
 
-		$http.post('/data/mail', userDataJson);
+		$http.post('/data/mail', userDataJson).then( function() {
+				$scope.success = true;
+				$scope.error = "";
+		}, function(errorMessage) {
+			$scope.error = errorMessage;
+		});
 	}
 }]);
