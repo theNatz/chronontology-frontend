@@ -48,9 +48,9 @@
                     <dl class="dl-horizontal">
 
                         <dt>Namen</dt>
-                        <span ng-repeat="(lang, names) in period.names">
-                            <dd ng-repeat="name in names">
-                                {{ name }} <i>({{lang}})</i>
+                        <span ng-repeat="language in period.names">
+                            <dd ng-repeat="name in language.content">
+                                {{ name }} <i>({{language.lang}})</i>
                             </dd>
                         </span>
                         <br>
