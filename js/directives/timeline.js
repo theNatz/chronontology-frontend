@@ -1,6 +1,6 @@
 'use strict';
 
-angular.module('chronontology.directives', [])
+angular.module('chronontology.directives')
 
   .directive('timeline', function($location) {
     return {
