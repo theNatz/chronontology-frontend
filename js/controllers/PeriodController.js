@@ -1,22 +1,6 @@
 'use strict';
 
-angular.module('chronontology.controllers', [])
-
-.controller('SearchFormController', function($scope, $location) {
-
-	$scope.search = function(fq) {
-		if ($scope.q) {
-			var url = '/search?q=' + $scope.q;
-			$scope.q = null;
-			$location.url(url);
-		}
-	}
-
-})
-
-.controller("SearchController", function($scope, $location) {
-
-})
+angular.module('chronontology.controllers')
 
 .controller("PeriodController", function($scope, $location, $routeParams, $http, $sce, chronontologySettings) {
 
@@ -60,34 +44,3 @@ angular.module('chronontology.controllers', [])
 	}
 
 })
-
-.controller("ThesaurusController", function($scope, $routeParams, $http) {
-		
-	$http.get('/data/period/?size=1000&q=provenance:' + $routeParams.provenance).success( function(result) {
-		$scope.periods = result.results;
-	});
-})
-
-.controller('ContactController', ['$scope','$http', function($scope, $http) {
-
-	$scope.success = false;
-	$scope.error = "";
-
-	$scope.submit = function () {
-        var userData = $scope.usrData;
-        var userDataJson = {};
-
-		//create proper json
-		angular.forEach(userData, function(value, key){
-			userDataJson[key] = value;
-		});
-		userDataJson['to'] = "idaiContact";
-
-		$http.post('/data/mail', userDataJson).then( function() {
-				$scope.success = true;
-				$scope.error = "";
-		}, function(errorMessage) {
-			$scope.error = errorMessage;
-		});
-	}
-}]);
