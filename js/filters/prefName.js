@@ -1,13 +1,7 @@
 'use strict';
 
-angular.module('chronontology.filters', [])
+angular.module('chronontology.filters')
 
-	.filter('isoDate', function() {
-		return function(dateString) {
-			return new Date(dateString);
-		}
-	})
-	
 	.filter('prefName',['language', function(language) {
 
 		return function(names) {
