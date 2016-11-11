@@ -8,22 +8,21 @@ angular.module('chronontology.filters', [])
 		}
 	})
 	
-	.filter('prefName', function() {
+	.filter('prefName',['language', function(language) {
 
 		return function(names) {
 
 			// if names is non-empty then we assume there is 
 			// at least one name for each given language
 
-			var browserlang = 'en';
-
+			var browserlang = language.browserPrimaryLanguage();
 			var availableLanguages = names.map(function(line) { return line.lang; });
 			var browserlangPosition = availableLanguages.indexOf(browserlang);
 			var enPosition = availableLanguages.indexOf('en');
 
 			if(names.length > 0) {
 				if (browserlangPosition > -1) {
-					// user's preferred language is available
+					// user-preferred language is available
 					return names[browserlangPosition].content[0];
 				}
 				else if (enPosition > -1) {
@@ -39,4 +38,4 @@ angular.module('chronontology.filters', [])
 			    return "(kein Name)";
 			}			
 		}
-	})
+	}])
