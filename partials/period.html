@@ -1,7 +1,7 @@
 <div class="container-fluid">
     <div ng-controller="PeriodController">
 
-        <h2>{{ period.prefLabel.de }}
+        <h2>{{ period.names | prefName }}
             <small>{{ period.types.join(", ") }}</small>
             <br/>
             <small>http://chronontology.dainst.org/period/{{ document.resource.id }}</small>
@@ -140,7 +140,7 @@
                             <span ng-if="period.relations[relation]">
                                 <dt>{{label}}</dt>
                                 <dd ng-repeat="document in relatedDocuments[relation]">
-                                    <a ng-href="/period/{{document.resource.id}}">{{document.resource.prefLabel.de}}</a>
+                                    <a ng-href="/period/{{document.resource.id}}">{{ document.resource.names | prefName }}</a>
                                     ({{ document.resource.types.join(", ") }})
                                     {{ document.resource.provenance }}
                                 </dd>

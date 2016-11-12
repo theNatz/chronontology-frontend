@@ -2,7 +2,7 @@
 
 angular.module('chronontology.directives')
 
-  .directive('timeline', function($location) {
+  .directive('timeline', function($location, $filter) {
     return {
       restrict: 'EA',
       scope: {
@@ -18,7 +18,7 @@ angular.module('chronontology.directives')
           var minYear = -10000;
           var maxYear = new Date().getFullYear();
           var maxZoomYears = 5;
-          // / These variables should be constant variables. Set to var because of an error with safari.
+          // These variables should be constant variables. Set to var because of an error with safari.
 
           var bars, barRects, barTexts;
           var tooltip;
@@ -204,8 +204,8 @@ angular.module('chronontology.directives')
               for (var i in scope.periods) {
                   if (validatePeriod(scope.periods[i])) {
                       var label = "";
-                      if (scope.periods[i].resource.prefLabel && scope.periods[i].resource.prefLabel.de)
-                        label = scope.periods[i].resource.prefLabel.de;
+                      if (scope.periods[i].resource.names)
+                        label = $filter('prefName')(scope.periods[i].resource.names);
                       var period = {
                           id: scope.periods[i].resource.id,
                           name: label,
