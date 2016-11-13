@@ -4,7 +4,8 @@ angular.module('chronontology.controllers')
 
 .controller("PeriodController", function($scope, $location, $routeParams, $http, $sce, chronontologySettings) {
 
-	// possible relations mapped to labels
+	// possible relations
+	// (labels are now in transl8 keys "relation_isSenseOf" etc.)
 	$scope.internalRelations = chronontologySettings.internalRelations;
 	$scope.gazetteerRelations = chronontologySettings.gazetteerRelations;
 
@@ -19,8 +20,9 @@ angular.module('chronontology.controllers')
 		var geoFrameUrl = chronontologySettings.geoFrameBaseUri + "?uri=" + chronontologySettings.baseUri;
 		$scope.geoFrameUrl = $sce.trustAsResourceUrl(geoFrameUrl + result.resource.id);
 
-		for(var relation in $scope.internalRelations) {
-			var label = $scope.internalRelations[relation];
+		// note: for(var relation in $scope.internalRelations) would yield 0, 1, 2, ...
+		for(var i = 0; i < $scope.internalRelations.length; i += 1) {
+			var relation = $scope.internalRelations[i];
 			$scope.relatedDocuments[relation] = [];
 			if($scope.period.relations[relation]) $scope.period.relations[relation].forEach(function(periodUri) {
 				(function(relation) {

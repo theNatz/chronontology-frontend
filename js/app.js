@@ -34,22 +34,18 @@ angular.module('chronontology', [
 ]).constant('chronontologySettings', {
 	baseUri: "http://chronontology.dainst.org",
 	geoFrameBaseUri: "http://chronontology.i3mainz.hs-mainz.de/stc/W_ChronOntologyGEO",
-	internalRelations: {
-		"isSenseOf": "Ist eine Bedeutung von",
-		"hasSense": "Hat als eine Bedeutung",
-		"isPartOf": "Ist Teil von",
-		"hasPart": "Hat Unterteilungen",
-		"isListedIn": "Wird aufgelistet in",
-		"lists": "Listet",
-		"follows": "Folgt auf",
-		"isFollowedBy": "Wird gefolgt von",
-		"sameAs": "Entspricht"
-	},
-	gazetteerRelations: {
-		"isNamedAfter": "Ist benannt nach",
-		"hasCoreArea": "Hat Kerngebiet",
-		"spatiallyPartOfRegion": "Räumlich Teil von"
-	}
+	internalRelations: [
+		"isSenseOf", "hasSense",
+		"isPartOf", "hasPart",
+		"isListedIn", "lists",
+		"follows", "isFollowedBy",
+		"sameAs"
+	],
+	gazetteerRelations: [
+		"isNamedAfter",
+		"hasCoreArea",
+		"spatiallyPartOfRegion"
+	]
 }).constant('componentsSettings', {
 	transl8Uri: "http://bogusman01.dai-cloud.uni-koeln.de/transl8/translation/jsonp?application=chronontology_frontend&lang={LANG}&callback=JSON_CALLBACK"
 }).run(['$rootScope', function($rootScope) {

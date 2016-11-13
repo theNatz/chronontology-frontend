@@ -37,7 +37,7 @@
 
             <form ng-controller="SearchFormController" ng-submit="search()" class="input-group form-inline"
                   role="search" method="GET">
-                <input type="text" ng-model="q" name="q" class="form-control" autofocus placeholder="Suche"/>
+                <input type="text" ng-model="q" name="q" class="form-control" autofocus placeholder="{{ 'placeholder_search' | transl8 }}"/>
 					<span class="input-group-btn">
 						<button type="submit" class="btn btn-primary">
 							&nbsp;<span class="glyphicon glyphicon-search"></span>&nbsp;
@@ -45,7 +45,7 @@
 					</span>
             </form>
             <div style="text-align: right;">
-            	<a ng-href="/search?q=*">alle anzeigen</a>
+            	<a ng-href="/search?q=*">{{ "ui_showall" | transl8 }}</a>
             </div>
         </div>
 

@@ -55,11 +55,11 @@
                         </span>
                         <br>
 
-                        <dt>Epochentyp</dt>
+                        <dt>{{ "period_type" | transl8 }}</dt>
                         <dd ng-repeat="type in period.types">{{ type }}</dd>
                         <br>
 
-                        <dt>Provenienz</dt>
+                        <dt>{{ "period_provenance" | transl8 }}</dt>
                         <dd>
                             <a ng-href="/thesaurus/{{ period.provenance }}">{{ period.provenance }}</a>
                             <span ng-show="period.externalId">(originale ID: {{ period.externalId }})</span>
@@ -136,9 +136,9 @@
 
                         <h4>Beziehungen</h4>
 
-                        <span ng-repeat="(relation,label) in internalRelations">
+                        <span ng-repeat="relation in internalRelations">
                             <span ng-if="period.relations[relation]">
-                                <dt>{{label}}</dt>
+                                <dt>{{ "relation_"+relation | transl8 }}</dt>
                                 <dd ng-repeat="document in relatedDocuments[relation]">
                                     <a ng-href="/period/{{document.resource.id}}">{{ document.resource.names | prefName }}</a>
                                     ({{ document.resource.types.join(", ") }})
@@ -148,9 +148,9 @@
                             </span>
                         </span>
 
-                        <span ng-repeat="(gazetteerRelation,label) in gazetteerRelations">
+                        <span ng-repeat="gazetteerRelation in gazetteerRelations">
                             <span ng-if="period[gazetteerRelation]">
-                                <dt>{{label}}</dt>				
+                                <dt>{{ "relation_"+gazetteerRelation | transl8 }}</dt>				
 								<dd ng-repeat="region in period[gazetteerRelation]">
 									<a ng-href="{{region}}" target="_blank">
 										{{region}} <span class="glyphicon glyphicon-new-window"></span>
