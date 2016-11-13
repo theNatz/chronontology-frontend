@@ -29,25 +29,25 @@
 
                 <ul class="nav nav-tabs">
                     <li ng-class="{ 'active': !activeTab }">
-                        <a href="#" ng-click="activeTab = false">Informationen</a>
+                        <a href="#" ng-click="activeTab = false">{{ "ui_infoTab" | transl8 }}</a>
                     </li>
                     <li ng-class="{ 'active': (activeTab == 'json') }">
                         <a hreg="#" ng-click="activeTab = 'json'">JSON</a>
                     </li>
                     <li>
                         <a target='_blank' href="http://localhost:8084/#/edit/{{document.resource.id}}">
-                            <span class="glyphicon glyphicon-edit"></span> Bearbeiten
+                            <span class="glyphicon glyphicon-edit"></span> {{ "ui_editTab" | transl8 }}
                         </a>
                     </li>
                 </ul>
 
                 <div ng-show="!activeTab" style="margin: 30px 0;">
 
-                    <h4>Informationen zur Epoche</h4>
+                    <h4>{{ "ui_periodInfo" | transl8 }}</h4>
 
                     <dl class="dl-horizontal">
 
-                        <dt>Namen</dt>
+                        <dt>{{ "period_names" | transl8 }}</dt>
                         <span ng-repeat="language in period.names">
                             <dd ng-repeat="name in language.content">
                                 {{ name }} <i>({{language.lang}})</i>
@@ -67,64 +67,64 @@
                         <br>
 
                         <span ng-show="period.definition">
-                            <dt>Definition</dt>
+                            <dt>{{ "period_definition" | transl8 }}</dt>
                             <dd class="preserve-linebreaks">{{ period.definition }}</dd>
                             <br>
                         </span>
 
                         <span ng-show="period.description">
-                            <dt>Beschreibung</dt>
+                            <dt>{{ "period_description" | transl8 }}</dt>
                             <dd class="preserve-linebreaks">{{ period.description }}</dd>
                             <br>
                         </span>
 
                         <span ng-show="period.tags">
-                            <dt>Tags</dt>
+                            <dt>{{ "period_tags" | transl8 }}</dt>
                         	<dd>{{ period.tags.join(", ") }}</dd>
                             <br>
                         </span>
 
                         <span ng-show="period.note">
-                            <dt>Notiz</dt>
+                            <dt>{{ "period_note" | transl8 }}</dt>
                             <dd class="preserve-linebreaks">{{ period.note }}</dd>
                             <br>
                         </span>
 
                         <span ng-show="period.hasTimespan">
-                            <dt>Zeitliche Ausdehnung</dt>
+                            <dt>{{ "period_temporalExtent" | transl8 }}</dt>
 							<span ng-show="period.ongoing">
-								<dd>dauert noch an</dd>
+								<dd>{{ "period_ongoing" | transl8 }}</dd>
 								<br>
 							</span>
                             <dd ng-repeat="timespan in period.hasTimespan">
                                 {{ timespan.timeOriginal }}
                                 <br>
                                 <span ng-show="timespan.begin">
-                                	Beginn: 
+                                	{{ "temporal_begin" | transl8 }}
                                 	<span ng-show="timespan.begin.at">
                                 		{{ timespan.begin.at }}
                                 		<span ng-show="timespan.begin.atPrecision">
                                 			({{ timespan.begin.atPrecision }})
                                 		</span>
                                 	</span>
-                                	<span ng-show="timespan.begin.notBefore">nicht vor {{ timespan.begin.notBefore }}</span>
-                                	<span ng-show="timespan.begin.notAfter">nicht nach {{ timespan.begin.notAfter }}</span>
+                                	<span ng-show="timespan.begin.notBefore">{{ "temporal_notBefore" | transl8 }} {{ timespan.begin.notBefore }}</span>
+                                	<span ng-show="timespan.begin.notAfter">{{ "temporal_notAfter" | transl8 }} {{ timespan.begin.notAfter }}</span>
                                 	<br>
                                 </span>
                                 <span ng-show="timespan.end">
-                                	Ende: 
+                                	{{ "temporal_end" | transl8 }} 
                                 	<span ng-show="timespan.end.at">
                                 		{{ timespan.end.at }}
                                 		<span ng-show="timespan.end.atPrecision">
                                 			({{ timespan.end.atPrecision }})
                                 		</span>
                                 	</span>
-                                	<span ng-show="timespan.end.notBefore">nicht vor {{ timespan.end.notBefore }}</span>
-                                	<span ng-show="timespan.end.notAfter">nicht nach {{ timespan.end.notAfter }}</span>
+                                	<span ng-show="timespan.end.notBefore">{{ "temporal_notBefore" | transl8 }} {{ timespan.end.notBefore }}</span>
+                                	<span ng-show="timespan.end.notAfter">{{ "temporal_notAfter" | transl8 }} {{ timespan.end.notAfter }}</span>
                                 	<br>
                                 </span>
-                                <span ng-show="timespan.calendar">Kalender: {{ timespan.calendar }}<br></span>
-                                <span ng-show="timespan.sourceOriginal">Quelle: {{ timespan.sourceOriginal }}<br></span>
+                                <span ng-show="timespan.calendar">{{ "temporal_calendar" | transl8 }} {{ timespan.calendar }}<br></span>
+                                <span ng-show="timespan.sourceOriginal">{{ "ui_source" | transl8 }} {{ timespan.sourceOriginal }}<br></span>
                                 <span ng-show="timespan.sourceURL"><a ng-href="{{timespan.sourceURL}}">{{timespan.sourceURL}}</a><br></span>
                             </dd>
                             <br>
@@ -134,7 +134,7 @@
 
                     <dl class="dl-horizontal">
 
-                        <h4>Beziehungen</h4>
+                        <h4>{{ "ui_relations" | transl8 }}</h4>
 
                         <span ng-repeat="relation in internalRelations">
                             <span ng-if="period.relations[relation]">
@@ -162,18 +162,18 @@
 
                     </dl>
 
-                    <h4>Dokumentmetadaten</h4>
+                    <h4>{{ "ui_metadata" | transl8 }}</h4>
 
                     <dl class="dl-horizontal">                        
 
-                        <dt>Erstellt</dt>
+                        <dt>{{ "ui_created" | transl8 }}</dt>
                         <dd>
                             {{ document.created.date | isoDate | date:'medium' }}
                             ({{document.created.user}})
                         </dd>
                         <br>
 
-                        <dt>Geändert</dt>
+                        <dt>{{ "ui_modified" | transl8 }}</dt>
                         <dd ng-repeat="m in document.modified">
                             {{ m.date | isoDate | date:'medium' }}
                             ({{ m.user }})
