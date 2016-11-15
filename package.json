@@ -38,7 +38,7 @@
     "gulp-sass": "^2.3.1",
     "gulp-sort": "^2.0.0",
     "gulp-uglify": "^1.5.3",
-    "idai-components": "git://github.com/dainst/idai-components.git#d37d548ed7e91de0737f40e07247f378ab350d48",
+    "idai-components": "git://github.com/dainst/idai-components.git#4a3a4cf57474ea9739b6739b8d9b78755bbb6011",
     "jsonld": "^0.4.11",
     "morgan": "^1.5.2",
     "passport": "^0.3.2",
