@@ -47,7 +47,7 @@ angular.module('chronontology', [
 		"spatiallyPartOfRegion"
 	]
 }).constant('componentsSettings', {
-	transl8Uri: "http://bogusman01.dai-cloud.uni-koeln.de/transl8/translation/jsonp?application=chronontology_frontend&lang={LANG}&callback=JSON_CALLBACK"
+	transl8Uri: "http://bogusman01.dai-cloud.uni-koeln.de/transl8/translation/jsonp?application=chronontology_frontend&application=components1&lang={LANG}&callback=JSON_CALLBACK"
 }).run(['$rootScope', function($rootScope) {
 
 }]);
