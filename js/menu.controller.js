@@ -6,6 +6,5 @@ angular.module('chronontology.controllers')
             $scope.currentPath = $location.path();
             $scope.$on("$locationChangeSuccess", function () {
                 $scope.currentPath = $location.path();
-                console.log($scope.currentPath);
             });
         }]);
