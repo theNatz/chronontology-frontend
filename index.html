@@ -8,11 +8,13 @@
     <title>Chronontology</title>
     <link href="css/chronontology.css?build=BUILD_NO" rel="stylesheet">
   </head>
-  <body>
-
-    <idai-navbar project-id="chronontology"
-                 hide-register-button="true"
-                 hide-contact-button="false"></idai-navbar>
+  <body ng-controller="MenuController">
+    <idai-navbar
+            project-id="chronontology"
+            hide-register-button="true"
+            hide-contact-button="false"
+            hide-search-form="currentPath == '/'">
+    </idai-navbar>
 
     <div class="container-fluid">
       <div ng-view></div>

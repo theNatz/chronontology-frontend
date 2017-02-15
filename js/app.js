@@ -21,7 +21,6 @@ angular.module('chronontology', [
             $locationProvider.html5Mode(true);
 
             $httpProvider.defaults.cache = true;
-
             $routeProvider
                 .when('/', {templateUrl: 'partials/homepage.html'})
                 .when('/search', {templateUrl: 'partials/search.html'})
@@ -47,7 +46,9 @@ angular.module('chronontology', [
 		"spatiallyPartOfRegion"
 	]
 }).constant('componentsSettings', {
-	transl8Uri: "http://bogusman01.dai-cloud.uni-koeln.de/transl8/translation/jsonp?application=chronontology_frontend&application=shared&lang={LANG}&callback=JSON_CALLBACK"
+    transl8Uri: 'https://arachne.dainst.org/transl8/translation/jsonp?application=chronontology_frontend&application=shared&lang={LANG}&callback=JSON_CALLBACK',
+    // searchUri: 'https://arachne.dainst.org/data/suggest?q=',
+    mailTo: 'idai.chronontology@dainst.org'
 }).run(['$rootScope', function($rootScope) {
 
 }]);
