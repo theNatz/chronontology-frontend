@@ -45,4 +45,4 @@ angular.module('chronontology.controllers')
 		saveAs(blob, $scope.period.id + ".json");
 	}
 
-})
+});

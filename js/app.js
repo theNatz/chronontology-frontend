@@ -13,7 +13,8 @@ angular.module('chronontology', [
     'chronontology.services',
     'chronontology.directives',
     'chronontology.controllers',
-    'chronontology.filters'
+    'chronontology.filters',
+    'chronontology.components'
 ])
     .config(['$routeProvider', '$locationProvider', '$compileProvider', '$httpProvider',
         function ($routeProvider, $locationProvider, $compileProvider, $httpProvider) {
