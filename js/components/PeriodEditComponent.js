@@ -31,5 +31,50 @@ angular.module('chronontology.components')
             _this.reset = function () {
                 _this.period = angular.copy(_this.originalPeriod);
             };
+
+            _this.addLanguage = function () {
+                var newLanguageInput = document.getElementById('language-input');
+                _this.period.names.push({'lang':newLanguageInput.value, 'content':[]});
+                newLanguageInput.value = "";
+            };
+
+            _this.removeLanguage = function(languageObject) {
+                _this.period.names = _this.period.names
+                    .filter(function (nameItem)
+                    {
+                        return nameItem['lang'] != languageObject['lang'];
+                    });
+            };
+
+            _this.getLanguageIndex = function(languageObject) {
+                return _this.period.names.findIndex(function(x){
+                   return x['lang'] == languageObject['lang'];
+                });
+            };
+
+            _this.addName = function (languageObject) {
+                var newNameInput = document.getElementById('name-input-' + languageObject['lang']);
+                var languageIndex = _this.getLanguageIndex(languageObject);
+                _this.period.names[languageIndex]['content'].push(newNameInput.value);
+                newNameInput.value = null;
+            };
+
+            _this.removeName = function(languageObject, contentObject) {
+                var languageIndex = _this.getLanguageIndex(languageObject);
+                _this.period.names[languageIndex]['content'] = _this.period.names[languageIndex]['content']
+                    .filter(function (x){
+                    {
+                        return contentObject != x;
+                    }
+                })
+            };
+
+            _this.getContentIndex = function (languageObject, contentObject) {
+                var languageIndex = _this.getLanguageIndex(languageObject);
+                var indices = _this.period.names[languageIndex]['content'].findIndex(function(x){
+                    return x == contentObject;
+                });
+                return indices;
+            }
         }
     });

@@ -12,35 +12,66 @@
                        ng-model="$ctrl.period.id" readonly>
             </div>
         </div>
-        <div class="form-group form-group-sm">
+        <div class="form-group">
             <div class="control-label">
                 Period names
             </div>
 
-            <div class="row" ng-repeat="language in $ctrl.period.names"
-                             ng-init="languageIndex = $index">
+            <div class="row" ng-repeat="language in $ctrl.period.names">
                 <p>
                     <div class="col-md-2">
-                        <input required type="text"
-                               class="form-control"
-                               placeholder="{{'ui_username'|transl8}}"
-                               ng-model="$ctrl.period.names[languageIndex]['lang']">
-
-                    </div>
-                    <div class="col-md-10">
-                         <div ng-repeat="name in $ctrl.period.names[languageIndex]['content']"
-                              ng-init="contentIndex = $index">
-
+                        <div class="input-group">
+                            <span class="input-group-btn">
+                                 <button class="btn btn-danger"
+                                         ng-click="$ctrl.removeLanguage(language)"
+                                         type="button">
+                                     <span class="glyphicon glyphicon-minus-sign" aria-hidden="true"></span>
+                                 </button>
+                            </span>
                             <input required type="text"
-                                    class="form-control"
-                                    placeholder="{{'ui_username'|transl8}}"
-                                    ng-model="$ctrl.period.names[languageIndex]['content'][contentIndex]">
+                                   class="form-control"
+                                   ng-model="$ctrl.period.names[$ctrl.getLanguageIndex(language)]['lang']">
+                        </div>
+                    </div>
+                    <div class="col-md-10 ">
+                         <div ng-repeat="name in $ctrl.period.names[$ctrl.getLanguageIndex(language)]['content']">
+                             <div class="input-group">
+                                 <input required type="text"
+                                        class="form-control"
+                                        ng-model="$ctrl.period.names[$ctrl.getLanguageIndex(language)]['content'][$ctrl.getContentIndex(language, name)]">
+                                 <span class="input-group-btn">
+                                     <button class="btn btn-danger"
+                                             ng-click="$ctrl.removeName(language, name)"
+                                             type="button">
+                                         <span class="glyphicon glyphicon-minus-sign" aria-hidden="true"></span>
+                                     </button>
+                                </span>
+                             </div>
+                         </div>
+                         <div class="input-group">
+                             <input type="text" class="form-control" id="name-input-{{language['lang']}}" placeholder="Add name...">
+                             <span class="input-group-btn">
+                                 <button class="btn btn-success" ng-click="$ctrl.addName(language)" type="button">
+                                     <span class="glyphicon glyphicon-plus-sign" aria-hidden="true"></span>
+                                 </button>
+                             </span>
                          </div>
                     </div>
                 </p>
             </div>
+            <p>
+                <div class="input-group">
+                    <input type="text" class="form-control" id="language-input" placeholder="Add language...">
+                    <span class="input-group-btn">
+                        <button class="btn btn-success" ng-click="$ctrl.addLanguage()" type="button">
+                            <span class="glyphicon glyphicon-plus-sign" aria-hidden="true"></span>
+                        </button>
+                    </span>
+                </div>
+            </p>
         </div>
-        <div class="form-group">
+        <!--
+        <div>
             <div class="control-label">
                 Period types
             </div>
@@ -50,7 +81,6 @@
 
                 <input required type="text"
                        class="form-control"
-                       placeholder="{{'ui_username'|transl8}}"
                        ng-model="$ctrl.period.types[typeIndex]">
             </div>
         </div>
@@ -62,10 +92,9 @@
             <div>
                 <input required type="text"
                        class="form-control"
-                       placeholder="{{'ui_username'|transl8}}"
                        ng-model="$ctrl.period.provenance">
             </div>
-        </div>
+        </div>-->
     </form>
     <button class="btn btn-primary" ng-click="$ctrl.saveChanges()">Save</button>
     <button class="btn btn-default" ng-click="$ctrl.reset()">Reset</button>
