@@ -28,20 +28,31 @@
             <div class="col-md-7">
 
                 <ul class="nav nav-tabs">
-                    <li ng-class="{ 'active': !activeTab }">
-                        <a href="#" ng-click="activeTab = false">{{ "ui_infoTab" | transl8 }}</a>
+                    <li ng-class="{ 'active': (activeTab == 'info') }">
+                        <a href="#" ng-click="activeTab = 'info'">{{ "ui_infoTab" | transl8 }}</a>
                     </li>
-                    <li ng-class="{ 'active': (activeTab == 'json') }">
+
+
+                    <!--<li ng-class="{ 'active': (activeTab == 'json') }">
                         <a hreg="#" ng-click="activeTab = 'json'">JSON</a>
-                    </li>
+                    </li>-->
                     <li>
                         <a target='_blank' href="http://localhost:8084/#/edit/{{document.resource.id}}">
                             <span class="glyphicon glyphicon-edit"></span> {{ "ui_editTab" | transl8 }}
                         </a>
                     </li>
+
+                    <li>
+                        <button type="button"
+                                class="btn btn-primary"
+                                style="margin-top: 5px;"
+                                ng-click="exportJSON()">
+                            <span class="glyphicon glyphicon-floppy-disk" aria-hidden="true"></span>Download JSON
+                        </button>
+                    </li>
                 </ul>
 
-                <div ng-show="!activeTab" style="margin: 30px 0;">
+                <div ng-show="activeTab == 'info'" style="margin: 30px 0;">
                     <period-information period="period"
                                         internal-relations="internalRelations"
                                         gazetteer-relations="gazetteerRelations"
@@ -49,21 +60,6 @@
                                         related-documents="relatedDocuments">
                     </period-information>
                 </div>
-
-                <div ng-show="activeTab == 'json'" style="margin: 30px 0;">
-
-                    <h4>JSON Daten</h4>
-
-                    <button type="button"
-                            class="btn btn-primary btn-xs"
-                            style="margin-top: 5px;"
-                            ng-click="exportJSON()">
-                        <span class="glyphicon glyphicon-floppy-disk" aria-hidden="true"></span> Herunterladen
-                    </button>
-
-                    <pre>{{ document | json }}</pre>
-                </div>
-
             </div>
 
         </div>

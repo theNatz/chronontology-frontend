@@ -14,6 +14,7 @@ angular.module('chronontology.controllers')
 
 	$http.get('/data/period/' + $routeParams.id).success( function(result) {
 
+		$scope.activeTab = 'info';
 		$scope.document = result;
 		$scope.period = result.resource;
 
@@ -42,7 +43,6 @@ angular.module('chronontology.controllers')
 	$scope.exportJSON = function() {
 		var JSONexport = angular.toJson($scope.period, true);
 		var blob = new Blob([JSONexport], {type: "text/plain;charset=utf-8"});
-		saveAs(blob, $scope.period.id + ".json");
+		saveAs(blob, 'period-' + $scope.period.id + ".json");
 	}
-
 });
