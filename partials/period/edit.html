@@ -1,3 +1,78 @@
-<h4>Todo</h4>
+<div>
+    <h4>Edit</h4>
 
-{{$ctrl.period}}
+    <form novalidate show-validation role="form">
+        <div class="form-group">
+            <div class="control-label">
+                ID
+            </div>
+
+            <div>
+                <input required type="text" class="form-control" placeholder="{{'ui_username'|transl8}}"
+                       ng-model="$ctrl.period.id" readonly>
+            </div>
+        </div>
+        <div class="form-group form-group-sm">
+            <div class="control-label">
+                Period names
+            </div>
+
+            <div class="row" ng-repeat="language in $ctrl.period.names"
+                             ng-init="languageIndex = $index">
+                <p>
+                    <div class="col-md-2">
+                        <input required type="text"
+                               class="form-control"
+                               placeholder="{{'ui_username'|transl8}}"
+                               ng-model="$ctrl.period.names[languageIndex]['lang']">
+
+                    </div>
+                    <div class="col-md-10">
+                         <div ng-repeat="name in $ctrl.period.names[languageIndex]['content']"
+                              ng-init="contentIndex = $index">
+
+                            <input required type="text"
+                                    class="form-control"
+                                    placeholder="{{'ui_username'|transl8}}"
+                                    ng-model="$ctrl.period.names[languageIndex]['content'][contentIndex]">
+                         </div>
+                    </div>
+                </p>
+            </div>
+        </div>
+        <div class="form-group">
+            <div class="control-label">
+                Period types
+            </div>
+
+            <div ng-repeat="type in $ctrl.period.types"
+                 ng-init="typeIndex = $index">
+
+                <input required type="text"
+                       class="form-control"
+                       placeholder="{{'ui_username'|transl8}}"
+                       ng-model="$ctrl.period.types[typeIndex]">
+            </div>
+        </div>
+
+        <div class="form-group">
+            <div class="control-label">
+                Provenance
+            </div>
+            <div>
+                <input required type="text"
+                       class="form-control"
+                       placeholder="{{'ui_username'|transl8}}"
+                       ng-model="$ctrl.period.provenance">
+            </div>
+        </div>
+    </form>
+    <button class="btn btn-primary" ng-click="$ctrl.saveChanges()">Save</button>
+    <button class="btn btn-default" ng-click="$ctrl.reset()">Reset</button>
+</div>
+
+<!-- {{$ctrl.period}}
+
+<p>----</p>
+
+{{$ctrl.originalPeriod}} -->
