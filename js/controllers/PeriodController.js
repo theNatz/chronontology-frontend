@@ -14,7 +14,7 @@ angular.module('chronontology.controllers')
 
 	$http.get('/data/period/' + $routeParams.id).success( function(result) {
 
-		$scope.activeTab = 'edit';
+		$scope.activeTab = 'view';
 		$scope.document = result;
 		$scope.period = result.resource;
 
