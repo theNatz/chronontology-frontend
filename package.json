@@ -21,7 +21,7 @@
     "d3": "~3.5.17",
     "elasticsearch": "~11.0.1",
     "file-saver": "~1.3.0",
-    "idai-components": "git+http://bogusman03.dai-cloud.uni-koeln.de/idai-components-builds/267/.git"
+    "idai-components": "git+http://bogusman03.dai-cloud.uni-koeln.de/idai-components-builds/271/.git"
   },
   "devDependencies": {
     "bootstrap-sass": "~3.3.6",

@@ -9,14 +9,14 @@ angular.module('chronontology.filters')
 			// at least one name for each given language
 
 			if(names != undefined && names.length > 0) {
-                var browserlang = language.browserPrimaryLanguage();
+                var currentLang = language.currentLanguage();
                 var availableLanguages = names.map(function(line) { return line.lang; });
-                var browserlangPosition = availableLanguages.indexOf(browserlang);
+                var currentLangPosition = availableLanguages.indexOf(currentLang);
                 var enPosition = availableLanguages.indexOf('en');
 
-                if (browserlangPosition > -1) {
+                if (currentLangPosition > -1) {
 					// user-preferred language is available
-					return names[browserlangPosition].content[0];
+					return names[currentLangPosition].content[0];
 				}
 				else if (enPosition > -1) {
 					// at least English is available
