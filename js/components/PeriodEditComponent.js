@@ -78,7 +78,8 @@ angular.module('chronontology.components')
 
 
             _this.knownTypes = [
-                'alle Bedeutungen', 'viele Bedeutungen', 'Bedeutungen', 'kaum Bedeutungen', 'keinerlei Bedeutungen'
+                'alle Bedeutungen', 'kulturell', 'pottery style	', 'politisch', 'Chronological subdivision',
+                'Geological Epoch', 'Geological Period', 'Geological Era', 'material culture'
             ];
 
             _this.toggleTypeSelection = function (typeString) {
@@ -94,7 +95,7 @@ angular.module('chronontology.components')
             }
 
             _this.knownProvenances = [
-                'chronontology', 'example'
+                'chronontology', 'Arachne'
             ]
         }
     });
