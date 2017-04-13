@@ -93,5 +93,8 @@ angular.module('chronontology.components')
                 }
             }
 
+            _this.knownProvenances = [
+                'chronontology', 'example'
+            ]
         }
     });

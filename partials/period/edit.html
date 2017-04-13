@@ -1,102 +1,114 @@
 <div>
-    <h4>Edit</h4>
+    <h3>Edit</h3>
 
-    <form novalidate show-validation role="form">
-        <div class="form-group">
-            <h3>
-                ID
-            </h3>
+    <div class="form-group">
+        <h4>
+            ID
+        </h4>
 
-            <div>
-                <input required type="text" class="form-control" placeholder="{{'ui_username'|transl8}}"
-                       ng-model="$ctrl.period.id" readonly>
-            </div>
+        <div>
+            <input required type="text" class="form-control" placeholder="{{'ui_username'|transl8}}"
+                   ng-model="$ctrl.period.id" readonly>
         </div>
+    </div>
 
 
-        <div class="form-group">
-            <h3>
-                Period names
-            </h3>
+    <div class="form-group">
+        <h4>
+            Period names
+        </h4>
 
-            <div class="row" ng-repeat="language in $ctrl.period.names">
-                <p>
-                    <div class="col-md-2">
-                        <div class="input-group">
-                            <span class="input-group-btn">
+        <div class="row" ng-repeat="language in $ctrl.period.names">
+            <p>
+                <div class="col-md-2">
+                    <div class="input-group">
+                        <span class="input-group-btn">
+                             <button class="btn btn-danger"
+                                     ng-click="$ctrl.removeLanguage(language)"
+                                     type="button">
+                                 <span class="glyphicon glyphicon-minus-sign" aria-hidden="true"></span>
+                             </button>
+                        </span>
+                        <input required type="text"
+                               class="form-control"
+                               ng-model="$ctrl.period.names[$ctrl.getLanguageIndex(language)]['lang']">
+                    </div>
+                </div>
+                <div class="col-md-10 ">
+                     <div ng-repeat="name in $ctrl.period.names[$ctrl.getLanguageIndex(language)]['content']">
+                         <div class="input-group">
+                             <input required type="text"
+                                    class="form-control"
+                                    ng-model="$ctrl.period.names[$ctrl.getLanguageIndex(language)]['content'][$ctrl.getContentIndex(language, name)]">
+                             <span class="input-group-btn">
                                  <button class="btn btn-danger"
-                                         ng-click="$ctrl.removeLanguage(language)"
+                                         ng-click="$ctrl.removeName(language, name)"
                                          type="button">
                                      <span class="glyphicon glyphicon-minus-sign" aria-hidden="true"></span>
                                  </button>
                             </span>
-                            <input required type="text"
-                                   class="form-control"
-                                   ng-model="$ctrl.period.names[$ctrl.getLanguageIndex(language)]['lang']">
-                        </div>
-                    </div>
-                    <div class="col-md-10 ">
-                         <div ng-repeat="name in $ctrl.period.names[$ctrl.getLanguageIndex(language)]['content']">
-                             <div class="input-group">
-                                 <input required type="text"
-                                        class="form-control"
-                                        ng-model="$ctrl.period.names[$ctrl.getLanguageIndex(language)]['content'][$ctrl.getContentIndex(language, name)]">
-                                 <span class="input-group-btn">
-                                     <button class="btn btn-danger"
-                                             ng-click="$ctrl.removeName(language, name)"
-                                             type="button">
-                                         <span class="glyphicon glyphicon-minus-sign" aria-hidden="true"></span>
-                                     </button>
-                                </span>
-                             </div>
                          </div>
-                         <div class="input-group">
-                             <input type="text" class="form-control" id="name-input-{{language['lang']}}" placeholder="Add name...">
-                             <span class="input-group-btn">
-                                 <button class="btn btn-success" ng-click="$ctrl.addName(language)" type="button">
-                                     <span class="glyphicon glyphicon-plus-sign" aria-hidden="true"></span>
-                                 </button>
-                             </span>
-                         </div>
-                    </div>
-                </p>
-            </div>
-            <p>
-                <div class="input-group">
-                    <span class="input-group-btn">
-                        <button class="btn btn-success" ng-click="$ctrl.addLanguage()" type="button">
-                            <span class="glyphicon glyphicon-plus-sign" aria-hidden="true"></span>
-                        </button>
-                    </span>
-                    <input type="text" class="form-control" id="language-input" placeholder="Add language...">
+                     </div>
+                     <div class="input-group">
+                         <input type="text" class="form-control" id="name-input-{{language['lang']}}" placeholder="Add name...">
+                         <span class="input-group-btn">
+                             <button class="btn btn-success" ng-click="$ctrl.addName(language)" type="button">
+                                 <span class="glyphicon glyphicon-plus-sign" aria-hidden="true"></span>
+                             </button>
+                         </span>
+                     </div>
                 </div>
             </p>
         </div>
+        <p>
+            <div class="input-group">
+                <span class="input-group-btn">
+                    <button class="btn btn-success" ng-click="$ctrl.addLanguage()" type="button">
+                        <span class="glyphicon glyphicon-plus-sign" aria-hidden="true"></span>
+                    </button>
+                </span>
+                <input type="text" class="form-control" id="language-input" placeholder="Add language...">
+            </div>
+        </p>
+    </div>
 
-        <div class="form-group row">
-            <h3>
-                Period types
-            </h3>
+    <div class="form-group row">
+        <h4>
+            Period types
+        </h4>
 
-            <form name="myForm">
-                <div class="col-md-6" ng-repeat="type in $ctrl.knownTypes">
-                    <input type="checkbox"
-                           name="selectedFruits[]"
-                           value="{{type}}"
-                           ng-checked="$ctrl.period.types.indexOf(type) > -1"
-                           ng-click="$ctrl.toggleTypeSelection(type)">
-                    {{type}}
-                </div>
-            </form>
-        </div>
-    </form>
+        <form name="myForm">
+            <div class="col-md-6" ng-repeat="type in $ctrl.knownTypes">
+                <input type="checkbox"
+                       name="selectedFruits[]"
+                       value="{{type}}"
+                       ng-checked="$ctrl.period.types.indexOf(type) > -1"
+                       ng-click="$ctrl.toggleTypeSelection(type)">
+                {{type}}
+            </div>
+        </form>
+    </div>
+
+    <div class="form-group row">
+        <h4>
+            Provenance
+        </h4>
+        <form>
+            <div class="col-md-6" ng-repeat="provenance in $ctrl.knownProvenances">
+            <label>
+                <input type="radio" ng-model="$ctrl.period.provenance" value="{{provenance}}">
+                {{provenance}}
+            </label>
+            </div>
+        </form>
+    </div>
     <p>
         <button class="btn btn-primary" ng-click="$ctrl.saveChanges()">Save</button>
         <button class="btn btn-default" ng-click="$ctrl.reset()">Reset</button>
     </p>
 </div>
-
-<!-- {{$ctrl.period}}
+<!--
+{{$ctrl.period}}
 <!--
 <p>----</p>
 
