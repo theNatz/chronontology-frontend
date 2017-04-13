@@ -59,22 +59,39 @@ angular.module('chronontology.components')
                 newNameInput.value = null;
             };
 
-            _this.removeName = function(languageObject, contentObject) {
+            _this.removeName = function(languageObject, contentString) {
                 var languageIndex = _this.getLanguageIndex(languageObject);
                 _this.period.names[languageIndex]['content'] = _this.period.names[languageIndex]['content']
                     .filter(function (x){
                     {
-                        return contentObject != x;
+                        return contentString != x;
                     }
                 })
             };
 
-            _this.getContentIndex = function (languageObject, contentObject) {
+            _this.getContentIndex = function (languageObject, contentString) {
                 var languageIndex = _this.getLanguageIndex(languageObject);
-                var indices = _this.period.names[languageIndex]['content'].findIndex(function(x){
-                    return x == contentObject;
+                return _this.period.names[languageIndex]['content'].findIndex(function(x){
+                    return x == contentString;
                 });
-                return indices;
+            };
+
+
+            _this.knownTypes = [
+                'alle Bedeutungen', 'viele Bedeutungen', 'Bedeutungen', 'kaum Bedeutungen', 'keinerlei Bedeutungen'
+            ];
+
+            _this.toggleTypeSelection = function (typeString) {
+                var typeIndex = _this.period.types.indexOf(typeString);
+                if(typeIndex < 0){
+                    _this.period.types.push(typeString)
+                }
+                else {
+                    _this.period.types = _this.period.types.filter(function (x) {
+                        return typeString != x;
+                    })
+                }
             }
+
         }
     });

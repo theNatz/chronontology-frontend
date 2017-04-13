@@ -3,19 +3,21 @@
 
     <form novalidate show-validation role="form">
         <div class="form-group">
-            <div class="control-label">
+            <h3>
                 ID
-            </div>
+            </h3>
 
             <div>
                 <input required type="text" class="form-control" placeholder="{{'ui_username'|transl8}}"
                        ng-model="$ctrl.period.id" readonly>
             </div>
         </div>
+
+
         <div class="form-group">
-            <div class="control-label">
+            <h3>
                 Period names
-            </div>
+            </h3>
 
             <div class="row" ng-repeat="language in $ctrl.period.names">
                 <p>
@@ -61,47 +63,41 @@
             </div>
             <p>
                 <div class="input-group">
-                    <input type="text" class="form-control" id="language-input" placeholder="Add language...">
                     <span class="input-group-btn">
                         <button class="btn btn-success" ng-click="$ctrl.addLanguage()" type="button">
                             <span class="glyphicon glyphicon-plus-sign" aria-hidden="true"></span>
                         </button>
                     </span>
+                    <input type="text" class="form-control" id="language-input" placeholder="Add language...">
                 </div>
             </p>
         </div>
-        <!--
-        <div>
-            <div class="control-label">
+
+        <div class="form-group row">
+            <h3>
                 Period types
-            </div>
+            </h3>
 
-            <div ng-repeat="type in $ctrl.period.types"
-                 ng-init="typeIndex = $index">
-
-                <input required type="text"
-                       class="form-control"
-                       ng-model="$ctrl.period.types[typeIndex]">
-            </div>
+            <form name="myForm">
+                <div class="col-md-6" ng-repeat="type in $ctrl.knownTypes">
+                    <input type="checkbox"
+                           name="selectedFruits[]"
+                           value="{{type}}"
+                           ng-checked="$ctrl.period.types.indexOf(type) > -1"
+                           ng-click="$ctrl.toggleTypeSelection(type)">
+                    {{type}}
+                </div>
+            </form>
         </div>
-
-        <div class="form-group">
-            <div class="control-label">
-                Provenance
-            </div>
-            <div>
-                <input required type="text"
-                       class="form-control"
-                       ng-model="$ctrl.period.provenance">
-            </div>
-        </div>-->
     </form>
-    <button class="btn btn-primary" ng-click="$ctrl.saveChanges()">Save</button>
-    <button class="btn btn-default" ng-click="$ctrl.reset()">Reset</button>
+    <p>
+        <button class="btn btn-primary" ng-click="$ctrl.saveChanges()">Save</button>
+        <button class="btn btn-default" ng-click="$ctrl.reset()">Reset</button>
+    </p>
 </div>
 
 <!-- {{$ctrl.period}}
-
+<!--
 <p>----</p>
 
 {{$ctrl.originalPeriod}} -->
