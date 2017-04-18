@@ -47,7 +47,19 @@ angular.module('chronontology.controllers')
 	};
 
 	$scope.savePeriod = function(updatedPeriod) {
-		console.log("TODO: Save updated period to DB:");
-        console.dir(updatedPeriod);
+
+        $scope.period = angular.copy(updatedPeriod);
+        $scope.document.resource = $scope.period;
+
+		$http.put("/data/period/" + $scope.period.id, JSON.stringify($scope.document))
+			.success(function (data) {
+				//putMsg('ui.update.success', 'success')
+				console.log("success");
+				console.dir(data);
+		})
+			.error(function (data) {
+                console.log("error");
+                console.dir(data);
+		});
     }
 });
