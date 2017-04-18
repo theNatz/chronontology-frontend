@@ -8,14 +8,29 @@ angular.module('chronontology.components')
         bindings:
         {
             originalPeriod: '<',
-            internalRelations: '<',
             gazetteerRelations: '<',
+            internalRelations: '<',
             document: '<',
             relatedDocuments: '<',
             onSave: '&'
         },
         controller: function() {
             var _this = this;
+
+            // TODO: Load from elsewhere?
+            _this.knownTypes = [
+                'period'
+            ];
+
+            _this.knownSubtypes = [
+                'alle Bedeutungen', 'kulturell', 'pottery style', 'politisch', 'Chronological subdivision',
+                'Geological Epoch', 'Geological Period', 'Geological Era', 'material culture'
+            ];
+
+            _this.knownProvenances = [
+                'chronontology', 'Arachne'
+            ];
+
             _this.$onChanges = function() {
                 if(!_this.originalPeriod){
                     return;
@@ -76,13 +91,7 @@ angular.module('chronontology.components')
                 });
             };
 
-
-            _this.knownTypes = [
-                'alle Bedeutungen', 'kulturell', 'pottery style	', 'politisch', 'Chronological subdivision',
-                'Geological Epoch', 'Geological Period', 'Geological Era', 'material culture'
-            ];
-
-            _this.toggleTypeSelection = function (typeString) {
+            _this.toggleSubtypeSelection = function (typeString) {
                 var typeIndex = _this.period.types.indexOf(typeString);
                 if(typeIndex < 0){
                     _this.period.types.push(typeString)
@@ -92,10 +101,40 @@ angular.module('chronontology.components')
                         return typeString != x;
                     })
                 }
-            }
+            };
 
-            _this.knownProvenances = [
-                'chronontology', 'Arachne'
-            ]
+            _this.selectAllSubtypes = function () {
+                _this.period.types = _this.knownSubtypes.slice(0);
+            };
+
+            _this.deselectAllSubtypes = function () {
+                _this.period.types = [];
+            };
+
+            _this.addTag = function () {
+                var newTagInput = document.getElementById('tag-input');
+
+                if(_this.period.tags == undefined) {
+                    _this.period.tags = [];
+                }
+
+                if(_this.period.tags.includes(newTagInput.value)){
+                    newTagInput.value = "";
+                    return;
+                }
+
+                if(newTagInput.value == "") return;
+
+                _this.period.tags.push(newTagInput.value);
+                newTagInput.value = "";
+            };
+
+            _this.removeTag = function (tag) {
+                console.dir(tag);
+                _this.period.tags = _this.period.tags.filter(function (x) {
+                    console.log(x,tag);
+                    return x != tag;
+                })
+            }
         }
     });
