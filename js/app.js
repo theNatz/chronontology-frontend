@@ -42,6 +42,11 @@ angular.module('chronontology', [
 		"sameAs",
 		"isSimilarTo"
 	],
+	gazetteerRelations: [
+		"isNamedAfter",
+		"hasCoreArea",
+		"spatiallyPartOfRegion"
+	],
 	allenRelations: [
 		"includes", "occursDuring",
 		"meetsInTimeWith", "isMetInTimeBy",
@@ -50,11 +55,6 @@ angular.module('chronontology', [
 		"starts", "isStartedBy",
 		"finishes", "isFinishedBy",
 		"overlapsInTimeWith", "isOverlappedInTimeBy"
-	],
-	gazetteerRelations: [
-		"isNamedAfter",
-		"hasCoreArea",
-		"spatiallyPartOfRegion"
 	],
     validTypes: [
         'period'

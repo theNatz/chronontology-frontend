@@ -10,6 +10,7 @@ angular.module('chronontology.components')
             period: '<',
             internalRelations: '<',
             gazetteerRelations: '<',
+            allenRelations: '<',
             document: '<',
             relatedDocuments: '<'
         }

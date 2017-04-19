@@ -8,6 +8,7 @@ angular.module('chronontology.controllers')
 	// (labels are now in transl8 keys "relation_isSenseOf" etc.)
 	$scope.internalRelations = chronontologySettings.internalRelations;
 	$scope.gazetteerRelations = chronontologySettings.gazetteerRelations;
+	$scope.allenRelations = chronontologySettings.allenRelations;
 
 	// store related periods, should be a central app-wide cache
 	$scope.relatedDocuments = {};
@@ -33,7 +34,43 @@ angular.module('chronontology.controllers')
 				}(relation));
 			});
 		}
+		for(var i = 0; i < $scope.allenRelations.length; i += 1) {
+			var relation = $scope.allenRelations[i];
+			$scope.relatedDocuments[relation] = [];
+			if($scope.period.relations[relation]) $scope.period.relations[relation].forEach(function(periodUri) {
+				(function(relation) {
+					$http.get('/data/period/'+periodUri).success(function(result) {
+						$scope.relatedDocuments[relation].push(result);
+					})
+				}(relation));
+			});
+		}
+		
+		$scope.relatedDocuments.derived = {};
 
+		for(var i = 0; i < $scope.internalRelations.length; i += 1) {
+			var relation = $scope.internalRelations[i];
+			$scope.relatedDocuments.derived[relation] = [];
+			if($scope.period.relations.derived[relation]) $scope.period.relations.derived[relation].forEach(function(periodUri) {
+				(function(relation) {
+					$http.get('/data/period/'+periodUri).success(function(result) {
+						$scope.relatedDocuments.derived[relation].push(result);
+					})
+				}(relation));
+			});
+		}
+		for(var i = 0; i < $scope.allenRelations.length; i += 1) {
+			var relation = $scope.allenRelations[i];
+			$scope.relatedDocuments.derived[relation] = [];
+			if($scope.period.relations.derived[relation]) $scope.period.relations.derived[relation].forEach(function(periodUri) {
+				(function(relation) {
+					$http.get('/data/period/'+periodUri).success(function(result) {
+						$scope.relatedDocuments.derived[relation].push(result);
+					})
+				}(relation));
+			});
+		}
+		
 		$http.get('/data/period/?size=1000&q=provenance:' + $scope.period.provenance).success( function(result) {
 			$scope.provenancePeriods = result.results;
 		});
