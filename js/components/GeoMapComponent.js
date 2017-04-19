@@ -16,23 +16,23 @@ angular.module('chronontology.components')
                 document.getElementById("map").innerHTML = "";
                 // set styles
                 var colors = {};
-                colors.spatiallypartofregion = "#ff0000";
-                colors.namedafter = "#00ff00";
-                colors.hasecoreregion = "#ff34b3";
-                colors.undefinedregion = "#9214ff";
+                colors.spatiallyPartOfRegion = "#ff0000";
+                colors.isNamedAfter = "#00ff00";
+                colors.hasCoreArea = "#ff34b3";
+                colors.undefinedRegion = "#9214ff";
                 var styleattr = {};
                 styleattr.color = "#ffffff";
                 styleattr.weight = 3;
                 styleattr.opacity = 1;
-                styleattr.fillopacity = 0.7;
-                var spatiallyPartOfRegion = {color: styleattr.color, fillColor: colors.spatiallypartofregion, weight: styleattr.weight, opacity: styleattr.opacity, fillOpacity: styleattr.fillopacity};
-                var spatiallyPartOfRegionCircle = {fillColor: colors.spatiallypartofregion, color: styleattr.color, weight: styleattr.weight, opacity: styleattr.opacity, fillOpacity: styleattr.fillopacity};
-            	var namedAfter = {color: colors.namedafter, fillColor: colors.namedafter, weight: styleattr.weight, opacity: styleattr.opacity, fillOpacity: styleattr.fillopacity};
-                var namedAfterCircle = {color: colors.namedafter, fillcolor: styleattr.color, weight: styleattr.weight, opacity: styleattr.opacity, fillOpacity: styleattr.fillopacity};
-            	var hasCoreRegion = {color: colors.hasecoreregion, fillColor: colors.hasecoreregion, weight: styleattr.weight, opacity: styleattr.opacity, fillOpacity: styleattr.fillopacity};
-                var hasCoreRegionCircle = {color: colors.hasecoreregion, fillcolor: styleattr.color, weight: styleattr.weight, opacity: styleattr.opacity, fillOpacity: styleattr.fillopacity};
-            	var undefinedRegion = {color: colors.undefinedregion, fillColor: colors.undefinedregion, weight: 0, opacity: styleattr.opacity, fillOpacity: styleattr.fillopacity};
-                var undefinedRegionCircle = {color: colors.undefinedregion, fillcolor: styleattr.color, weight: styleattr.weight, opacity: styleattr.opacity, fillOpacity: styleattr.fillopacity};
+                styleattr.fillOpacity = 0.7;
+                var spatiallyPartOfRegion = {color: styleattr.color, fillColor: colors.spatiallyPartOfRegion, weight: styleattr.weight, opacity: styleattr.opacity, fillOpacity: styleattr.fillOpacity};
+                var spatiallyPartOfRegionCircle = {fillColor: colors.spatiallyPartOfRegion, color: styleattr.color, weight: styleattr.weight, opacity: styleattr.opacity, fillOpacity: styleattr.fillOpacity};
+            	var isNamedAfter = {color: colors.isNamedAfter, fillColor: colors.isNamedAfter, weight: styleattr.weight, opacity: styleattr.opacity, fillOpacity: styleattr.fillOpacity};
+                var isNamedAfterCircle = {color: colors.isNamedAfter, fillcolor: styleattr.color, weight: styleattr.weight, opacity: styleattr.opacity, fillOpacity: styleattr.fillOpacity};
+            	var hasCoreArea = {color: colors.hasCoreArea, fillColor: colors.hasCoreArea, weight: styleattr.weight, opacity: styleattr.opacity, fillOpacity: styleattr.fillOpacity};
+                var hasCoreAreaCircle = {color: colors.hasCoreArea, fillcolor: styleattr.color, weight: styleattr.weight, opacity: styleattr.opacity, fillOpacity: styleattr.fillOpacity};
+            	var undefinedRegion = {color: colors.undefinedRegion, fillColor: colors.undefinedRegion, weight: 0, opacity: styleattr.opacity, fillOpacity: styleattr.fillOpacity};
+                var undefinedRegionCircle = {color: colors.undefinedRegion, fillcolor: styleattr.color, weight: styleattr.weight, opacity: styleattr.opacity, fillOpacity: styleattr.fillOpacity};
                 // init map
                 _this.mapY = 50.009167;
                 _this.mapX = 4.666389;
@@ -53,10 +53,10 @@ angular.module('chronontology.components')
                 var legend = L.control({position: 'topright'});
                 legend.onAdd = function (map) {
                     var div = L.DomUtil.create('div', 'info legend');
-                    div.innerHTML += '<i style="background:' + colors.spatiallypartofregion + '"></i> ' + "spatially part of region" + '<br>';
-                    div.innerHTML += '<i style="background:' + colors.namedafter + '"></i> ' + "named after" + '<br>';
-                    div.innerHTML += '<i style="background:' + colors.hasecoreregion + '"></i> ' + "has core region" + '<br>';
-                    div.innerHTML += '<i style="background:' + colors.undefinedregion + '"></i> ' + "undefined" + '<br>';
+                    div.innerHTML += '<i style="background:' + colors.spatiallyPartOfRegion + '"></i> ' + "spatially part of region" + '<br>';
+                    div.innerHTML += '<i style="background:' + colors.isNamedAfter + '"></i> ' + "is named after" + '<br>';
+                    div.innerHTML += '<i style="background:' + colors.hasCoreArea + '"></i> ' + "has core area" + '<br>';
+                    div.innerHTML += '<i style="background:' + colors.undefinedRegion + '"></i> ' + "undefined" + '<br>';
                     return div;
                 };
                 legend.addTo(_this.map);
@@ -68,10 +68,10 @@ angular.module('chronontology.components')
         				if (feature.geometry.type != "Point") {
         					if (feature.properties.relation === "spatiallyPartOfRegion") {
         						return spatiallyPartOfRegion;
-        					} else if (feature.properties.relation === "namedAfter") {
-        						return namedAfter;
-        					} else if (feature.properties.relation === "hasCoreRegion") {
-        						return hasCoreRegion;
+        					} else if (feature.properties.relation === "isNamedAfter") {
+        						return isNamedAfter;
+        					} else if (feature.properties.relation === "hasCoreArea") {
+        						return hasCoreArea;
         					} else if (feature.properties.relation === "undefined") {
         						return undefinedRegion;
         					} else {
@@ -82,10 +82,10 @@ angular.module('chronontology.components')
         			pointToLayer: function (feature, latlng) {
         				if (feature.properties.relation === "spatiallyPartOfRegion") {
         					return L.circleMarker(latlng, spatiallyPartOfRegionCircle).setRadius(8);
-        				} else if (feature.properties.relation === "namedAfter") {
-        					return L.circleMarker(latlng, namedAfterCircle).setRadius(8);
-        				} else if (feature.properties.relation === "hasCoreRegion") {
-        					return L.circleMarker(latlng, hasCoreRegionCircle).setRadius(8);
+        				} else if (feature.properties.relation === "isisNamedAfter") {
+        					return L.circleMarker(latlng, isNamedAfterCircle).setRadius(8);
+        				} else if (feature.properties.relation === "hasCoreArea") {
+        					return L.circleMarker(latlng, hasCoreAreaCircle).setRadius(8);
         				} else {
         					return L.circleMarker(latlng, undefinedRegionCircle).setRadius(8);
         				}
