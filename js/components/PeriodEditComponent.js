@@ -119,11 +119,9 @@ angular.module('chronontology.components')
             };
 
             _this.removeTag = function (tag) {
-                console.dir(tag);
                 _this.period.tags = _this.period.tags.filter(function (x) {
-                    console.log(x,tag);
                     return x != tag;
                 })
-            }
+            };
         }
     });
