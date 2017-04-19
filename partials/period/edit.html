@@ -20,16 +20,15 @@
         </form>
     </div>
 
-    <div class="form-group">
+    <div class="row">
         <h4>
-            Period names
+            {{ "period_names" | transl8 }}
         </h4>
-
-        <div class="row" ng-init="languageIndex = $index"
-             ng-repeat="language in $ctrl.period.names track by $index">
-            <p>
+        <div class="row">
+            <div ng-init="languageIndex = $index"
+                 ng-repeat="language in $ctrl.period.names track by $index">
                 <div class="col-md-2">
-                    <div class="input-group">
+                    <span class="input-group">
                         <span class="input-group-btn">
                              <button class="btn btn-danger"
                                      ng-click="$ctrl.removeLanguage(language)"
@@ -40,7 +39,7 @@
                         <input type="text"
                                class="form-control"
                                ng-model="$ctrl.period.names[languageIndex]['lang']">
-                    </div>
+                    </span>
                 </div>
                 <div class="col-md-10">
                      <div ng-init="variantIndex = $index"
@@ -67,9 +66,10 @@
                          </span>
                      </div>
                 </div>
-            </p>
+            </div>
         </div>
-        <p>
+        <p></p>
+        <div class="row col-md-4">
             <div class="input-group">
                 <span class="input-group-btn">
                     <button class="btn btn-success" ng-click="$ctrl.addLanguage()" type="button">
@@ -78,11 +78,11 @@
                 </span>
                 <input type="text" class="form-control" id="language-input" placeholder="Add language...">
             </div>
-        </p>
+        </div>
     </div>
 
     <div class="row">
-        <h4>Subtypes</h4>
+        <h4>{{ "period_type" | transl8 }}</h4>
 
         <form class="form-group">
             <div class="row">
@@ -109,17 +109,17 @@
     </div>
 
     <div class="row">
-        <h4>Definition</h4>
+        <h4>{{ "period_definition" | transl8 }}</h4>
         <textarea class="form-control" rows="3" ng-model="$ctrl.period.definition"></textarea>
     </div>
 
     <div class="row">
-        <h4>Description</h4>
+        <h4>{{ "period_description" | transl8 }}</h4>
         <textarea class="form-control" rows="3" ng-model="$ctrl.period.description"></textarea>
     </div>
 
     <div class="row">
-        <h4>Provenance</h4>
+        <h4>{{ "period_provenance" | transl8 }}</h4>
         <form class="form-group">
             <div class="col-md-6" ng-repeat="provenance in $ctrl.validProvenances">
             <label>
@@ -132,7 +132,7 @@
 
 
     <div class="row">
-        <h4>Tags</h4>
+        <h4>{{ "period_tags" | transl8 }}</h4>
         <div class="row">
             <div ng-repeat="tag in $ctrl.period.tags track by $index" class="col-md-6">
                 <div class="input-group">
@@ -163,7 +163,7 @@
     </div>
 
     <div class="row">
-        <h4>Note</h4>
+        <h4>{{ "period_note" | transl8 }}</h4>
         <textarea class="form-control" rows="3" ng-model="$ctrl.period.note"></textarea>
     </div>
 
@@ -181,12 +181,12 @@
     <!-- TODO: period.hasTimespan -->
 
     <div class="row form-group">
-        <h4>Relations</h4>
+        <h4>{{ "ui_relations" | transl8 }}</h4>
 
         <div class="col-md-12" ng-init="relationIndex = $index"
              ng-repeat="relationName in $ctrl.internalRelations">
             <div ng-if="relationName!='derived'">
-                <div>{{relationName}}</div>
+                <div>{{ "relation_"+relationName | transl8 }}{{}}</div>
                 <div class="col-md-4"
                      ng-init="valueIndex = $index"
                      ng-repeat="value in $ctrl.period.relations[relationName] track by $index">
