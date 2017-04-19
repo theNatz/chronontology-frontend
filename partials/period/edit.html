@@ -11,7 +11,7 @@
     <div class="row">
         <h4>Type</h4>
         <form class="form-group">
-            <div class="col-md-6" ng-repeat="type in $ctrl.knownTypes">
+            <div class="col-md-6" ng-repeat="type in $ctrl.validTypes">
                 <label>
                     <input type="radio" ng-model="$ctrl.period.type" value="{{type}}">
                     {{type}}
@@ -96,7 +96,7 @@
                 </div>
             </div>
             <div class="row">
-                <div class="col-md-6" ng-repeat="subtype in $ctrl.knownSubtypes">
+                <div class="col-md-6" ng-repeat="subtype in $ctrl.validSubtypes">
                     <input type="checkbox"
                            name="selectedSubtypes"
                            value="{{subtype}}"
@@ -121,7 +121,7 @@
     <div class="row">
         <h4>Provenance</h4>
         <form class="form-group">
-            <div class="col-md-6" ng-repeat="provenance in $ctrl.knownProvenances">
+            <div class="col-md-6" ng-repeat="provenance in $ctrl.validProvenances">
             <label>
                 <input type="radio" ng-model="$ctrl.period.provenance" value="{{provenance}}">
                 {{provenance}}

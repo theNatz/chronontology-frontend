@@ -14,29 +14,18 @@ angular.module('chronontology.components')
             relatedDocuments: '<',
             onSave: '&'
         },
-        controller: function() {
+        controller: function(chronontologySettings) {
             var _this = this;
 
-            // TODO: Load from elsewhere?
-            _this.knownTypes = [
-                'period'
-            ];
-
-            _this.knownSubtypes = [
-                'alle Bedeutungen', 'kulturell', 'pottery style', 'politisch', 'Chronological subdivision',
-                'Geological Epoch', 'Geological Period', 'Geological Era', 'material culture'
-            ];
-
-            _this.knownProvenances = [
-                'chronontology', 'Arachne'
-            ];
+            _this.validTypes = chronontologySettings.validTypes;
+            _this.validSubtypes = chronontologySettings.validSubtypes;
+            _this.validProvenances = chronontologySettings.validProvenances;
 
             _this.$onChanges = function() {
                 if(!_this.originalPeriod){
                     return;
                 }
                 _this.period = angular.copy(_this.originalPeriod);
-
             };
 
             _this.saveChanges = function () {
@@ -104,7 +93,7 @@ angular.module('chronontology.components')
             };
 
             _this.selectAllSubtypes = function () {
-                _this.period.types = _this.knownSubtypes.slice(0);
+                _this.period.types = _this.validSubtypes.slice(0);
             };
 
             _this.deselectAllSubtypes = function () {
