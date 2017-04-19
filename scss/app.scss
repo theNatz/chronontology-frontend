@@ -2,6 +2,11 @@
 
 @import "idai-components";
 @import "timeline";
+@import "geo/geomap";
+@import "geo/leaflet";
+@import "geo/leaflet-fullscreen";
+@import "geo/MarkerCluster.Default";
+@import "geo/MarkerCluster";
 
 body {
 	padding-top: 70px;
