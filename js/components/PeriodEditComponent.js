@@ -8,10 +8,6 @@ angular.module('chronontology.components')
         bindings:
         {
             originalPeriod: '<',
-            gazetteerRelations: '<',
-            internalRelations: '<',
-            document: '<',
-            relatedDocuments: '<',
             onSave: '&'
         },
         controller: function(chronontologySettings) {
@@ -21,18 +17,26 @@ angular.module('chronontology.components')
             _this.validSubtypes = chronontologySettings.validSubtypes;
             _this.validProvenances = chronontologySettings.validProvenances;
 
+
+
             _this.$onChanges = function() {
                 if(!_this.originalPeriod){
                     return;
                 }
-                _this.period = angular.copy(_this.originalPeriod);
+                _this.copyOriginal();
             };
 
             _this.saveChanges = function () {
-                _this.onSave({updatedPeriod: _this.period});
+                _this.onSave({
+                    updatedPeriod: _this.period
+                });
             };
 
             _this.reset = function () {
+                _this.copyOriginal();
+            };
+
+            _this.copyOriginal = function () {
                 _this.period = angular.copy(_this.originalPeriod);
             };
 
@@ -123,5 +127,26 @@ angular.module('chronontology.components')
                     return x != tag;
                 })
             };
+
+            _this.addRelation = function(relationName) {
+                if(_this.period.relations == undefined) {
+                    _this.period.relations = [];
+                }
+
+                if(_this.period.relations[relationName] == undefined) {
+                    _this.period.relations[relationName] = [];
+                }
+
+                var newRelationInput = document.getElementById('relation-input-' + relationName);
+                _this.period.relations[relationName].push(newRelationInput.value);
+                newRelationInput.value = "";
+            };
+
+            _this.removeRelation = function(relationName, relation) {
+                _this.period.relations[relationName] = _this.period.relations[relationName].filter(function(x){
+                    return x != relation;
+                });
+            };
+
         }
     });

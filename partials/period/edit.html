@@ -178,6 +178,45 @@
         </form>
     </div>
 
+    <!-- TODO: period.hasTimespan -->
+
+    <div class="row form-group">
+        <h4>Relations</h4>
+
+        <div class="col-md-12" ng-init="relationIndex = $index"
+             ng-repeat="(relationName, values) in $ctrl.period.relations">
+            <div ng-if="relationName!='derived'">
+                <div>{{relationName}}</div>
+                <div class="col-md-4"
+                     ng-init="valueIndex = $index"
+                     ng-repeat="value in values track by $index">
+                    <span class="input-group">
+                        <input type="text"
+                               class="form-control"
+                               ng-model="$ctrl.period.relations[relationName][valueIndex]">
+                        <span class="input-group-btn">
+                                 <button class="btn btn-danger"
+                                         ng-click="$ctrl.removeRelation(relationName, value)"
+                                         type="button">
+                                     <span class="glyphicon glyphicon-minus-sign" aria-hidden="true"></span>
+                                 </button>
+                            </span>
+                    </span>
+                </div>
+                <div class="col-md-4">
+                    <div class="input-group">
+                        <input type="text" class="form-control" id="relation-input-{{relationName}}" placeholder="Add relation...">
+                        <span class="input-group-btn">
+                                 <button class="btn btn-success" ng-click="$ctrl.addRelation(relationName)" type="button">
+                                     <span class="glyphicon glyphicon-plus-sign" aria-hidden="true"></span>
+                                 </button>
+                             </span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    
     <p>
         <div class="row">
             <button class="btn btn-primary" ng-click="$ctrl.saveChanges()">Save changes</button>
