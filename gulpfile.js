@@ -30,6 +30,9 @@ var cssDeps = [
 var jsDeps = [
     paths.lib + 'file-saver/FileSaver.min.js',
     paths.lib + 'd3/d3.min.js',
+    paths.lib + 'leaflet/dist/leaflet.js',
+    paths.lib + 'leaflet-fullscreen/dist/Leaflet.fullscreen.min.js',
+    paths.lib + 'leaflet.markercluster/dist/leaflet.markercluster.js',
     paths.lib + 'angular/angular.min.js',
     paths.lib + 'angular-route/angular-route.min.js',
     paths.lib + 'angular-ui-bootstrap/dist/ui-bootstrap.js',
