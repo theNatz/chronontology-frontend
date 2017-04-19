@@ -10,8 +10,13 @@ angular.module('chronontology.controllers')
 	$scope.gazetteerRelations = chronontologySettings.gazetteerRelations;
 	$scope.allenRelations = chronontologySettings.allenRelations;
 
+	$scope.internalAndAllenRelations = 
+		chronontologySettings.internalRelations
+		.concat(chronontologySettings.allenRelations);
+
 	// store related periods, should be a central app-wide cache
 	$scope.relatedDocuments = {};
+	$scope.relatedDocuments.derived = {};
 
 	$http.get('/data/period/' + $routeParams.id).success( function(result) {
 
@@ -22,45 +27,19 @@ angular.module('chronontology.controllers')
 		var geoFrameUrl = chronontologySettings.geoFrameBaseUri + "?uri=" + chronontologySettings.baseUri;
 		$scope.geoFrameUrl = $sce.trustAsResourceUrl(geoFrameUrl + "/period/" + result.resource.id);
 
-		// note: for(var relation in $scope.internalRelations) would yield 0, 1, 2, ...
-		for(var i = 0; i < $scope.internalRelations.length; i += 1) {
-			var relation = $scope.internalRelations[i];
-			$scope.relatedDocuments[relation] = [];
-			if($scope.period.relations[relation]) $scope.period.relations[relation].forEach(function(periodUri) {
-				(function(relation) {
-					$http.get('/data/period/'+periodUri).success(function(result) {
-						$scope.relatedDocuments[relation].push(result);
-					})
-				}(relation));
-			});
-		}
-		for(var i = 0; i < $scope.allenRelations.length; i += 1) {
-			var relation = $scope.allenRelations[i];
-			$scope.relatedDocuments[relation] = [];
-			if($scope.period.relations[relation]) $scope.period.relations[relation].forEach(function(periodUri) {
-				(function(relation) {
-					$http.get('/data/period/'+periodUri).success(function(result) {
-						$scope.relatedDocuments[relation].push(result);
-					})
-				}(relation));
-			});
-		}
-		
-		$scope.relatedDocuments.derived = {};
+		// note: for(var relation in $scope.internalAndAllenRelations) would yield 0, 1, 2, ...
+		for(var i = 0; i < $scope.internalAndAllenRelations.length; i += 1) {
+			var relation = $scope.internalAndAllenRelations[i];
 
-		for(var i = 0; i < $scope.internalRelations.length; i += 1) {
-			var relation = $scope.internalRelations[i];
-			$scope.relatedDocuments.derived[relation] = [];
-			if($scope.period.relations.derived[relation]) $scope.period.relations.derived[relation].forEach(function(periodUri) {
+			$scope.relatedDocuments[relation] = [];
+			if($scope.period.relations[relation]) $scope.period.relations[relation].forEach(function(periodUri) {
 				(function(relation) {
 					$http.get('/data/period/'+periodUri).success(function(result) {
-						$scope.relatedDocuments.derived[relation].push(result);
+						$scope.relatedDocuments[relation].push(result);
 					})
 				}(relation));
 			});
-		}
-		for(var i = 0; i < $scope.allenRelations.length; i += 1) {
-			var relation = $scope.allenRelations[i];
+
 			$scope.relatedDocuments.derived[relation] = [];
 			if($scope.period.relations.derived[relation]) $scope.period.relations.derived[relation].forEach(function(periodUri) {
 				(function(relation) {

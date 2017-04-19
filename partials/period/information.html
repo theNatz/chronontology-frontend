@@ -114,6 +114,18 @@
         </span>
     </span>
 
+    <span ng-repeat="allenRelation in $ctrl.allenRelations">
+        <span ng-if="$ctrl.period.relations[allenRelation]">
+            <dt>{{ "relation_"+allenRelation | transl8 }}</dt>
+            <dd ng-repeat="document in $ctrl.relatedDocuments[allenRelation]">
+                <a ng-href="/period/{{document.resource.id}}">{{ document.resource.names | prefName }}</a>
+                ({{ document.resource.types.join(", ") }})
+                {{ document.resource.provenance }}
+            </dd>
+            <br>
+        </span>
+    </span>
+
     <h4>{{ "ui_derivedRelations" | transl8 }}</h4>
 
     <span ng-repeat="relation in $ctrl.internalRelations">
