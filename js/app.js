@@ -39,7 +39,8 @@ angular.module('chronontology', [
 		"isPartOf", "hasPart",
 		"isListedIn", "lists",
 		"follows", "isFollowedBy",
-		"sameAs"
+		"sameAs",
+		"isSimilarTo"
 	],
 	gazetteerRelations: [
 		"isNamedAfter",
@@ -54,7 +55,7 @@ angular.module('chronontology', [
         'Geological Epoch', 'Geological Period', 'Geological Era', 'material culture'
     ],
     validProvenances: [
-        'chronontology', 'Arachne'
+        'chronontology', 'Arachne', 'aat'
     ]
 }).constant('componentsSettings', {
     transl8Uri: 'https://arachne.dainst.org/transl8/translation/jsonp?application=chronontology_frontend&application=shared&lang={LANG}&callback=JSON_CALLBACK',
