@@ -29,11 +29,11 @@ angular.module('chronontology', [
                 .when('/thesaurus/:provenance', {templateUrl: 'partials/thesaurus.html'})
                 .when('/about', {templateUrl: 'partials/about.html'})
                 .when('/contact', {templateUrl: 'partials/contact.html'})
-            
+
 	}
 ]).constant('chronontologySettings', {
 	baseUri: "http://chronontology.dainst.org",
-	geoFrameBaseUri: "http://chronontology.i3mainz.hs-mainz.de/stc/W_ChronOntologyGEO",
+    geowidgetURL: "http://chronontology.i3mainz.hs-mainz.de/spatialapi/geowidget",
 	internalRelations: [
 		"isSenseOf", "hasSense",
 		"isPartOf", "hasPart",
