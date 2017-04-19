@@ -53,9 +53,10 @@ angular.module('chronontology.controllers')
 
 		$http.put("/data/period/" + $scope.period.id, JSON.stringify($scope.document))
 			.success(function (data) {
-				//putMsg('ui.update.success', 'success')
 				console.log("success");
 				console.dir(data);
+
+				$scope.activeTab = 'info';
 		})
 			.error(function (data) {
                 console.log("error");
