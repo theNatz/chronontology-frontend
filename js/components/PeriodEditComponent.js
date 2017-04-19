@@ -16,8 +16,7 @@ angular.module('chronontology.components')
             _this.validTypes = chronontologySettings.validTypes;
             _this.validSubtypes = chronontologySettings.validSubtypes;
             _this.validProvenances = chronontologySettings.validProvenances;
-
-
+            _this.internalRelations = chronontologySettings.internalRelations;
 
             _this.$onChanges = function() {
                 if(!_this.originalPeriod){

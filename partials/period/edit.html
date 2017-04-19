@@ -184,12 +184,12 @@
         <h4>Relations</h4>
 
         <div class="col-md-12" ng-init="relationIndex = $index"
-             ng-repeat="(relationName, values) in $ctrl.period.relations">
+             ng-repeat="relationName in $ctrl.internalRelations">
             <div ng-if="relationName!='derived'">
                 <div>{{relationName}}</div>
                 <div class="col-md-4"
                      ng-init="valueIndex = $index"
-                     ng-repeat="value in values track by $index">
+                     ng-repeat="value in $ctrl.period.relations[relationName] track by $index">
                     <span class="input-group">
                         <input type="text"
                                class="form-control"
