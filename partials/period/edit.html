@@ -169,15 +169,12 @@
 
     <div class="row">
         <form class="form-group">
-            <div class="row">
-                <h4>Ongoing? </h4>
-                <input type="checkbox"
-                       name="toggleOngoing"
-                       value="{{$ctrl.period.ongoing}}"
-                       ng-checked="$ctrl.period.ongoing"
-                       ng-click="$ctrl.period.ongoing = !$ctrl.period.ongoing">
-                </div>
-            </div>
+            <h4>Ongoing? </h4>
+            <input type="checkbox"
+                   name="toggleOngoing"
+                   value="{{$ctrl.period.ongoing}}"
+                   ng-checked="$ctrl.period.ongoing"
+                   ng-click="$ctrl.period.ongoing = !$ctrl.period.ongoing">
         </form>
     </div>
 
