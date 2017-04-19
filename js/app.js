@@ -42,6 +42,15 @@ angular.module('chronontology', [
 		"sameAs",
 		"isSimilarTo"
 	],
+	allenRelations: [
+		"includes", "occursDuring",
+		"meetsInTimeWith", "isMetInTimeBy",
+		"occursBefore", "occursAfter",
+		"isEqualInTimeTo",
+		"starts", "isStartedBy",
+		"finishes", "isFinishedBy",
+		"overlapsInTimeWith", "isOverlappedInTimeBy"
+	],
 	gazetteerRelations: [
 		"isNamedAfter",
 		"hasCoreArea",
