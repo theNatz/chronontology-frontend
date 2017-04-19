@@ -5,7 +5,7 @@ angular.module('chronontology.components')
             var _this = this;
             var popupinfo = [];
             // set div to loading
-            document.getElementById("map").innerHTML = "<h1 style='text-align:center;line-height:250px;'>map is loading...</h1>";
+            document.getElementById("map").innerHTML = "<h1 style='text-align:center;line-height:450px;'>map is loading...</h1>";
             var geowidgetParam = "?uri=" + chronontologySettings.baseUri + "/period/";
             $http.get(chronontologySettings.geowidgetURL + geowidgetParam + $routeParams.id).success(function(geojson){
                 _this.geojson = geojson;
@@ -82,7 +82,7 @@ angular.module('chronontology.components')
         			pointToLayer: function (feature, latlng) {
         				if (feature.properties.relation === "spatiallyPartOfRegion") {
         					return L.circleMarker(latlng, spatiallyPartOfRegionCircle).setRadius(8);
-        				} else if (feature.properties.relation === "isisNamedAfter") {
+        				} else if (feature.properties.relation === "isNamedAfter") {
         					return L.circleMarker(latlng, isNamedAfterCircle).setRadius(8);
         				} else if (feature.properties.relation === "hasCoreArea") {
         					return L.circleMarker(latlng, hasCoreAreaCircle).setRadius(8);
