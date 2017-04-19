@@ -17,70 +17,70 @@
     <dt>{{ "period_provenance" | transl8 }}</dt>
     <dd>
         <a ng-href="/thesaurus/{{ $ctrl.period.provenance }}">{{ $ctrl.period.provenance }}</a>
-        <span ng-show="$ctrl.period.externalId">(originale ID: {{ $ctrl.period.externalId }})</span>
+        <span ng-if="$ctrl.period.externalId">(originale ID: {{ $ctrl.period.externalId }})</span>
     </dd>
     <br>
 
-    <span ng-show="$ctrl.period.definition">
+    <span ng-if="$ctrl.period.definition">
         <dt>{{ "period_definition" | transl8 }}</dt>
         <dd class="preserve-linebreaks">{{ $ctrl.period.definition }}</dd>
         <br>
     </span>
 
-    <span ng-show="$ctrl.period.description">
+    <span ng-if="$ctrl.period.description">
         <dt>{{ "period_description" | transl8 }}</dt>
         <dd class="preserve-linebreaks">{{ $ctrl.period.description }}</dd>
         <br>
     </span>
 
-    <span ng-show="$ctrl.period.tags">
+    <span ng-if="$ctrl.period.tags">
         <dt>{{ "period_tags" | transl8 }}</dt>
         <dd>{{ $ctrl.period.tags.join(", ") }}</dd>
         <br>
     </span>
 
-    <span ng-show="$ctrl.period.note">
+    <span ng-if="$ctrl.period.note">
         <dt>{{ "period_note" | transl8 }}</dt>
         <dd class="preserve-linebreaks">{{ $ctrl.period.note }}</dd>
         <br>
     </span>
 
-    <span ng-show="$ctrl.period.hasTimespan">
+    <span ng-if="$ctrl.period.hasTimespan">
         <dt>{{ "period_temporalExtent" | transl8 }}</dt>
-        <span ng-show="$ctrl.period.ongoing">
+        <span ng-if="$ctrl.period.ongoing">
             <dd>{{ "period_ongoing" | transl8 }}</dd>
             <br>
         </span>
         <dd ng-repeat="timespan in $ctrl.period.hasTimespan">
             {{ timespan.timeOriginal }}
             <br>
-            <span ng-show="timespan.begin">
+            <span ng-if="timespan.begin">
                 {{ "temporal_begin" | transl8 }}
-                <span ng-show="timespan.begin.at">
+                <span ng-if="timespan.begin.at">
                     {{ timespan.begin.at }}
-                    <span ng-show="timespan.begin.atPrecision">
+                    <span ng-if="timespan.begin.atPrecision">
                         ({{ timespan.begin.atPrecision }})
                     </span>
                 </span>
-                <span ng-show="timespan.begin.notBefore">{{ "temporal_notBefore" | transl8 }} {{ timespan.begin.notBefore }}</span>
-                <span ng-show="timespan.begin.notAfter">{{ "temporal_notAfter" | transl8 }} {{ timespan.begin.notAfter }}</span>
+                <span ng-if="timespan.begin.notBefore">{{ "temporal_notBefore" | transl8 }} {{ timespan.begin.notBefore }}</span>
+                <span ng-if="timespan.begin.notAfter">{{ "temporal_notAfter" | transl8 }} {{ timespan.begin.notAfter }}</span>
                 <br>
             </span>
-            <span ng-show="timespan.end">
+            <span ng-if="timespan.end">
                 {{ "temporal_end" | transl8 }}
-                <span ng-show="timespan.end.at">
+                <span ng-if="timespan.end.at">
                     {{ timespan.end.at }}
-                    <span ng-show="timespan.end.atPrecision">
+                    <span ng-if="timespan.end.atPrecision">
                         ({{ timespan.end.atPrecision }})
                     </span>
                 </span>
-                <span ng-show="timespan.end.notBefore">{{ "temporal_notBefore" | transl8 }} {{ timespan.end.notBefore }}</span>
-                <span ng-show="timespan.end.notAfter">{{ "temporal_notAfter" | transl8 }} {{ timespan.end.notAfter }}</span>
+                <span ng-if="timespan.end.notBefore">{{ "temporal_notBefore" | transl8 }} {{ timespan.end.notBefore }}</span>
+                <span ng-if="timespan.end.notAfter">{{ "temporal_notAfter" | transl8 }} {{ timespan.end.notAfter }}</span>
                 <br>
             </span>
-            <span ng-show="timespan.calendar">{{ "temporal_calendar" | transl8 }} {{ timespan.calendar }}<br></span>
-            <span ng-show="timespan.sourceOriginal">{{ "ui_source" | transl8 }} {{ timespan.sourceOriginal }}<br></span>
-            <span ng-show="timespan.sourceURL"><a ng-href="{{timespan.sourceURL}}">{{timespan.sourceURL}}</a><br></span>
+            <span ng-if="timespan.calendar">{{ "temporal_calendar" | transl8 }} {{ timespan.calendar }}<br></span>
+            <span ng-if="timespan.sourceOriginal">{{ "ui_source" | transl8 }} {{ timespan.sourceOriginal }}<br></span>
+            <span ng-if="timespan.sourceURL"><a ng-href="{{timespan.sourceURL}}">{{timespan.sourceURL}}</a><br></span>
         </dd>
         <br>
     </span>
@@ -126,6 +126,8 @@
         </span>
     </span>
 
+<span ng-if="$ctrl.period.relations.derived">
+
     <h4>{{ "ui_derivedRelations" | transl8 }}</h4>
 
     <span ng-repeat="relation in $ctrl.internalRelations">
@@ -163,6 +165,8 @@
             <br>
         </span>
     </span>
+
+</span>
 
 </dl>
 
