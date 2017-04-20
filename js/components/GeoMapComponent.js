@@ -23,19 +23,19 @@ angular.module('chronontology.components')
                 // set styles
                 var colors = {};
                 colors.spatiallyPartOfRegion = "#ff0000";
-                colors.isNamedAfter = "#00ff00";
+                colors.isNamedAfter = "#FFA500";
                 colors.hasCoreArea = "#9214ff";
                 var styleattr = {};
                 styleattr.color = "#ffffff";
-                styleattr.weight = 1.5;
+                styleattr.weight = 1.75;
                 styleattr.opacity = 1;
-                styleattr.fillOpacity = 0.7;
+                styleattr.fillOpacity = 0.65;
                 var spatiallyPartOfRegion = {color: styleattr.color, fillColor: colors.spatiallyPartOfRegion, weight: styleattr.weight, opacity: styleattr.opacity, fillOpacity: styleattr.fillOpacity};
-                var spatiallyPartOfRegionCircle = {fillColor: colors.spatiallyPartOfRegion, color: styleattr.color, weight: styleattr.weight, opacity: styleattr.opacity, fillOpacity: styleattr.fillOpacity};
-            	var isNamedAfter = {color: colors.isNamedAfter, fillColor: colors.isNamedAfter, weight: styleattr.weight, opacity: styleattr.opacity, fillOpacity: styleattr.fillOpacity};
-                var isNamedAfterCircle = {color: colors.isNamedAfter, fillcolor: styleattr.color, weight: styleattr.weight, opacity: styleattr.opacity, fillOpacity: styleattr.fillOpacity};
-            	var hasCoreArea = {color: colors.hasCoreArea, fillColor: colors.hasCoreArea, weight: styleattr.weight, opacity: styleattr.opacity, fillOpacity: styleattr.fillOpacity};
-                var hasCoreAreaCircle = {color: colors.hasCoreArea, fillcolor: styleattr.color, weight: styleattr.weight, opacity: styleattr.opacity, fillOpacity: styleattr.fillOpacity};
+                var spatiallyPartOfRegionCircle = {color: styleattr.color, fillColor: colors.spatiallyPartOfRegion, weight: styleattr.weight, opacity: styleattr.opacity, fillOpacity: styleattr.fillOpacity};
+            	var isNamedAfter = {color: styleattr.color, fillColor: colors.isNamedAfter, weight: styleattr.weight, opacity: styleattr.opacity, fillOpacity: styleattr.fillOpacity};
+                var isNamedAfterCircle = {color: styleattr.color, fillcolor: colors.isNamedAfter, weight: styleattr.weight, opacity: styleattr.opacity, fillOpacity: styleattr.fillOpacity};
+            	var hasCoreArea = {color: styleattr.color, fillColor: colors.hasCoreArea, weight: styleattr.weight, opacity: styleattr.opacity, fillOpacity: styleattr.fillOpacity};
+                var hasCoreAreaCircle = {color: styleattr.color, fillcolor: colors.hasCoreArea, weight: styleattr.weight, opacity: styleattr.opacity, fillOpacity: styleattr.fillOpacity};
                 // init map
                 _this.mapY = 0;
                 _this.mapX = 0;
