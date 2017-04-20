@@ -37,8 +37,9 @@ angular.module('chronontology.components')
             	var hasCoreArea = {color: colors.hasCoreArea, fillColor: colors.hasCoreArea, weight: styleattr.weight, opacity: styleattr.opacity, fillOpacity: styleattr.fillOpacity};
                 var hasCoreAreaCircle = {color: colors.hasCoreArea, fillcolor: styleattr.color, weight: styleattr.weight, opacity: styleattr.opacity, fillOpacity: styleattr.fillOpacity};
                 // init map
-                _this.mapY = 50.009167;
-                _this.mapX = 4.666389;
+                _this.mapY = 0;
+                _this.mapX = 0;
+                _this.markersArea = 0;
                 _this.mapZoom = 2;
                 _this.baseLayer = L.tileLayer('http://{s}.tiles.mapbox.com/v3/isawnyu.map-knmctlkh/{z}/{x}/{y}.png', {
                     maxZoom: 15,
@@ -91,8 +92,22 @@ angular.module('chronontology.components')
         				}
         			}
         		});
+                // add marker as layer
                 _this.markers.addLayer(marker);
-		        _this.map.addLayer(_this.markers);
+                _this.map.addLayer(_this.markers);
+                // calc area and zoom
+                var area = turf.area(geojson); // http://turfjs.org/docs/#area --> area in square meters
+                if (_this.markersArea <= 1000000) { // 1 Mio.
+                    _this.mapZoom = 5;
+                } else if (_this.markersArea <= 10000000) { // 10 Mio.
+                    _this.mapZoom = 3;
+                } else if (_this.markersArea <= 20000000) { // 20 Mio.
+                    _this.mapZoom = 3;
+                } else if (_this.markersArea <= 30000000) { // 30 Mio.
+                    _this.mapZoom = 3;
+                } else {
+                    _this.mapZoom = 1; // world
+                }
                 // add popup
                 var popupContent = "";
         		for (var i=0; i< popupinfo.length; i++) {
