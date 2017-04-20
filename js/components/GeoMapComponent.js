@@ -31,11 +31,8 @@ angular.module('chronontology.components')
                 styleattr.opacity = 1;
                 styleattr.fillOpacity = 0.65;
                 var spatiallyPartOfRegion = {color: styleattr.color, fillColor: colors.spatiallyPartOfRegion, weight: styleattr.weight, opacity: styleattr.opacity, fillOpacity: styleattr.fillOpacity};
-                var spatiallyPartOfRegionCircle = {color: styleattr.color, fillColor: colors.spatiallyPartOfRegion, weight: styleattr.weight, opacity: styleattr.opacity, fillOpacity: styleattr.fillOpacity};
             	var isNamedAfter = {color: styleattr.color, fillColor: colors.isNamedAfter, weight: styleattr.weight, opacity: styleattr.opacity, fillOpacity: styleattr.fillOpacity};
-                var isNamedAfterCircle = {color: styleattr.color, fillcolor: colors.isNamedAfter, weight: styleattr.weight, opacity: styleattr.opacity, fillOpacity: styleattr.fillOpacity};
             	var hasCoreArea = {color: styleattr.color, fillColor: colors.hasCoreArea, weight: styleattr.weight, opacity: styleattr.opacity, fillOpacity: styleattr.fillOpacity};
-                var hasCoreAreaCircle = {color: styleattr.color, fillcolor: colors.hasCoreArea, weight: styleattr.weight, opacity: styleattr.opacity, fillOpacity: styleattr.fillOpacity};
                 // init map
                 _this.mapY = 0;
                 _this.mapX = 0;
@@ -57,9 +54,19 @@ angular.module('chronontology.components')
                 var legend = L.control({position: 'topright'});
                 legend.onAdd = function (map) {
                     var div = L.DomUtil.create('div', 'info legend');
-                    div.innerHTML += '<i style="background:' + colors.spatiallyPartOfRegion + '"></i> ' + _this.g1 + '<br>';
-                    div.innerHTML += '<i style="background:' + colors.isNamedAfter + '"></i> ' + _this.g2 + '<br>';
-                    div.innerHTML += '<i style="background:' + colors.hasCoreArea + '"></i> ' + _this.g3 + '<br>';
+                    var stop = false;
+                    for (var feature in geojson.features) {
+                        if (geojson.features[feature].properties.relation.indexOf("spatiallyPartOfRegion") !== -1 && !stop) {
+                            div.innerHTML += '<i style="background:' + colors.spatiallyPartOfRegion + '"></i> ' + _this.g1 + '<br>';
+                            stop = true;
+                        } else if (geojson.features[feature].properties.relation.indexOf("isNamedAfter") !== -1 && !stop) {
+                            div.innerHTML += '<i style="background:' + colors.isNamedAfter + '"></i> ' + _this.g2 + '<br>';
+                            stop = true;
+                        } else if (geojson.features[feature].properties.relation.indexOf("hasCoreArea") !== -1 && !stop) {
+                            div.innerHTML += '<i style="background:' + colors.hasCoreArea + '"></i> ' + _this.g3 + '<br>';
+                            stop = true;
+                        }
+                    }
                     return div;
                 };
                 legend.addTo(_this.map);
@@ -67,29 +74,22 @@ angular.module('chronontology.components')
                 _this.markers = L.markerClusterGroup();
                 var marker = L.geoJson(geojson, {
         			onEachFeature: onEachFeature,
-        			style: function (feature) {
-        				if (feature.geometry.type != "Point") {
-        					if (feature.properties.relation === "spatiallyPartOfRegion") {
-        						return spatiallyPartOfRegion;
-        					} else if (feature.properties.relation === "isNamedAfter") {
-        						return isNamedAfter;
-        					} else if (feature.properties.relation === "hasCoreArea") {
-        						return hasCoreArea;
-        					} else {
-        						return spatiallyPartOfRegion;
-        					}
-        				}
+        			style: function (feature, latlng) {
+    					if (feature.properties.relation === "spatiallyPartOfRegion") {
+    						return spatiallyPartOfRegion;
+    					} else if (feature.properties.relation === "isNamedAfter") {
+    						return isNamedAfter;
+    					} else if (feature.properties.relation === "hasCoreArea") {
+    						return hasCoreArea;
+    					} else {
+    						return spatiallyPartOfRegion;
+    					}
         			},
         			pointToLayer: function (feature, latlng) {
-        				if (feature.properties.relation === "spatiallyPartOfRegion") {
-        					return L.circleMarker(latlng, spatiallyPartOfRegionCircle).setRadius(8);
-        				} else if (feature.properties.relation === "isNamedAfter") {
-        					return L.circleMarker(latlng, isNamedAfterCircle).setRadius(8);
-        				} else if (feature.properties.relation === "hasCoreArea") {
-        					return L.circleMarker(latlng, hasCoreAreaCircle).setRadius(8);
-        				} else {
-        					return L.circleMarker(latlng, spatiallyPartOfRegionCircle).setRadius(8);
-        				}
+                        // create polygon out of point
+                        var point = turf.point([latlng.lat, latlng.lng]);
+                        var buffer = turf.buffer(point, 25, "kilometers");
+                        return L.polygon(buffer.geometry.coordinates);
         			}
         		});
                 // add marker as layer
@@ -98,7 +98,9 @@ angular.module('chronontology.components')
                 // calc area and zoom
                 var area = turf.area(geojson); // http://turfjs.org/docs/#area --> area in square meters
                 _this.markersArea = parseFloat((area/1000000).toFixed(2));
-                if (_this.markersArea <= 1000000) { // 1 Mio.
+                if (_this.markersArea === 0) { // point
+                    _this.mapZoom = 8;
+                } else if (_this.markersArea <= 1000000) { // 1 Mio.
                     _this.mapZoom = 5;
                 } else if (_this.markersArea <= 10000000) { // 10 Mio.
                     _this.mapZoom = 3;
