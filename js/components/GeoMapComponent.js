@@ -56,15 +56,17 @@ angular.module('chronontology.components')
                     var div = L.DomUtil.create('div', 'info legend');
                     var stop = false;
                     for (var feature in geojson.features) {
-                        if (geojson.features[feature].properties.relation.indexOf("spatiallyPartOfRegion") !== -1 && !stop) {
-                            div.innerHTML += '<i style="background:' + colors.spatiallyPartOfRegion + '"></i> ' + _this.g1 + '<br>';
-                            stop = true;
-                        } else if (geojson.features[feature].properties.relation.indexOf("isNamedAfter") !== -1 && !stop) {
-                            div.innerHTML += '<i style="background:' + colors.isNamedAfter + '"></i> ' + _this.g2 + '<br>';
-                            stop = true;
-                        } else if (geojson.features[feature].properties.relation.indexOf("hasCoreArea") !== -1 && !stop) {
-                            div.innerHTML += '<i style="background:' + colors.hasCoreArea + '"></i> ' + _this.g3 + '<br>';
-                            stop = true;
+                        if (geojson.features[feature].properties.relation) {
+                            if (geojson.features[feature].properties.relation.indexOf("spatiallyPartOfRegion") !== -1 && !stop) {
+                                div.innerHTML += '<i style="background:' + colors.spatiallyPartOfRegion + '"></i> ' + _this.g1 + '<br>';
+                                stop = true;
+                            } else if (geojson.features[feature].properties.relation.indexOf("isNamedAfter") !== -1 && !stop) {
+                                div.innerHTML += '<i style="background:' + colors.isNamedAfter + '"></i> ' + _this.g2 + '<br>';
+                                stop = true;
+                            } else if (geojson.features[feature].properties.relation.indexOf("hasCoreArea") !== -1 && !stop) {
+                                div.innerHTML += '<i style="background:' + colors.hasCoreArea + '"></i> ' + _this.g3 + '<br>';
+                                stop = true;
+                            }
                         }
                     }
                     return div;
