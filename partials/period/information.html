@@ -111,7 +111,14 @@
     <span ng-repeat="gazetteerRelation in $ctrl.gazetteerRelations">
         <span ng-if="$ctrl.period[gazetteerRelation]">
             <dt>{{ "relation_"+gazetteerRelation | transl8 }}</dt>
-            <dd ng-repeat="region in $ctrl.period[gazetteerRelation]">
+			<dd ng-if="$ctrl.document.derived[gazetteerRelation]"
+					ng-repeat="region in $ctrl.document.derived[gazetteerRelation]">
+				<a ng-href="{{region['@id']}}" target="_blank">
+                    {{region.prefName.title}} <span class="glyphicon glyphicon-new-window"></span>
+                </a>
+			</dd>
+            <dd ng-if="!$ctrl.document.derived[gazetteerRelation]"
+					ng-repeat="region in $ctrl.period[gazetteerRelation]">
                 <a ng-href="{{region}}" target="_blank">
                     {{region}} <span class="glyphicon glyphicon-new-window"></span>
                 </a>
