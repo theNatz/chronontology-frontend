@@ -97,6 +97,7 @@ angular.module('chronontology.components')
                 _this.map.addLayer(_this.markers);
                 // calc area and zoom
                 var area = turf.area(geojson); // http://turfjs.org/docs/#area --> area in square meters
+                _this.markersArea = parseFloat((area/1000000).toFixed(2));
                 if (_this.markersArea <= 1000000) { // 1 Mio.
                     _this.mapZoom = 5;
                 } else if (_this.markersArea <= 10000000) { // 10 Mio.
@@ -108,6 +109,12 @@ angular.module('chronontology.components')
                 } else {
                     _this.mapZoom = 1; // world
                 }
+                // calc layer center
+                _this.mapY = _this.markers.getBounds().getCenter().lat;
+                _this.mapX = _this.markers.getBounds().getCenter().lng;
+                // set map
+                console.info("geojson-area[km²]",_this.markersArea,"map-zoom",_this.mapZoom,"geojson-center",_this.mapY,_this.mapX);
+                _this.map.setView([_this.mapY, _this.mapX], _this.mapZoom);
                 // add popup
                 var popupContent = "";
         		for (var i=0; i< popupinfo.length; i++) {
