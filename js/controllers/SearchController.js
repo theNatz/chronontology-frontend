@@ -2,21 +2,21 @@
 
 angular.module('chronontology.controllers')
 
-.controller("SearchController", function($scope, $location) {
+.controller("SearchController", function($scope, $location, chronontologySettings) {
 
-    $scope.getRegion = function(period) {
+    $scope.getRegion = function(doc) {
 
-        if (!period.derived) {
+        if (!doc.derived) {
             return '-';
-        } else if(period.derived.namedAfter) {
-            return period.derived.namedAfter[0].prefName.title;
-        } else if(period.derived.hasCoreRegion) {
-            return period.derived.hasCoreRegion[0].prefName.title;
-        } else if(period.derived.spatiallyPartOfRegion) {
-            return period.derived.spatiallyPartOfRegion[0].prefName.title;
         } else {
-            return '-';
+            for (var i in chronontologySettings.gazetteerRelations) {
+                var relation = chronontologySettings.gazetteerRelations[i];
+                if (doc.derived[relation]) {
+                    return doc.derived[relation][0].prefName.title;
+                }
+            }
         }
+        return '-';
     }
 
 })
