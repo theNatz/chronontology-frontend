@@ -1,11 +1,17 @@
 angular.module('chronontology.components')
     .component('geomap',{
         templateUrl: '../../partials/geo/map.html',
+        bindings: {
+            g1:'@', //spatiallyPartOfRegion
+            g2:'@', //isNamedAfter
+            g3:'@'  //hasCoreArea
+        },
         controller: function($scope, $location, $routeParams, $http, $sce, chronontologySettings){
             var _this = this;
             var popupinfo = [];
             // set div to loading
-            document.getElementById("map").innerHTML = "<h1 style='text-align:center;line-height:450px;'>map is loading...</h1>";
+            document.getElementById("map").innerHTML = "<h1 class='maploading'>map is loading...</h1>";
+            // load data
             var geowidgetParam = "?uri=" + chronontologySettings.baseUri + "/period/";
             $http.get(chronontologySettings.geowidgetURL + geowidgetParam + $routeParams.id).success(function(geojson){
                 _this.geojson = geojson;
@@ -18,11 +24,10 @@ angular.module('chronontology.components')
                 var colors = {};
                 colors.spatiallyPartOfRegion = "#ff0000";
                 colors.isNamedAfter = "#00ff00";
-                colors.hasCoreArea = "#ff34b3";
-                colors.undefinedRegion = "#9214ff";
+                colors.hasCoreArea = "#9214ff";
                 var styleattr = {};
                 styleattr.color = "#ffffff";
-                styleattr.weight = 3;
+                styleattr.weight = 1.5;
                 styleattr.opacity = 1;
                 styleattr.fillOpacity = 0.7;
                 var spatiallyPartOfRegion = {color: styleattr.color, fillColor: colors.spatiallyPartOfRegion, weight: styleattr.weight, opacity: styleattr.opacity, fillOpacity: styleattr.fillOpacity};
@@ -31,8 +36,6 @@ angular.module('chronontology.components')
                 var isNamedAfterCircle = {color: colors.isNamedAfter, fillcolor: styleattr.color, weight: styleattr.weight, opacity: styleattr.opacity, fillOpacity: styleattr.fillOpacity};
             	var hasCoreArea = {color: colors.hasCoreArea, fillColor: colors.hasCoreArea, weight: styleattr.weight, opacity: styleattr.opacity, fillOpacity: styleattr.fillOpacity};
                 var hasCoreAreaCircle = {color: colors.hasCoreArea, fillcolor: styleattr.color, weight: styleattr.weight, opacity: styleattr.opacity, fillOpacity: styleattr.fillOpacity};
-            	var undefinedRegion = {color: colors.undefinedRegion, fillColor: colors.undefinedRegion, weight: 0, opacity: styleattr.opacity, fillOpacity: styleattr.fillOpacity};
-                var undefinedRegionCircle = {color: colors.undefinedRegion, fillcolor: styleattr.color, weight: styleattr.weight, opacity: styleattr.opacity, fillOpacity: styleattr.fillOpacity};
                 // init map
                 _this.mapY = 50.009167;
                 _this.mapX = 4.666389;
@@ -53,10 +56,9 @@ angular.module('chronontology.components')
                 var legend = L.control({position: 'topright'});
                 legend.onAdd = function (map) {
                     var div = L.DomUtil.create('div', 'info legend');
-                    div.innerHTML += '<i style="background:' + colors.spatiallyPartOfRegion + '"></i> ' + "spatially part of region" + '<br>';
-                    div.innerHTML += '<i style="background:' + colors.isNamedAfter + '"></i> ' + "is named after" + '<br>';
-                    div.innerHTML += '<i style="background:' + colors.hasCoreArea + '"></i> ' + "has core area" + '<br>';
-                    div.innerHTML += '<i style="background:' + colors.undefinedRegion + '"></i> ' + "undefined" + '<br>';
+                    div.innerHTML += '<i style="background:' + colors.spatiallyPartOfRegion + '"></i> ' + _this.g1 + '<br>';
+                    div.innerHTML += '<i style="background:' + colors.isNamedAfter + '"></i> ' + _this.g2 + '<br>';
+                    div.innerHTML += '<i style="background:' + colors.hasCoreArea + '"></i> ' + _this.g3 + '<br>';
                     return div;
                 };
                 legend.addTo(_this.map);
@@ -72,10 +74,8 @@ angular.module('chronontology.components')
         						return isNamedAfter;
         					} else if (feature.properties.relation === "hasCoreArea") {
         						return hasCoreArea;
-        					} else if (feature.properties.relation === "undefined") {
-        						return undefinedRegion;
         					} else {
-        						return undefinedRegion;
+        						return spatiallyPartOfRegion;
         					}
         				}
         			},
@@ -87,7 +87,7 @@ angular.module('chronontology.components')
         				} else if (feature.properties.relation === "hasCoreArea") {
         					return L.circleMarker(latlng, hasCoreAreaCircle).setRadius(8);
         				} else {
-        					return L.circleMarker(latlng, undefinedRegionCircle).setRadius(8);
+        					return L.circleMarker(latlng, spatiallyPartOfRegionCircle).setRadius(8);
         				}
         			}
         		});
