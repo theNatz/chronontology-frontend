@@ -5,7 +5,8 @@
 
             <thead>
             <tr>
-                <th style="width: 60%">{{ "period_prefName" | transl8 }}</th>
+                <th style="width: 40%">{{ "period_prefName" | transl8 }}</th>
+                <th style="width: 20%">{{ "period_region" | transl8 }}</th>
                 <th style="width: 20%">{{ "period_type" | transl8 }}</th>
                 <th style="width: 20%">{{ "period_provenance" | transl8 }}</th>
             </tr>
@@ -15,6 +16,7 @@
 
             <tr ui-scroll="period in dataSource">
                 <td><a ng-href="/period/{{ period.resource.id }}">{{ period.resource.names | prefName }}</a></td>
+                <td>{{ getRegion(period) }}</td>
                 <td>{{period.resource.types.join(", ")}}</td>
                 <td><a ng-href="/thesaurus/{{ period.resource.provenance }}">{{ period.resource.provenance }}</a></td>
             </tr>
