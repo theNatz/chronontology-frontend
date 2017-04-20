@@ -1,3 +1,26 @@
+<script type="text/ng-template" id="/explicitConnection">
+	<span ng-if="$ctrl.period.relations[relation]">
+		<dt>{{ "relation_"+relation | transl8 }}</dt>
+		<dd ng-repeat="document in $ctrl.relatedDocuments[relation]" ng-include src="'/periodLink'"></dd>
+		<br>
+	</span>
+</script>
+
+<script type="text/ng-template" id="/derivedConnection">
+	<span ng-if="$ctrl.period.relations.derived[relation]">
+		<dt>{{ "relation_"+relation | transl8 }}</dt>
+		<dd ng-repeat="document in $ctrl.relatedDocuments.derived[relation]" ng-include src="'/periodLink'"></dd>
+		<br>
+	</span>
+</script>
+
+<script type="text/ng-template" id="/periodLink">
+	<a ng-href="/period/{{document.resource.id}}">{{ document.resource.names | prefName }}</a>
+	({{ document.resource.types.join(", ") }})
+	{{ document.resource.provenance }}
+</script>
+
+
 <dl class="dl-horizontal">
 
 	<h4>{{ "ui_periodInfo" | transl8 }}</h4>
@@ -102,29 +125,9 @@
 
     <h5>{{ "ui_relations" | transl8 }}</h5>
 
-    <span ng-repeat="relation in $ctrl.internalRelations">
-        <span ng-if="$ctrl.period.relations[relation]">
-            <dt>{{ "relation_"+relation | transl8 }}</dt>
-            <dd ng-repeat="document in $ctrl.relatedDocuments[relation]">
-                <a ng-href="/period/{{document.resource.id}}">{{ document.resource.names | prefName }}</a>
-                ({{ document.resource.types.join(", ") }})
-                {{ document.resource.provenance }}
-            </dd>
-            <br>
-        </span>
-    </span>
+	<span ng-repeat="relation in $ctrl.internalRelations" ng-include src="'/explicitConnection'"></span>
 
-    <span ng-repeat="allenRelation in $ctrl.allenRelations">
-        <span ng-if="$ctrl.period.relations[allenRelation]">
-            <dt>{{ "relation_"+allenRelation | transl8 }}</dt>
-            <dd ng-repeat="document in $ctrl.relatedDocuments[allenRelation]">
-                <a ng-href="/period/{{document.resource.id}}">{{ document.resource.names | prefName }}</a>
-                ({{ document.resource.types.join(", ") }})
-                {{ document.resource.provenance }}
-            </dd>
-            <br>
-        </span>
-    </span>
+	<span ng-repeat="relation in $ctrl.allenRelations" ng-include src="'/explicitConnection'"></span>
 
 <span ng-if="$ctrl.period.relations.derived">
 
@@ -144,29 +147,9 @@
 
     <h5>{{ "ui_relations" | transl8 }}</h5>
 
-    <span ng-repeat="relation in $ctrl.internalRelations">
-        <span ng-if="$ctrl.period.relations.derived[relation]">
-            <dt>{{ "relation_"+relation | transl8 }}</dt>
-            <dd ng-repeat="document in $ctrl.relatedDocuments.derived[relation]">
-                <a ng-href="/period/{{document.resource.id}}">{{ document.resource.names | prefName }}</a>
-                ({{ document.resource.types.join(", ") }})
-                {{ document.resource.provenance }}
-            </dd>
-            <br>
-        </span>
-    </span>
+	<span ng-repeat="relation in $ctrl.internalRelations" ng-include src="'/derivedConnection'"></span>
 
-    <span ng-repeat="allenRelation in $ctrl.allenRelations">
-        <span ng-if="$ctrl.period.relations.derived[allenRelation]">
-            <dt>{{ "relation_"+allenRelation | transl8 }}</dt>
-            <dd ng-repeat="document in $ctrl.relatedDocuments.derived[allenRelation]">
-                <a ng-href="/period/{{document.resource.id}}">{{ document.resource.names | prefName }}</a>
-                ({{ document.resource.types.join(", ") }})
-                {{ document.resource.provenance }}
-            </dd>
-            <br>
-        </span>
-    </span>
+	<span ng-repeat="relation in $ctrl.allenRelations" ng-include src="'/derivedConnection'"></span>
 
 </span>
 
