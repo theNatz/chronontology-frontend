@@ -54,18 +54,20 @@ angular.module('chronontology.components')
                 var legend = L.control({position: 'topright'});
                 legend.onAdd = function (map) {
                     var div = L.DomUtil.create('div', 'info legend');
-                    var stop = false;
+                    var stopA = false;
+                    var stopB = false;
+                    var stopC = false;
                     for (var feature in geojson.features) {
                         if (geojson.features[feature].properties.relation) {
-                            if (geojson.features[feature].properties.relation.indexOf("spatiallyPartOfRegion") !== -1 && !stop) {
+                            if (geojson.features[feature].properties.relation.indexOf("spatiallyPartOfRegion") !== -1 && !stopA) {
                                 div.innerHTML += '<i style="background:' + colors.spatiallyPartOfRegion + '"></i> ' + _this.g1 + '<br>';
-                                stop = true;
-                            } else if (geojson.features[feature].properties.relation.indexOf("isNamedAfter") !== -1 && !stop) {
+                                stopA = true;
+                            } else if (geojson.features[feature].properties.relation.indexOf("isNamedAfter") !== -1 && !stopB) {
                                 div.innerHTML += '<i style="background:' + colors.isNamedAfter + '"></i> ' + _this.g2 + '<br>';
-                                stop = true;
-                            } else if (geojson.features[feature].properties.relation.indexOf("hasCoreArea") !== -1 && !stop) {
+                                stopB = true;
+                            } else if (geojson.features[feature].properties.relation.indexOf("hasCoreArea") !== -1 && !stopC) {
                                 div.innerHTML += '<i style="background:' + colors.hasCoreArea + '"></i> ' + _this.g3 + '<br>';
-                                stop = true;
+                                stopC = true;
                             }
                         }
                     }
@@ -123,13 +125,13 @@ angular.module('chronontology.components')
                 var popupContent = "";
         		for (var i=0; i< popupinfo.length; i++) {
         			var split = popupinfo[i].split(";");
-        			popupContent += "<a href='" + split[1] + "' target='_blank'>"+split[0]+"</a><br>";
+        			popupContent += "<a href='" + split[1] + "' target='_blank'>"+split[0]+"</a> <i>["+split[2]+"]</i><br>";
         		}
         		marker.bindPopup(popupContent);
                 console.info(_this);
             }
             function onEachFeature(feature, layer) {
-                popupinfo.push(feature.properties.name + ";" + feature.properties.homepage);
+                popupinfo.push(feature.properties.name + ";" + feature.properties.homepage + ";" + feature.properties.relation);
             }
         }
     });
