@@ -180,13 +180,25 @@
 
     <!-- TODO: period.hasTimespan -->
 
+    <span ng-repeat="gazetteerRelation in $ctrl.gazetteerRelations">
+        <span ng-if="$ctrl.period[gazetteerRelation]">
+            <dt>{{ "relation_"+gazetteerRelation | transl8 }}</dt>
+            <dd ng-repeat="region in $ctrl.period[gazetteerRelation]">
+                <a ng-href="{{region}}" target="_blank">
+                    {{region}} <span class="glyphicon glyphicon-new-window"></span>
+                </a>
+            </dd>
+            <br>
+        </span>
+    </span>
+
     <div class="row form-group">
         <h4>{{ "ui_relations" | transl8 }}</h4>
 
         <div class="col-md-12" ng-init="relationIndex = $index"
              ng-repeat="relationName in $ctrl.internalRelations">
             <div ng-if="relationName!='derived'">
-                <div>{{ "relation_"+relationName | transl8 }}{{}}</div>
+                <div>{{ "relation_"+relationName | transl8 }}</div>
                 <div class="col-md-4"
                      ng-init="valueIndex = $index"
                      ng-repeat="value in $ctrl.period.relations[relationName] track by $index">
@@ -225,7 +237,7 @@
         <div class="col-md-12" ng-init="relationIndex = $index"
              ng-repeat="relationName in $ctrl.allenRelations">
             <div ng-if="relationName!='derived'">
-                <div>{{ "relation_"+relationName | transl8 }}{{}}</div>
+                <div>{{ "relation_"+relationName | transl8 }}</div>
                 <div class="col-md-4"
                      ng-init="valueIndex = $index"
                      ng-repeat="value in $ctrl.period.relations[relationName] track by $index">
@@ -265,7 +277,7 @@
         <div class="col-md-12" ng-init="relationIndex = $index"
              ng-repeat="relationName in $ctrl.gazetteerRelations">
             <div ng-if="relationName!='derived'">
-                <div>{{ "relation_"+relationName | transl8 }}{{}}</div>
+                <div>{{ "relation_"+relationName | transl8 }}</div>
                 <div class="col-md-4"
                      ng-init="valueIndex = $index"
                      ng-repeat="value in $ctrl.period.relations[relationName] track by $index">
