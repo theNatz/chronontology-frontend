@@ -105,6 +105,52 @@ angular.module('chronontology.components')
                 _this.period.types = [];
             };
 
+            _this.removeTimespan = function(timespan) {
+                _this.period.hasTimespan = _this.period.hasTimespan.filter(function(x){
+                    return x['timeOriginal'] != timespan['timeOriginal'];
+                });
+            };
+
+            _this.addTimespan = function() {
+
+                if(!_this.period.hasTimespan) {
+                    _this.period.hasTimespan = [];
+                }
+
+                var source = document.getElementById('timespan-source-input');
+                var sourceUrl = document.getElementById('timespan-source-url-input');
+                var original = document.getElementById('timespan-original-input');
+                var calendar = document.getElementById('timespan-calendar-input');
+                var beginAt = document.getElementById('timespan-begin-at-input');
+                var beginAtPrecision = document.getElementById('timespan-begin-at-precision-input');
+                var endAt = document.getElementById('timespan-end-at-input');
+                var endAtPrecision = document.getElementById('timespan-end-at-precision-input');
+
+                _this.period.hasTimespan.push({
+                    "sourceOriginal": source.value,
+                    "sourceURL": sourceUrl.value,
+                    "timeOriginal": original.value,
+                    "calendar": calendar.value,
+                    "begin": {
+                        "at": beginAt.value,
+                        "atPrecision": beginAtPrecision.value
+                    },
+                    "end": {
+                        "at": endAt.value,
+                        "atPrecision": endAtPrecision.value
+                    }
+                });
+
+                source.value = "";
+                sourceUrl.value = "";
+                original.value = "";
+                calendar.value = "";
+                beginAt.value = "";
+                beginAtPrecision.value = "";
+                endAt.value = "";
+                endAtPrecision.value = "";
+            };
+
             _this.addTag = function () {
                 var newTagInput = document.getElementById('tag-input');
 
