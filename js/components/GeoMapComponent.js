@@ -51,7 +51,7 @@ angular.module('chronontology.components')
                 _this.mapY = 0;
                 _this.mapX = 0;
                 _this.markersArea = 0;
-                _this.mapZoom = 2;
+                _this.mapZoom = 1;
                 _this.baseLayer = L.tileLayer('http://{s}.tiles.mapbox.com/v3/isawnyu.map-knmctlkh/{z}/{x}/{y}.png', {
                     maxZoom: 15,
                     attribution: "<a href='javascript:alert(\"Tiles (c) MapBox (http://mapbox.com), Data (c) OpenStreetMap (http://www.openstreetmap.org) and contributors, CC-BY-SA, Tiles and Data (c) 2013 AWMC (http://www.awmc.unc.edu) CC-BY-NC 3.0 (http://creativecommons.org/licenses/by-nc/3.0/deed.en_US)\");'>Attribution</a>"
@@ -128,27 +128,12 @@ angular.module('chronontology.components')
         		});
                 // add marker as layer
                 _this.map.addLayer(_this.marker);
-                // calc area and zoom
-                var area = turf.area(geojson); // http://turfjs.org/docs/#area --> area in square meters
-                _this.markersArea = parseFloat((area/1000000).toFixed(2));
-                if (_this.markersArea === 0) { // point
-                    _this.mapZoom = 8;
-                } else if (_this.markersArea <= 1000000) { // 1 Mio.
-                    _this.mapZoom = 5;
-                } else if (_this.markersArea <= 10000000) { // 10 Mio.
-                    _this.mapZoom = 3;
-                } else if (_this.markersArea <= 20000000) { // 20 Mio.
-                    _this.mapZoom = 3;
-                } else if (_this.markersArea <= 30000000) { // 30 Mio.
-                    _this.mapZoom = 3;
-                } else {
-                    _this.mapZoom = 1; // world
-                }
                 // calc layer center
                 _this.mapY = _this.marker.getBounds().getCenter().lat;
                 _this.mapX = _this.marker.getBounds().getCenter().lng;
+                // zoom to bounds
+                _this.map.fitBounds(_this.marker.getBounds());
                 // set map
-                console.info("geojson-area[km²]",_this.markersArea,"map-zoom",_this.mapZoom,"geojson-center",_this.mapY,_this.mapX);
                 _this.map.setView([_this.mapY, _this.mapX], _this.mapZoom);
                 console.info(_this);
             }
