@@ -180,18 +180,6 @@
 
     <!-- TODO: period.hasTimespan -->
 
-    <span ng-repeat="gazetteerRelation in $ctrl.gazetteerRelations">
-        <span ng-if="$ctrl.period[gazetteerRelation]">
-            <dt>{{ "relation_"+gazetteerRelation | transl8 }}</dt>
-            <dd ng-repeat="region in $ctrl.period[gazetteerRelation]">
-                <a ng-href="{{region}}" target="_blank">
-                    {{region}} <span class="glyphicon glyphicon-new-window"></span>
-                </a>
-            </dd>
-            <br>
-        </span>
-    </span>
-
     <div class="row form-group">
         <h4>{{ "ui_relations" | transl8 }}</h4>
 
