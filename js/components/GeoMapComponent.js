@@ -20,19 +20,33 @@ angular.module('chronontology.components')
             function initMap(geojson) {
                 // clear map div
                 document.getElementById("map").innerHTML = "";
-                // set styles
+                // set styles and stle params
                 var colors = {};
                 colors.spatiallyPartOfRegion = "#ff0000";
-                colors.isNamedAfter = "#FFA500";
+                colors.isNamedAfter = "#32CD32";
                 colors.hasCoreArea = "#9214ff";
                 var styleattr = {};
-                styleattr.color = "#ffffff";
                 styleattr.weight = 1.75;
                 styleattr.opacity = 1;
-                styleattr.fillOpacity = 0.65;
-                var spatiallyPartOfRegion = {color: styleattr.color, fillColor: colors.spatiallyPartOfRegion, weight: styleattr.weight, opacity: styleattr.opacity, fillOpacity: styleattr.fillOpacity};
-            	var isNamedAfter = {color: styleattr.color, fillColor: colors.isNamedAfter, weight: styleattr.weight, opacity: styleattr.opacity, fillOpacity: styleattr.fillOpacity};
-            	var hasCoreArea = {color: styleattr.color, fillColor: colors.hasCoreArea, weight: styleattr.weight, opacity: styleattr.opacity, fillOpacity: styleattr.fillOpacity};
+                styleattr.fillOpacity = 0;
+                var spatiallyPartOfRegion = {
+                    color: colors.spatiallyPartOfRegion,
+                    weight: styleattr.weight,
+                    opacity: styleattr.opacity,
+                    fillOpacity: styleattr.fillOpacity
+                };
+            	var isNamedAfter = {
+                    color: colors.isNamedAfter,
+                    weight: styleattr.weight,
+                    opacity: styleattr.opacity,
+                    fillOpacity: styleattr.fillOpacity
+                };
+            	var hasCoreArea = {
+                    color: colors.hasCoreArea,
+                    weight: styleattr.weight,
+                    opacity: styleattr.opacity,
+                    fillOpacity: styleattr.fillOpacity
+                };
                 // init map
                 _this.mapY = 0;
                 _this.mapX = 0;
@@ -51,7 +65,7 @@ angular.module('chronontology.components')
                 // add scale
                 L.control.scale().addTo(_this.map);
                 // add legend
-                var legend = L.control({position: 'topright'});
+                var legend = L.control({position: 'bottomright'});
                 legend.onAdd = function (map) {
                     var div = L.DomUtil.create('div', 'info legend');
                     var stopA = false;
@@ -74,9 +88,24 @@ angular.module('chronontology.components')
                     return div;
                 };
                 legend.addTo(_this.map);
+                // add info legend
+                _this.infoLegend = L.control({position: 'topright'});
+                _this.infoLegend.onAdd = function (map) {
+                    this._div = L.DomUtil.create('div', 'info'); // create a div with a class "info"
+                    this.update();
+                    return this._div;
+                };
+                _this.infoLegend.update = function (props) {
+                    this._div.innerHTML = "<h4>Geometry Information</h4>";
+                    this._div.innerHTML +=  (props ?
+                        "<span><b>" + props.name + "</b></span>" +
+                        "<br><span>relation: " + props.relation + "</span>" +
+                        "<br><span>gazetteerID: " + props.homepage.split("/")[4] + "</span>"
+                        : "<span>no geometry selected</span>");
+                };
+                _this.infoLegend.addTo(_this.map);
                 // add markers and polygons
-                _this.markers = L.markerClusterGroup();
-                var marker = L.geoJson(geojson, {
+                _this.marker = L.geoJson(geojson, {
         			onEachFeature: onEachFeature,
         			style: function (feature, latlng) {
     					if (feature.properties.relation === "spatiallyPartOfRegion") {
@@ -93,12 +122,12 @@ angular.module('chronontology.components')
                         // create polygon out of point
                         var point = turf.point([latlng.lat, latlng.lng]);
                         var buffer = turf.buffer(point, 25, "kilometers");
-                        return L.polygon(buffer.geometry.coordinates);
+                        var envelope = turf.envelope(buffer);
+                        return L.polygon(envelope.geometry.coordinates);
         			}
         		});
                 // add marker as layer
-                _this.markers.addLayer(marker);
-                _this.map.addLayer(_this.markers);
+                _this.map.addLayer(_this.marker);
                 // calc area and zoom
                 var area = turf.area(geojson); // http://turfjs.org/docs/#area --> area in square meters
                 _this.markersArea = parseFloat((area/1000000).toFixed(2));
@@ -116,22 +145,40 @@ angular.module('chronontology.components')
                     _this.mapZoom = 1; // world
                 }
                 // calc layer center
-                _this.mapY = _this.markers.getBounds().getCenter().lat;
-                _this.mapX = _this.markers.getBounds().getCenter().lng;
+                _this.mapY = _this.marker.getBounds().getCenter().lat;
+                _this.mapX = _this.marker.getBounds().getCenter().lng;
                 // set map
                 console.info("geojson-area[km²]",_this.markersArea,"map-zoom",_this.mapZoom,"geojson-center",_this.mapY,_this.mapX);
                 _this.map.setView([_this.mapY, _this.mapX], _this.mapZoom);
-                // add popup
-                var popupContent = "";
-        		for (var i=0; i< popupinfo.length; i++) {
-        			var split = popupinfo[i].split(";");
-        			popupContent += "<a href='" + split[1] + "' target='_blank'>"+split[0]+"</a> <i>["+split[2]+"]</i><br>";
-        		}
-        		marker.bindPopup(popupContent);
                 console.info(_this);
             }
             function onEachFeature(feature, layer) {
-                popupinfo.push(feature.properties.name + ";" + feature.properties.homepage + ";" + feature.properties.relation);
+                layer.on({
+                    mouseover: highlightFeature,
+                    mouseout: resetHighlight,
+                    click: highlightFeature,
+                    dblclick: zoomToFeature
+                });
+            }
+            function highlightFeature(e) {
+                // highlight feature
+                e.target.setStyle({
+                    weight: 1.75,
+                    color: "#000000",
+                    fillOpacity: 0.5,
+                    fillColor: "#FFD700"
+                });
+                // set info to legend
+                _this.infoLegend.update(e.target.feature.properties);
+            }
+            function resetHighlight(e) {
+                // reset highlight
+                _this.marker.resetStyle(e.target);
+                // reset legend
+                _this.infoLegend.update();
+            }
+            function zoomToFeature(e) {
+                _this.map.fitBounds(e.target.getBounds());
             }
         }
     });
