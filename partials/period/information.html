@@ -1,4 +1,4 @@
-<script type="text/ng-template" id="/explicitConnection">
+<script type="text/ng-template" id="/explicitConnections">
 	<span ng-if="$ctrl.period.relations[relation]">
 		<dt>{{ "relation_"+relation | transl8 }}</dt>
 		<dd ng-repeat="document in $ctrl.relatedDocuments[relation]" ng-include src="'/periodLink'"></dd>
@@ -6,7 +6,7 @@
 	</span>
 </script>
 
-<script type="text/ng-template" id="/derivedConnection">
+<script type="text/ng-template" id="/derivedConnections">
 	<span ng-if="$ctrl.period.relations.derived[relation]">
 		<dt>{{ "relation_"+relation | transl8 }}</dt>
 		<dd ng-repeat="document in $ctrl.relatedDocuments.derived[relation]" ng-include src="'/periodLink'"></dd>
@@ -132,9 +132,9 @@
 
     <h5>{{ "ui_relations" | transl8 }}</h5>
 
-	<span ng-repeat="relation in $ctrl.internalRelations" ng-include src="'/explicitConnection'"></span>
+	<span ng-repeat="relation in $ctrl.internalRelations" ng-include src="'/explicitConnections'"></span>
 
-	<span ng-repeat="relation in $ctrl.allenRelations" ng-include src="'/explicitConnection'"></span>
+	<span ng-repeat="relation in $ctrl.allenRelations" ng-include src="'/explicitConnections'"></span>
 
 <span ng-if="$ctrl.period.relations.derived">
 
@@ -154,9 +154,9 @@
 
     <h5>{{ "ui_relations" | transl8 }}</h5>
 
-	<span ng-repeat="relation in $ctrl.internalRelations" ng-include src="'/derivedConnection'"></span>
+	<span ng-repeat="relation in $ctrl.internalRelations" ng-include src="'/derivedConnections'"></span>
 
-	<span ng-repeat="relation in $ctrl.allenRelations" ng-include src="'/derivedConnection'"></span>
+	<span ng-repeat="relation in $ctrl.allenRelations" ng-include src="'/derivedConnections'"></span>
 
 </span>
 
