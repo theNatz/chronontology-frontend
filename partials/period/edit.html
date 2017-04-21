@@ -413,7 +413,7 @@
              ng-repeat="relationName in $ctrl.gazetteerRelations">
             <div ng-if="relationName!='derived'">
                 <div>{{ "relation_"+relationName | transl8 }}</div>
-                <div class="col-md-4"
+                <div
                      ng-init="valueIndex = $index"
                      ng-repeat="value in $ctrl.period.relations[relationName] track by $index">
                     <span class="input-group">
@@ -429,7 +429,7 @@
                             </span>
                     </span>
                 </div>
-                <div class="col-md-8">
+                <div>
                     <div class="input-group">
                         <input type="text" class="form-control"
                                id="relation-input-{{relationName}}"
