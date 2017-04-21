@@ -215,6 +215,87 @@
                 </div>
             </div>
         </div>
+
+    </div>
+    <div class="row form-group">
+        <h4>{{ "ui_relations" | transl8 }} - <a href="https://en.wikipedia.org/wiki/Allen%27s_interval_algebra"
+            target="_blank">Allen</a>
+        </h4>
+
+        <div class="col-md-12" ng-init="relationIndex = $index"
+             ng-repeat="relationName in $ctrl.allenRelations">
+            <div ng-if="relationName!='derived'">
+                <div>{{ "relation_"+relationName | transl8 }}{{}}</div>
+                <div class="col-md-4"
+                     ng-init="valueIndex = $index"
+                     ng-repeat="value in $ctrl.period.relations[relationName] track by $index">
+                    <span class="input-group">
+                        <input type="text"
+                               class="form-control"
+                               ng-model="$ctrl.period.relations[relationName][valueIndex]">
+                        <span class="input-group-btn">
+                                 <button class="btn btn-danger"
+                                         ng-click="$ctrl.removeRelation(relationName, value)"
+                                         type="button">
+                                     <span class="glyphicon glyphicon-minus-sign" aria-hidden="true"></span>
+                                 </button>
+                            </span>
+                    </span>
+                </div>
+                <div class="col-md-4">
+                    <div class="input-group">
+                        <input type="text" class="form-control" id="relation-input-{{relationName}}" placeholder="Add relation...">
+                        <span class="input-group-btn">
+                                 <button class="btn btn-success" ng-click="$ctrl.addRelation(relationName)" type="button">
+                                     <span class="glyphicon glyphicon-plus-sign" aria-hidden="true"></span>
+                                 </button>
+                             </span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="row form-group">
+
+        <h4>{{ "ui_relations" | transl8 }} - <a href="https://gazetteer.dainst.org"
+                                                target="_blank">iDAI.gazetteer</a>
+        </h4>
+
+        <div class="col-md-12" ng-init="relationIndex = $index"
+             ng-repeat="relationName in $ctrl.gazetteerRelations">
+            <div ng-if="relationName!='derived'">
+                <div>{{ "relation_"+relationName | transl8 }}{{}}</div>
+                <div class="col-md-4"
+                     ng-init="valueIndex = $index"
+                     ng-repeat="value in $ctrl.period.relations[relationName] track by $index">
+                    <span class="input-group">
+                        <input type="text"
+                               class="form-control"
+                               ng-model="$ctrl.period.relations[relationName][valueIndex]">
+                        <span class="input-group-btn">
+                                 <button class="btn btn-danger"
+                                         ng-click="$ctrl.removeRelation(relationName, value)"
+                                         type="button">
+                                     <span class="glyphicon glyphicon-minus-sign" aria-hidden="true"></span>
+                                 </button>
+                            </span>
+                    </span>
+                </div>
+                <div class="col-md-8">
+                    <div class="input-group">
+                        <input type="text" class="form-control"
+                               id="relation-input-{{relationName}}"
+                               placeholder="Add iDAI.gazetteer URI...">
+                        <span class="input-group-btn">
+                                 <button class="btn btn-success" ng-click="$ctrl.addRelation(relationName)" type="button">
+                                     <span class="glyphicon glyphicon-plus-sign" aria-hidden="true"></span>
+                                 </button>
+                             </span>
+                    </div>
+                </div>
+            </div>
+        </div>
     </div>
     
     <p>
