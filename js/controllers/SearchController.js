@@ -6,16 +6,20 @@ angular.module('chronontology.controllers')
 
     $scope.getRegion = function(doc) {
 
-        if (!doc.derived) {
+        if (!doc.related) {
             return '-';
-        } else {
-            for (var i in chronontologySettings.gazetteerRelations) {
-                var relation = chronontologySettings.gazetteerRelations[i];
-                if (doc.derived[relation]) {
-                    return doc.derived[relation][0].prefName.title;
-                }
-            }
         }
+		for (var i in chronontologySettings.gazetteerRelations) {
+			var relation = chronontologySettings.gazetteerRelations[i];
+			if (doc.resource[relation]) {
+				for (var j in doc.resource[relation]) {
+					var uri = doc.resource[relation][j];
+					if (doc.related[uri]) {
+						return doc.related[uri].prefName.title;
+					}
+				}			
+			}
+		}
         return '-';
     }
 

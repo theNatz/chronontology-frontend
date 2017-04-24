@@ -103,17 +103,17 @@
     <span ng-repeat="gazetteerRelation in $ctrl.gazetteerRelations">
         <span ng-if="$ctrl.period[gazetteerRelation]">
             <dt>{{ "relation_"+gazetteerRelation | transl8 }}</dt>
-			<dd ng-if="$ctrl.document.derived[gazetteerRelation]"
-					ng-repeat="region in $ctrl.document.derived[gazetteerRelation]">
-				<a ng-href="{{region['@id']}}" target="_blank">
-                    {{region.prefName.title}} <span class="glyphicon glyphicon-new-window"></span>
-                </a>
-			</dd>
-            <dd ng-if="!$ctrl.document.derived[gazetteerRelation]"
-					ng-repeat="region in $ctrl.period[gazetteerRelation]">
-                <a ng-href="{{region}}" target="_blank">
-                    {{region}} <span class="glyphicon glyphicon-new-window"></span>
-                </a>
+            <dd ng-repeat="regionUri in $ctrl.period[gazetteerRelation]">
+				<span ng-if="$ctrl.document.related[regionUri]">
+					<a ng-href="regionUri" target="_blank">
+						{{$ctrl.document.related[regionUri].prefName.title}} <span class="glyphicon glyphicon-new-window"></span>
+					</a>
+				</span>
+				<span ng-if="!$ctrl.document.related[regionUri]">
+					<a ng-href="regionUri" target="_blank">
+						{{regionUri}} <span class="glyphicon glyphicon-new-window"></span>
+					</a>
+				</span>
             </dd>
             <br>
         </span>
@@ -135,10 +135,17 @@
     <span ng-repeat="gazetteerRelation in $ctrl.gazetteerRelations">
         <span ng-if="$ctrl.period.derived[gazetteerRelation]">
             <dt>{{ "relation_"+gazetteerRelation | transl8 }}</dt>
-            <dd ng-repeat="region in $ctrl.period.derived[gazetteerRelation]">
-                <a ng-href="{{region}}" target="_blank">
-                    {{region}} <span class="glyphicon glyphicon-new-window"></span>
-                </a>
+            <dd ng-repeat="regionUri in $ctrl.period.derived[gazetteerRelation]">
+				<span ng-if="$ctrl.document.related[regionUri]">
+					<a ng-href="regionUri" target="_blank">
+						{{$ctrl.document.related[regionUri].prefName.title}} <span class="glyphicon glyphicon-new-window"></span>
+					</a>
+				</span>
+				<span ng-if="!$ctrl.document.related[regionUri]">
+					<a ng-href="regionUri" target="_blank">
+						{{regionUri}} <span class="glyphicon glyphicon-new-window"></span>
+					</a>
+				</span>
             </dd>
             <br>
         </span>
