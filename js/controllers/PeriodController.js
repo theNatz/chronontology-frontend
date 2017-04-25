@@ -28,7 +28,7 @@ angular.module('chronontology.controllers')
 		$scope.geoFrameUrl = $sce.trustAsResourceUrl(geoFrameUrl + "/period/" + result.resource.id);
 
 		// note: for(var relation in $scope.internalAndAllenRelations) would yield 0, 1, 2, ...
-		for(var i = 0; i < $scope.internalAndAllenRelations.length; i += 1) {
+		for (var i in $scope.internalAndAllenRelations) {
 			var relation = $scope.internalAndAllenRelations[i];
 
 			$scope.relatedDocuments[relation] = [];
@@ -41,7 +41,7 @@ angular.module('chronontology.controllers')
 			});
 
 			$scope.relatedDocuments.derived[relation] = [];
-			if($scope.period.relations.derived[relation]) $scope.period.relations.derived[relation].forEach(function(periodUri) {
+			if($scope.document.derived.relations[relation]) $scope.document.derived.relations[relation].forEach(function(periodUri) {
 				(function(relation) {
 					$http.get('/data/period/'+periodUri).success(function(result) {
 						$scope.relatedDocuments.derived[relation].push(result);
