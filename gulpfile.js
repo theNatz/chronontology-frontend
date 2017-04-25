@@ -16,6 +16,7 @@ var argv = require('yargs').argv;
 var ngHtml2Js = require("gulp-ng-html2js");
 var minifyHtml = require("gulp-minify-html");
 var replace = require('gulp-replace');
+var sourcemaps = require('gulp-sourcemaps');
 
 var pkg = require('./package.json');
 
@@ -75,8 +76,10 @@ gulp.task('minify-css', ['compile-css'], function () {
 gulp.task('concat-deps', function () {
 
     return gulp.src(jsDeps)
+        .pipe(sourcemaps.init())
         .pipe(concat(pkg.name + '-deps.js'))
         //.pipe(uglify())
+        .pipe(sourcemaps.write())
         .pipe(gulp.dest('dist/js/'));
 });
 
@@ -84,8 +87,10 @@ gulp.task('concat-deps', function () {
 gulp.task('concat-js', function () {
 
     return gulp.src(['js/**/*.js'])
+        .pipe(sourcemaps.init())
         .pipe(sort())
         .pipe(concat(pkg.name + '.js'))
+        .pipe(sourcemaps.write())
         .pipe(gulp.dest('dist/js/'))
         .pipe(reload({stream: true}));
 });
