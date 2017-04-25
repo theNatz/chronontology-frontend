@@ -10,6 +10,7 @@ angular.module('chronontology', [
     'ui.scroll',
     'idai.templates',
     'idai.components',
+    'angulartics.piwik',
     'chronontology.services',
     'chronontology.directives',
     'chronontology.controllers',
