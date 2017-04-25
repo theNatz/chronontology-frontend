@@ -167,14 +167,14 @@
 
     <dt>{{ "ui_created" | transl8 }}</dt>
     <dd>
-        {{$ctrl.document.created.date | isoDate | date:'medium' }}
+        {{$ctrl.document.created.date | date:'medium' }}
         ({{$ctrl.document.created.user}})
     </dd>
     <br>
 
     <dt>{{ "ui_modified" | transl8 }}</dt>
     <dd ng-repeat="m in $ctrl.document.modified">
-        {{ m.date | isoDate | date:'medium' }}
+        {{ m.date | date:'medium' }}
         ({{ m.user }})
     </dd>
     <br>
