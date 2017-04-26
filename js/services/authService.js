@@ -18,7 +18,7 @@ angular.module('chronontology.services')
     return {
 
         setCredentials: function (username, password, successMethod, errorMethod) {
-            var encoded = $filter('base64')(username + ':' + password);
+            var encoded = $filter('base64')(username + ':' + $filter('md5')(password));
 
             $http.get('/data/user/login', { headers: { 'Authorization': 'Basic ' + encoded } })
                 .success(function(response) {
