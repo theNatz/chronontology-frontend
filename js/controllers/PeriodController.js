@@ -2,7 +2,7 @@
 
 angular.module('chronontology.controllers')
 
-.controller("PeriodController", function($scope, $location, $routeParams, $http, $sce, chronontologySettings) {
+.controller("PeriodController", function($scope, $location, $routeParams, $http, $sce, chronontologySettings, authService) {
 
 	// possible relations
 	// (labels are now in transl8 keys "relation_isSenseOf" etc.)
@@ -23,6 +23,7 @@ angular.module('chronontology.controllers')
 		$scope.activeTab = 'info';
 		$scope.document = result;
 		$scope.period = result.resource;
+		$scope.authService = authService;
 
 		var geoFrameUrl = chronontologySettings.geoFrameBaseUri + "?uri=" + chronontologySettings.baseUri;
 		$scope.geoFrameUrl = $sce.trustAsResourceUrl(geoFrameUrl + "/period/" + result.resource.id);
@@ -66,8 +67,7 @@ angular.module('chronontology.controllers')
 
         $scope.period = angular.copy(updatedPeriod);
         $scope.document.resource = $scope.period;
-
-		$http.put("/data/period/" + $scope.period.id, JSON.stringify($scope.document))
+        $http.put("/data/period/" + $scope.period.id, JSON.stringify($scope.document))
 			.success(function (data) {
 				console.log("success");
 				console.dir(data);

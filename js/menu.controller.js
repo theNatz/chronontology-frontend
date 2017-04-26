@@ -28,6 +28,6 @@ angular.module('chronontology.controllers')
             $scope.logout = function () {
                 authService.clearCredentials();
                 $scope.user = authService.getUser();
-                $window.location = '/';
+                $window.location.reload();
             }
         }]);

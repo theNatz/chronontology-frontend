@@ -36,7 +36,7 @@
                             {{ "ui_infoTab" | transl8 }}
                         </a>
                     </li>
-                    <li ng-class="{ 'active': (activeTab == 'edit') }">
+                    <li ng-show="authService.getUser() != undefined" ng-class="{ 'active': (activeTab == 'edit') }">
                         <a href="#" ng-click="activeTab = 'edit'">
                             <span class="glyphicon glyphicon-edit"></span>
                             {{ "ui_editTab" | transl8 }}
