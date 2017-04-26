@@ -1,4 +1,4 @@
-angular.module('arachne.filters')
+angular.module('chronontology.filters')
 
     .filter('md5', function () {
         return function (str) {
