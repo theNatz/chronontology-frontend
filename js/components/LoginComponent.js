@@ -18,7 +18,6 @@ angular.module('chronontology.components')
             _this.loginerror = false;
 
             _this.login = function () {
-                console.log("login clicked");
                 authService.setCredentials(_this.loginData.user, _this.loginData.password, function (response) {
                     _this.loginerror = false;
                     var closeModal = function () {
@@ -32,7 +31,6 @@ angular.module('chronontology.components')
             };
 
             _this.cancel = function () {
-                console.log("cancel clicked");
                 _this.modalInstance.dismiss();
             };
         }
