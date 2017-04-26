@@ -38,12 +38,16 @@ var jsDeps = [
     paths.lib + 'angular/angular.min.js',
     paths.lib + 'angular-route/angular-route.min.js',
     paths.lib + 'angular-ui-bootstrap/dist/ui-bootstrap.js',
+    paths.lib + 'angular-ui-bootstrap/dist/ui-bootstrap-tpls.js',
     paths.lib + 'angular-resource/angular-resource.min.js',
     paths.lib + 'angular-i18n/angular-locale_de-de.js',
     paths.lib + 'angular-ui-scroll/dist/ui-scroll-jqlite.js',
     paths.lib + 'angular-ui-scroll/dist/ui-scroll.js',
     paths.lib + 'angulartics/dist/angulartics.min.js',
     paths.lib + 'angulartics-piwik/dist/angulartics-piwik.min.js',
+    paths.lib + 'angular-cookies/angular-cookies.min.js',
+    paths.lib + 'angular-ui-tree/dist/angular-ui-tree.min.js',
+    paths.lib + 'angular-md5/angular-md5.js',
     paths.lib + 'idai-components/dist/idai-components.min.js'
 ];
 
