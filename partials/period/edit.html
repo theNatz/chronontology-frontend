@@ -26,7 +26,7 @@
         </h4>
         <div class="row">
             <div ng-init="languageIndex = $index"
-                 ng-repeat="language in $ctrl.period.names track by $index">
+                 ng-repeat="(language, names) in $ctrl.period.names">
                 <div class="col-md-2">
                     <span class="input-group">
                         <span class="input-group-btn">
@@ -38,19 +38,18 @@
                         </span>
                         <input type="text"
                                class="form-control"
-                               ng-model="$ctrl.period.names[languageIndex]['lang']">
+                               ng-model="language">
                     </span>
                 </div>
                 <div class="col-md-10">
-                     <div ng-init="variantIndex = $index"
-                          ng-repeat="name in $ctrl.period.names[languageIndex]['content'] track by $index">
+                     <div ng-repeat="name in names track by $index">
                          <div class="input-group">
                              <input type="text"
                                     class="form-control"
-                                    ng-model="$ctrl.period.names[languageIndex]['content'][variantIndex]">
+                                    ng-model="name">
                              <span class="input-group-btn">
                                  <button class="btn btn-danger"
-                                         ng-click="$ctrl.removeName(language, name)"
+                                         ng-click="$ctrl.removeName(language, $index)"
                                          type="button">
                                      <span class="glyphicon glyphicon-minus-sign" aria-hidden="true"></span>
                                  </button>
@@ -58,7 +57,7 @@
                          </div>
                      </div>
                      <div class="input-group">
-                         <input type="text" class="form-control" id="name-input-{{language['lang']}}" placeholder="Add name...">
+                         <input type="text" class="form-control" id="name-input-{{language}}" placeholder="Add name...">
                          <span class="input-group-btn">
                              <button class="btn btn-success" ng-click="$ctrl.addName(language)" type="button">
                                  <span class="glyphicon glyphicon-plus-sign" aria-hidden="true"></span>
@@ -444,7 +443,7 @@
             </div>
         </div>
     </div>
-    
+
     <p>
         <div class="row">
             <button class="btn btn-primary" ng-click="$ctrl.saveChanges()">Save changes</button>

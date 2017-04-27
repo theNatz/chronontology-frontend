@@ -41,9 +41,9 @@
 	<h4>{{ "ui_periodInfo" | transl8 }}</h4>
 
     <dt>{{ "period_names" | transl8 }}</dt>
-    <span ng-repeat="language in $ctrl.period.names">
-        <dd ng-repeat="name in language.content">
-            {{ name }} <i>({{language.lang}})</i>
+    <span ng-repeat="(language, names) in $ctrl.period.names">
+        <dd ng-repeat="name in names">
+            {{ name }} <i>({{language}})</i>
         </dd>
     </span>
     <br>

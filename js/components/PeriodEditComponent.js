@@ -47,42 +47,18 @@ angular.module('chronontology.components')
                 newLanguageInput.value = "";
             };
 
-            _this.removeLanguage = function(languageObject) {
-                _this.period.names = _this.period.names
-                    .filter(function (nameItem)
-                    {
-                        return nameItem['lang'] != languageObject['lang'];
-                    });
+            _this.removeLanguage = function(lang) {
+                delete _this.period.names[lang]
             };
 
-            _this.getLanguageIndex = function(languageObject) {
-                return _this.period.names.findIndex(function(x){
-                   return x['lang'] == languageObject['lang'];
-                });
-            };
-
-            _this.addName = function (languageObject) {
-                var newNameInput = document.getElementById('name-input-' + languageObject['lang']);
-                var languageIndex = _this.getLanguageIndex(languageObject);
-                _this.period.names[languageIndex]['content'].push(newNameInput.value);
+            _this.addName = function (lang) {
+                var newNameInput = document.getElementById('name-input-' + lang);
+                _this.period.names[lang].push(newNameInput.value);
                 newNameInput.value = null;
             };
 
-            _this.removeName = function(languageObject, contentString) {
-                var languageIndex = _this.getLanguageIndex(languageObject);
-                _this.period.names[languageIndex]['content'] = _this.period.names[languageIndex]['content']
-                    .filter(function (x){
-                    {
-                        return contentString != x;
-                    }
-                })
-            };
-
-            _this.getContentIndex = function (languageObject, contentString) {
-                var languageIndex = _this.getLanguageIndex(languageObject);
-                return _this.period.names[languageIndex]['content'].findIndex(function(x){
-                    return x == contentString;
-                });
+            _this.removeName = function(lang, index) {
+                _this.period.names[lang].splice(index, 1);
             };
 
             _this.toggleSubtypeSelection = function (typeString) {

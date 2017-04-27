@@ -8,27 +8,31 @@ angular.module('chronontology.filters')
 			// if names is non-empty then we assume there is
 			// at least one name for each given language
 
-			if(names != undefined && names.length > 0) {
+			if(names != undefined && Object.keys(names).length > 0) {
                 var currentLang = language.currentLanguage();
-                var availableLanguages = names.map(function(line) { return line.lang; });
-                var currentLangPosition = availableLanguages.indexOf(currentLang);
-                var enPosition = availableLanguages.indexOf('en');
 
-                if (currentLangPosition > -1) {
+				console.log("names", names);
+				console.log("currentLang", currentLang);
+				console.log("names", names[currentLang]);
+
+                if (names[currentLang] && names[currentLang].length > 0) {
 					// user-preferred language is available
-					return names[currentLangPosition].content[0];
+					return names[currentLang][0];
 				}
-				else if (enPosition > -1) {
+				else if (names['en'] && names['en'].length > 0) {
 					// at least English is available
-					return names[enPosition].content[0];
+					return names['en'][0];
+				} if (names['de'] && names['de'].length > 0) {
+					// fall back to german
+					return names['en'][0];
 				}
 				else {
 					// at least any language is available
-				    return names[0].content[0];
+				    return names[Object.keys(names)[0]][0];
 				}
 			}
 			else {
 			    return "(kein Name)";
-			}			
+			}
 		}
 	}])
