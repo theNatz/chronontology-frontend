@@ -18,9 +18,9 @@ angular.module('chronontology.filters')
 				else if (names['en'] && names['en'].length > 0) {
 					// at least English is available
 					return names['en'][0];
-				} if (names['de'] && names['de'].length > 0) {
+				} else if (names['de'] && names['de'].length > 0) {
 					// fall back to german
-					return names['en'][0];
+					return names['de'][0];
 				}
 				else {
 					// at least any language is available
