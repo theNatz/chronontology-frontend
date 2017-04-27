@@ -164,12 +164,25 @@ angular.module('chronontology.components')
                 _this.period.relations[relationName].push(newRelationInput.value);
                 newRelationInput.value = "";
             };
-
             _this.removeRelation = function(relationName, relation) {
                 _this.period.relations[relationName] = _this.period.relations[relationName].filter(function(x){
                     return x != relation;
                 });
             };
+
+            _this.addGazetteerRelation = function(relationName) {
+                if(_this.period[relationName] == undefined) {
+                    _this.period[relationName] = [];
+                }
+                var newRelationInput = document.getElementById('gazetteer-relation-input-' + relationName);
+                _this.period[relationName].push(newRelationInput.value);
+                newRelationInput.value = "";
+            };
+            _this.removeGazetteerRelation = function(relationName, relation) {
+                _this.period[relationName] = _this.period[relationName].filter(function(x){
+                    return x != relation;
+                });
+            }
 
         }
     });

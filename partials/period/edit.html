@@ -403,7 +403,6 @@
     </div>
 
     <div class="row form-group">
-
         <h4>{{ "ui_relations" | transl8 }} - <a href="https://gazetteer.dainst.org"
                                                 target="_blank">iDAI.gazetteer</a>
         </h4>
@@ -414,14 +413,14 @@
                 <div>{{ "relation_"+relationName | transl8 }}</div>
                 <div
                      ng-init="valueIndex = $index"
-                     ng-repeat="value in $ctrl.period.relations[relationName] track by $index">
+                     ng-repeat="value in $ctrl.period[relationName] track by $index">
                     <span class="input-group">
                         <input type="text"
                                class="form-control"
-                               ng-model="$ctrl.period.relations[relationName][valueIndex]">
+                               ng-model="$ctrl.period[relationName][valueIndex]">
                         <span class="input-group-btn">
                                  <button class="btn btn-danger"
-                                         ng-click="$ctrl.removeRelation(relationName, value)"
+                                         ng-click="$ctrl.removeGazetteerRelation(relationName, value)"
                                          type="button">
                                      <span class="glyphicon glyphicon-minus-sign" aria-hidden="true"></span>
                                  </button>
@@ -431,10 +430,10 @@
                 <div>
                     <div class="input-group">
                         <input type="text" class="form-control"
-                               id="relation-input-{{relationName}}"
+                               id="gazetteer-relation-input-{{relationName}}"
                                placeholder="Add iDAI.gazetteer URI...">
                         <span class="input-group-btn">
-                                 <button class="btn btn-success" ng-click="$ctrl.addRelation(relationName)" type="button">
+                                 <button class="btn btn-success" ng-click="$ctrl.addGazetteerRelation(relationName)" type="button">
                                      <span class="glyphicon glyphicon-plus-sign" aria-hidden="true"></span>
                                  </button>
                              </span>
