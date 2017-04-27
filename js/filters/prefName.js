@@ -11,10 +11,6 @@ angular.module('chronontology.filters')
 			if(names != undefined && Object.keys(names).length > 0) {
                 var currentLang = language.currentLanguage();
 
-				console.log("names", names);
-				console.log("currentLang", currentLang);
-				console.log("names", names[currentLang]);
-
                 if (names[currentLang] && names[currentLang].length > 0) {
 					// user-preferred language is available
 					return names[currentLang][0];
@@ -35,4 +31,4 @@ angular.module('chronontology.filters')
 			    return "(kein Name)";
 			}
 		}
-	}])
+	}]);
