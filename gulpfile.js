@@ -48,7 +48,7 @@ var jsDeps = [
     paths.lib + 'angular-cookies/angular-cookies.min.js',
     paths.lib + 'angular-ui-tree/dist/angular-ui-tree.min.js',
     paths.lib + 'angular-md5/angular-md5.js',
-    paths.lib + 'idai-components/dist/idai-components.min.js'
+    paths.lib + 'idai-components/dist/idai-components.js'
 ];
 
 gulp.task('compile-css', function () {
@@ -181,7 +181,7 @@ gulp.task('clean', function () {
 });
 
 // runs the development server and sets up browser reloading
-gulp.task('server', ['compile-css', 'minify-js', 'concat-deps', 'copy-resources'], function () {
+gulp.task('server', ['build'], function () {
 
     var proxyOptions = url.parse(cfg.backendUri);
     proxyOptions.route = '/data';
