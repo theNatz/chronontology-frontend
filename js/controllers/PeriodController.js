@@ -10,7 +10,7 @@ angular.module('chronontology.controllers')
 	$scope.gazetteerRelations = chronontologySettings.gazetteerRelations;
 	$scope.allenRelations = chronontologySettings.allenRelations;
 
-	$scope.internalAndAllenRelations = 
+	$scope.internalAndAllenRelations =
 		chronontologySettings.internalRelations
 		.concat(chronontologySettings.allenRelations);
 
@@ -50,8 +50,8 @@ angular.module('chronontology.controllers')
 				}(relation));
 			});
 		}
-		
-		$http.get('/data/period/?size=1000&q=provenance:' + $scope.period.provenance).success( function(result) {
+
+		$http.get('/data/period/?size=1000&q=resource.provenance:' + $scope.period.provenance).success( function(result) {
 			$scope.provenancePeriods = result.results;
 		});
 
