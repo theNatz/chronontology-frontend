@@ -19,6 +19,7 @@ angular.module('chronontology.components')
             _this.internalRelations = chronontologySettings.internalRelations;
             _this.allenRelations = chronontologySettings.allenRelations;
             _this.gazetteerRelations = chronontologySettings.gazetteerRelations;
+            _this.currentPickedRelation = null;
 
             _this.$onChanges = function() {
                 if(!_this.originalPeriod){
@@ -151,7 +152,12 @@ angular.module('chronontology.components')
                 })
             };
 
-            _this.addRelation = function(relationName) {
+            _this.addPickedRelation = function (relationName) {
+
+                if(_this.currentPickedRelation == null) {
+                    return;
+                }
+
                 if(_this.period.relations == undefined) {
                     _this.period.relations = [];
                 }
@@ -160,9 +166,8 @@ angular.module('chronontology.components')
                     _this.period.relations[relationName] = [];
                 }
 
-                var newRelationInput = document.getElementById('relation-input-' + relationName);
-                _this.period.relations[relationName].push(newRelationInput.value);
-                newRelationInput.value = "";
+                _this.period.relations[relationName].push(_this.currentPickedRelation.resource.id);
+                _this.currentPickedRelation = null;
             };
             _this.removeRelation = function(relationName, relation) {
                 _this.period.relations[relationName] = _this.period.relations[relationName].filter(function(x){
@@ -182,7 +187,6 @@ angular.module('chronontology.components')
                 _this.period[relationName] = _this.period[relationName].filter(function(x){
                     return x != relation;
                 });
-            }
-
+            };
         }
     });

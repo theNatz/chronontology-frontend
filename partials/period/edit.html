@@ -348,16 +348,21 @@
 					</span>
 				</span>
 			</div>
-			<div class="col-md-4">
-				<div class="input-group">
-					<input type="text" class="form-control" id="relation-input-{{relationName}}" placeholder="Add relation...">
-					<span class="input-group-btn">
-							 <button class="btn btn-success" ng-click="$ctrl.addRelation(relationName)" type="button">
-								 <span class="glyphicon glyphicon-plus-sign" aria-hidden="true"></span>
-							 </button>
-						 </span>
-				</div>
-			</div>
+            <div class="input-group col-md-12">
+                <div class="col-md-11">
+                    <idai-picker search-uri="/data/period/"
+                                 result-field="results"
+                                 title-field="resource.id + ': ' + (resource.names | prefName) + ', ' + resource.types"
+                                 selected-item="$ctrl.currentPickedRelation"/>
+                </div>
+                <div class="col-md-1">
+                    <span class="input-group-btn">
+                         <button class="btn btn-success" ng-click="$ctrl.addPickedRelation(relationName)" type="button">
+                             <span class="glyphicon glyphicon-plus-sign" aria-hidden="true"></span>
+                         </button>
+                    </span>
+                </div>
+            </div>
         </div>
 
     </div>
@@ -385,16 +390,21 @@
 						</span>
 				</span>
 			</div>
-			<div class="col-md-4">
-				<div class="input-group">
-					<input type="text" class="form-control" id="relation-input-{{relationName}}" placeholder="Add relation...">
-					<span class="input-group-btn">
-							 <button class="btn btn-success" ng-click="$ctrl.addRelation(relationName)" type="button">
-								 <span class="glyphicon glyphicon-plus-sign" aria-hidden="true"></span>
-							 </button>
-						 </span>
-				</div>
-			</div>
+            <div class="input-group col-md-12">
+                <div class="col-md-11">
+                    <idai-picker search-uri="/data/period/"
+                                 result-field="results"
+                                 title-field="resource.id + ': ' + (resource.names | prefName) + ', ' + resource.types"
+                                 selected-item="$ctrl.currentPickedRelation"/>
+                </div>
+                <div class="col-md-1">
+                    <span class="input-group-btn">
+                         <button class="btn btn-success" ng-click="$ctrl.addPickedRelation(relationName)" type="button">
+                             <span class="glyphicon glyphicon-plus-sign" aria-hidden="true"></span>
+                         </button>
+                    </span>
+                </div>
+            </div>
         </div>
     </div>
 
