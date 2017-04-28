@@ -4,14 +4,5 @@
 
 angular.module('chronontology.components')
     .component('periodInformation',{
-        templateUrl: '../../partials/period/information.html',
-        bindings:
-        {
-            period: '<',
-            internalRelations: '<',
-            gazetteerRelations: '<',
-            allenRelations: '<',
-            document: '<',
-            relatedDocuments: '<'
-        }
+        templateUrl: '../../partials/period/information.html'
     });
