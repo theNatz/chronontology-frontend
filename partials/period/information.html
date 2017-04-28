@@ -1,3 +1,5 @@
+<div ng-controller="PeriodController">
+
 <script type="text/ng-template" id="/explicitRelations">
 	<span ng-if="$ctrl.period.relations[relation]">
 		<dt>{{ "relation_"+relation | transl8 }}</dt>
@@ -161,22 +163,28 @@
 
 </dl>
 
-<h4>{{ "ui_metadata" | transl8 }}</h4>
+<span ng-if="authService.getUser() != undefined">
 
-<dl class="dl-horizontal">
+	<h4>{{ "ui_metadata" | transl8 }}</h4>
 
-    <dt>{{ "ui_created" | transl8 }}</dt>
-    <dd>
-        {{$ctrl.document.created.date | date:'medium' }}
-        ({{$ctrl.document.created.user}})
-    </dd>
-    <br>
+	<dl class="dl-horizontal">
 
-    <dt>{{ "ui_modified" | transl8 }}</dt>
-    <dd ng-repeat="m in $ctrl.document.modified">
-        {{ m.date | date:'medium' }}
-        ({{ m.user }})
-    </dd>
-    <br>
+		<dt>{{ "ui_created" | transl8 }}</dt>
+		<dd>
+			{{$ctrl.document.created.date | date:'medium' }}
+			({{$ctrl.document.created.user}})
+		</dd>
+		<br>
 
-</dl>
+		<dt>{{ "ui_modified" | transl8 }}</dt>
+		<dd ng-repeat="m in $ctrl.document.modified">
+			{{ m.date | date:'medium' }}
+			({{ m.user }})
+		</dd>
+		<br>
+
+	</dl>
+
+</span>
+
+</div>
