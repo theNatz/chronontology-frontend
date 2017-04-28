@@ -158,6 +158,12 @@ angular.module('chronontology.components')
                     return;
                 }
 
+                if(_this.period.id == _this.currentPickedRelation.resource.id) {
+                    console.log('Picked period is linked period, aborting.');
+                    _this.currentPickedRelation = null;
+                    return;
+                }
+
                 if(_this.period.relations == undefined) {
                     _this.period.relations = [];
                 }
@@ -165,6 +171,7 @@ angular.module('chronontology.components')
                 if(_this.period.relations[relationName] == undefined) {
                     _this.period.relations[relationName] = [];
                 }
+
 
                 _this.period.relations[relationName].push(_this.currentPickedRelation.resource.id);
                 _this.currentPickedRelation = null;
