@@ -107,7 +107,7 @@
             <dt>{{ "relation_"+gazetteerRelation | transl8 }}</dt>
             <dd ng-repeat="regionUri in period[gazetteerRelation]">
 				<span ng-if="document.related[regionUri]">
-					<a ng-href="regionUri" target="_blank">
+					<a ng-href="{{regionUri}}" target="_blank">
 						{{document.related[regionUri].prefName.title}} <span class="glyphicon glyphicon-new-window"></span>
 					</a>
 				</span>
@@ -137,7 +137,7 @@
             <dt>{{ "relation_"+gazetteerRelation | transl8 }}</dt>
             <dd ng-repeat="regionUri in document.derived[gazetteerRelation]">
 				<span ng-if="document.related[regionUri]">
-					<a ng-href="regionUri" target="_blank">
+					<a ng-href="{{regionUri}}" target="_blank">
 						{{document.related[regionUri].prefName.title}} <span class="glyphicon glyphicon-new-window"></span>
 					</a>
 				</span>
