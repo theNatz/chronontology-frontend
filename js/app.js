@@ -41,6 +41,7 @@ angular.module('chronontology', [
 		"isSenseOf", "hasSense",
 		"isPartOf", "hasPart",
 		"isListedIn", "lists",
+		"fallsWithin", "contains",
 		"follows", "isFollowedBy",
 		"sameAs",
 		"isSimilarTo"
