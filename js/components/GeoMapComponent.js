@@ -102,7 +102,8 @@ angular.module('chronontology.components')
                     this._div.innerHTML +=  (props ?
                         "<span><b>" + props.name + "</b></span>" +
                         "<br><span>relation: " + props.relation + "</span>" +
-                        "<br><span>gazetteerID: " + props.homepage.split("/")[4] + "</span>"
+                        "<br><span>gazetteerID: " + props.homepage.split("/")[4] + "</span>" +
+                        "<br><span>parentGeometry: " + props.parentGeometry.name + "</span>"
                         : "<span>no geometry selected</span>");
                 };
                 _this.infoLegend.addTo(_this.map);
