@@ -106,6 +106,9 @@ angular.module('chronontology.components')
                         "<br><span>parent geometry: " + props.parentGeometry.name + "</span>" +
                         "<br><span>parent ID: " + props.parentGeometry.id + "</span>"
                         : "<span>no geometry selected</span>");
+                    if (this._div.innerHTML.indexOf("<br><span>parent geometry: geom origin</span><br><span>parent ID: null</span>") != -1) {
+                        this._div.innerHTML = this._div.innerHTML.replace("<br><span>parent geometry: geom origin</span><br><span>parent ID: null</span>","");
+                    }
                 };
                 _this.infoLegend.addTo(_this.map);
                 // add markers and polygons
