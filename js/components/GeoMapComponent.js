@@ -101,8 +101,8 @@ angular.module('chronontology.components')
                     this._div.innerHTML = "<h4>Geometry Information</h4>";
                     this._div.innerHTML +=  (props ?
                         "<span><b>" + props.name + "</b></span>" +
-                        "<br><span>relation: " + props.relation + "</span>" +
-                        "<br><span>gazetteerID: " + props.id + "</span>" +
+                        "<br><span><i>" + props.relation + "</i></span>" +
+                        "<br><span>Gazetteer ID: " + props.id + "</span>" +
                         "<br><hr class=\"linehr\"><span>parent geometry: " + props.parentGeometry.name + "</span>" +
                         "<br><span>parent ID: " + props.parentGeometry.id + "</span>"
                         : "<span>no geometry selected</span>");
@@ -111,6 +111,9 @@ angular.module('chronontology.components')
                         this._div.innerHTML = this._div.innerHTML.replace("<span>parent geometry: geom origin</span>","");
                         this._div.innerHTML = this._div.innerHTML.replace("<br><span>parent ID: null</span>","");
                     }
+                    this._div.innerHTML = this._div.innerHTML.replace("spatiallyPartOfRegion",_this.g1);
+                    this._div.innerHTML = this._div.innerHTML.replace("isNamedAfter",_this.g2);
+                    this._div.innerHTML = this._div.innerHTML.replace("hasCoreArea",_this.g3);
                 };
                 _this.infoLegend.addTo(_this.map);
                 // add markers and polygons
