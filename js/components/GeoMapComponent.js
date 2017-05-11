@@ -138,10 +138,10 @@ angular.module('chronontology.components')
                 // calc layer center
                 _this.mapY = _this.marker.getBounds().getCenter().lat;
                 _this.mapX = _this.marker.getBounds().getCenter().lng;
-                // zoom to bounds
-                _this.map.fitBounds(_this.marker.getBounds());
                 // set map
                 _this.map.setView([_this.mapY, _this.mapX], _this.mapZoom);
+                // zoom to bounds
+                _this.map.fitBounds(_this.marker.getBounds());
                 console.info(_this);
             }
             function onEachFeature(feature, layer) {
