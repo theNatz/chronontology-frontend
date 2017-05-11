@@ -103,11 +103,13 @@ angular.module('chronontology.components')
                         "<span><b>" + props.name + "</b></span>" +
                         "<br><span>relation: " + props.relation + "</span>" +
                         "<br><span>gazetteerID: " + props.id + "</span>" +
-                        "<br><hr class='linehr'/><span>parent geometry: " + props.parentGeometry.name + "</span>" +
+                        "<br><hr class=\"linehr\"><span>parent geometry: " + props.parentGeometry.name + "</span>" +
                         "<br><span>parent ID: " + props.parentGeometry.id + "</span>"
                         : "<span>no geometry selected</span>");
-                    if (this._div.innerHTML.indexOf("<br><hr class='linehr'/><span>parent geometry: geom origin</span><br><span>parent ID: null</span>") != -1) {
-                        this._div.innerHTML = this._div.innerHTML.replace("<br><hr class='linehr'/><span>parent geometry: geom origin</span><br><span>parent ID: null</span>","");
+                    if (this._div.innerHTML.indexOf("geom origin") != -1) {
+                        this._div.innerHTML = this._div.innerHTML.replace("<hr class=\"linehr\">","");
+                        this._div.innerHTML = this._div.innerHTML.replace("<span>parent geometry: geom origin</span>","");
+                        this._div.innerHTML = this._div.innerHTML.replace("<br><span>parent ID: null</span>","");
                     }
                 };
                 _this.infoLegend.addTo(_this.map);
