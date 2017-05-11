@@ -76,13 +76,13 @@ angular.module('chronontology.components')
                     for (var feature in geojson.features) {
                         if (geojson.features[feature].properties.relation) {
                             if (geojson.features[feature].properties.relation.indexOf("spatiallyPartOfRegion") !== -1 && !stopA) {
-                                div.innerHTML += '<i style="border-color:' + colors.spatiallyPartOfRegion + '"></i> ' + _this.g1 + '<br>';
+                                div.innerHTML += '<box style="border-color:' + colors.spatiallyPartOfRegion + '"></box><content>' + _this.g1 + '</content>';
                                 stopA = true;
                             } else if (geojson.features[feature].properties.relation.indexOf("isNamedAfter") !== -1 && !stopB) {
-                                div.innerHTML += '<i style="border-color:' + colors.isNamedAfter + '"></i> ' + _this.g2 + '<br>';
+                                div.innerHTML += '<box style="border-color:' + colors.isNamedAfter + '"></box><content>' + _this.g2 + '</content>';
                                 stopB = true;
                             } else if (geojson.features[feature].properties.relation.indexOf("hasCoreArea") !== -1 && !stopC) {
-                                div.innerHTML += '<i style="border-color:' + colors.hasCoreArea + '"></i> ' + _this.g3 + '<br>';
+                                div.innerHTML += '<box style="border-color:' + colors.hasCoreArea + '"></box><content>' + _this.g3 + '</content>';
                                 stopC = true;
                             }
                         }
