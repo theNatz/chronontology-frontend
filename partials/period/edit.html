@@ -353,7 +353,7 @@
                     <idai-picker search-uri="/data/period/"
                                  result-field="results"
                                  title-field="resource.id + ': ' + (resource.names | prefName) + ', ' + resource.types"
-                                 selected-item="$ctrl.currentPickedRelation"/>
+                                 selected-item="$ctrl.pickedRelations[relationName]"/>
                 </div>
                 <div class="col-md-1">
                     <span class="input-group-btn">
@@ -370,7 +370,6 @@
         <h4>{{ "ui_relations" | transl8 }} - <a href="https://en.wikipedia.org/wiki/Allen%27s_interval_algebra"
             target="_blank">Allen</a>
         </h4>
-
         <div class="col-md-12" ng-init="relationIndex = $index"
              ng-repeat="relationName in $ctrl.allenRelations">
 			<div>{{ "relation_"+relationName | transl8 }}</div>
@@ -395,7 +394,7 @@
                     <idai-picker search-uri="/data/period/"
                                  result-field="results"
                                  title-field="resource.id + ': ' + (resource.names | prefName) + ', ' + resource.types"
-                                 selected-item="$ctrl.currentPickedRelation"/>
+                                 selected-item="$ctrl.pickedRelations[relationName]"/>
                 </div>
                 <div class="col-md-1">
                     <span class="input-group-btn">

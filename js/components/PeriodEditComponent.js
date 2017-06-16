@@ -20,6 +20,19 @@ angular.module('chronontology.components')
             _this.allenRelations = chronontologySettings.allenRelations;
             _this.gazetteerRelations = chronontologySettings.gazetteerRelations;
             _this.currentPickedRelation = null;
+            _this.pickedRelations = function(){
+                var result = {};
+
+                for(var i = 0; i < _this.internalRelations.length; i++){
+                    result[_this.internalRelations[i]] = null;
+                }
+
+                for(var i = 0; i < _this.allenRelations.length; i++){
+                    result[_this.allenRelations[i]] = null;
+                }
+
+                return result;
+            }();
 
             _this.$onChanges = function() {
                 if(!_this.originalPeriod){
@@ -154,13 +167,13 @@ angular.module('chronontology.components')
 
             _this.addPickedRelation = function (relationName) {
 
-                if(_this.currentPickedRelation == null) {
+                if(_this.pickedRelations[relationName] == null) {
                     return;
                 }
 
-                if(_this.period.id == _this.currentPickedRelation.resource.id) {
+                if(_this.period.id == _this.pickedRelations[relationName]) {
                     console.log('Picked period is linked period, aborting.');
-                    _this.currentPickedRelation = null;
+                    _this.pickedRelations[relationName] = null;
                     return;
                 }
 
@@ -173,8 +186,8 @@ angular.module('chronontology.components')
                 }
 
 
-                _this.period.relations[relationName].push(_this.currentPickedRelation.resource.id);
-                _this.currentPickedRelation = null;
+                _this.period.relations[relationName].push(_this.pickedRelations[relationName].resource.id);
+                _this.pickedRelations[relationName] = null;
             };
             _this.removeRelation = function(relationName, relation) {
                 _this.period.relations[relationName] = _this.period.relations[relationName].filter(function(x){
