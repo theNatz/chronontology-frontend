@@ -10,7 +10,7 @@ angular.module('chronontology.components')
             originalPeriod: '<',
             onSave: '&'
         },
-        controller: function(chronontologySettings) {
+        controller: function(chronontologySettings, $http) {
             var _this = this;
 
             _this.validTypes = chronontologySettings.validTypes;
@@ -19,7 +19,6 @@ angular.module('chronontology.components')
             _this.internalRelations = chronontologySettings.internalRelations;
             _this.allenRelations = chronontologySettings.allenRelations;
             _this.gazetteerRelations = chronontologySettings.gazetteerRelations;
-            _this.currentPickedRelation = null;
             _this.pickedRelations = function(){
                 var result = {};
 
@@ -33,12 +32,27 @@ angular.module('chronontology.components')
 
                 return result;
             }();
+            
+            _this.cachedPeriods = {};
 
             _this.$onChanges = function() {
                 if(!_this.originalPeriod){
                     return;
                 }
                 _this.copyOriginal();
+                for(var key in _this.period.relations) {
+                    for(var j = 0; j < _this.period.relations[key].length; j++) {
+                        _this.cachePeriod(_this.period.relations[key][j]);
+                    }
+                }
+            };
+
+            _this.cachePeriod = function(periodId) {
+                $http.get('/data/period/'+periodId).success((function(id) {
+                    return function(result) {
+                        _this.cachedPeriods[id] = result;
+                    }
+                })(periodId));
             };
 
             _this.saveChanges = function () {
@@ -187,6 +201,7 @@ angular.module('chronontology.components')
 
 
                 _this.period.relations[relationName].push(_this.pickedRelations[relationName].resource.id);
+                _this.cachePeriod(_this.pickedRelations[relationName].resource.id);
                 _this.pickedRelations[relationName] = null;
             };
             _this.removeRelation = function(relationName, relation) {

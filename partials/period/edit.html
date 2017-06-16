@@ -332,10 +332,11 @@
         <div class="col-md-12" ng-init="relationIndex = $index"
              ng-repeat="relationName in $ctrl.internalRelations">
 			<div>{{ "relation_"+relationName | transl8 }}</div>
-			<div class="col-md-4"
+			<div
 				 ng-init="valueIndex = $index"
 				 ng-repeat="value in $ctrl.period.relations[relationName] track by $index">
 				<span class="input-group">
+                    <span class="input-group-addon">{{$ctrl.cachedPeriods[value].resource.names | prefName}}</span>
 					<input type="text"
 						   class="form-control"
 						   ng-model="$ctrl.period.relations[relationName][valueIndex]">
@@ -346,22 +347,22 @@
 							 <span class="glyphicon glyphicon-minus-sign" aria-hidden="true"></span>
 						 </button>
 					</span>
+
 				</span>
 			</div>
             <div class="input-group col-md-12">
-                <div class="col-md-11">
+                <div>
                     <idai-picker search-uri="/data/period/"
                                  result-field="results"
                                  title-field="resource.id + ': ' + (resource.names | prefName) + ', ' + resource.types"
                                  selected-item="$ctrl.pickedRelations[relationName]"/>
                 </div>
-                <div class="col-md-1">
-                    <span class="input-group-btn">
-                         <button class="btn btn-success" ng-click="$ctrl.addPickedRelation(relationName)" type="button">
-                             <span class="glyphicon glyphicon-plus-sign" aria-hidden="true"></span>
-                         </button>
-                    </span>
-                </div>
+                <span class="input-group-btn">
+                     <button class="btn btn-success" ng-click="$ctrl.addPickedRelation(relationName)" type="button">
+                         <span class="glyphicon glyphicon-plus-sign" aria-hidden="true"></span>
+                     </button>
+                </span>
+
             </div>
         </div>
 
@@ -373,36 +374,36 @@
         <div class="col-md-12" ng-init="relationIndex = $index"
              ng-repeat="relationName in $ctrl.allenRelations">
 			<div>{{ "relation_"+relationName | transl8 }}</div>
-			<div class="col-md-4"
+			<div
 				 ng-init="valueIndex = $index"
 				 ng-repeat="value in $ctrl.period.relations[relationName] track by $index">
 				<span class="input-group">
+                    <span class="input-group-addon">{{$ctrl.cachedPeriods[value].resource.names | prefName}}</span>
 					<input type="text"
 						   class="form-control"
 						   ng-model="$ctrl.period.relations[relationName][valueIndex]">
+
 					<span class="input-group-btn">
-							 <button class="btn btn-danger"
-									 ng-click="$ctrl.removeRelation(relationName, value)"
-									 type="button">
-								 <span class="glyphicon glyphicon-minus-sign" aria-hidden="true"></span>
-							 </button>
-						</span>
+                         <button class="btn btn-danger"
+                                 ng-click="$ctrl.removeRelation(relationName, value)"
+                                 type="button">
+                             <span class="glyphicon glyphicon-minus-sign" aria-hidden="true"></span>
+                         </button>
+                    </span>
 				</span>
 			</div>
             <div class="input-group col-md-12">
-                <div class="col-md-11">
+                <div>
                     <idai-picker search-uri="/data/period/"
-                                 result-field="results"
-                                 title-field="resource.id + ': ' + (resource.names | prefName) + ', ' + resource.types"
-                                 selected-item="$ctrl.pickedRelations[relationName]"/>
+                                     result-field="results"
+                                     title-field="resource.id + ': ' + (resource.names | prefName) + ', ' + resource.types"
+                                     selected-item="$ctrl.pickedRelations[relationName]"/>
                 </div>
-                <div class="col-md-1">
-                    <span class="input-group-btn">
-                         <button class="btn btn-success" ng-click="$ctrl.addPickedRelation(relationName)" type="button">
-                             <span class="glyphicon glyphicon-plus-sign" aria-hidden="true"></span>
-                         </button>
-                    </span>
-                </div>
+                <span class="input-group-btn">
+                     <button class="btn btn-success" ng-click="$ctrl.addPickedRelation(relationName)" type="button">
+                         <span class="glyphicon glyphicon-plus-sign" aria-hidden="true"></span>
+                     </button>
+                </span>
             </div>
         </div>
     </div>
