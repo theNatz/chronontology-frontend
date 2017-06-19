@@ -8,17 +8,23 @@ angular.module('chronontology.components')
         bindings:
         {
             originalPeriod: '<',
+            resourceCache: '=',
             onSave: '&'
         },
-        controller: function(chronontologySettings, $http) {
+        controller: function(chronontologySettings) {
             var _this = this;
 
             _this.validTypes = chronontologySettings.validTypes;
             _this.validSubtypes = chronontologySettings.validSubtypes;
             _this.validProvenances = chronontologySettings.validProvenances;
-            _this.internalRelations = chronontologySettings.internalRelations;
-            _this.allenRelations = chronontologySettings.allenRelations;
-            _this.gazetteerRelations = chronontologySettings.gazetteerRelations;
+            _this.internalRelations = chronontologySettings.internalRelationTypes;
+            _this.allenRelationTypes = chronontologySettings.allenRelationTypes;
+            _this.gazetteerRelationTypes = chronontologySettings.gazetteerRelationTypes;
+
+            _this.period = null;
+            _this.relatedPeriods = null;
+            _this.relatedLocations = null;
+
             _this.pickedRelations = function(){
                 var result = {};
 
@@ -26,33 +32,18 @@ angular.module('chronontology.components')
                     result[_this.internalRelations[i]] = null;
                 }
 
-                for(var i = 0; i < _this.allenRelations.length; i++){
-                    result[_this.allenRelations[i]] = null;
+                for(var i = 0; i < _this.allenRelationTypes.length; i++){
+                    result[_this.allenRelationTypes[i]] = null;
                 }
 
                 return result;
             }();
-            
-            _this.cachedPeriods = {};
 
             _this.$onChanges = function() {
                 if(!_this.originalPeriod){
                     return;
                 }
                 _this.copyOriginal();
-                for(var key in _this.period.relations) {
-                    for(var j = 0; j < _this.period.relations[key].length; j++) {
-                        _this.cachePeriod(_this.period.relations[key][j]);
-                    }
-                }
-            };
-
-            _this.cachePeriod = function(periodId) {
-                $http.get('/data/period/'+periodId).success((function(id) {
-                    return function(result) {
-                        _this.cachedPeriods[id] = result;
-                    }
-                })(periodId));
             };
 
             _this.saveChanges = function () {
