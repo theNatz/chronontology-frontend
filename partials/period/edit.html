@@ -437,14 +437,15 @@
 			</div>
 			<div>
 				<div class="input-group">
-					<input type="text" class="form-control"
-						   id="gazetteer-relation-input-{{relationName}}"
-						   placeholder="Add iDAI.gazetteer URI...">
-					<span class="input-group-btn">
-							 <button class="btn btn-success" ng-click="$ctrl.addGazetteerRelation(relationName)" type="button">
-								 <span class="glyphicon glyphicon-plus-sign" aria-hidden="true"></span>
-							 </button>
-						 </span>
+                    <span class="input-group-btn" ng-show="$ctrl.pickedLocations[relationName]">
+                         <button class="btn btn-success" ng-click="$ctrl.addGazetteerRelation(relationName)" type="button">
+                             <span class="glyphicon glyphicon-plus-sign" aria-hidden="true"></span>
+                         </button>
+                    </span>
+                    <idai-picker search-uri="https://gazetteer.dainst.org/search"
+                                 result-field="result"
+                                 title-field="gazId + ': ' + prefName.title"
+                                 selected-item="$ctrl.pickedLocations[relationName]"/>
 				</div>
 			</div>
         </div>

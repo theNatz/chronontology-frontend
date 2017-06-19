@@ -39,6 +39,14 @@ angular.module('chronontology.components')
                 return result;
             }();
 
+            _this.pickedLocations = function () {
+                var result = {};
+                for(var i = 0; i < _this.gazetteerRelationTypes.length; i++) {
+                    result[_this.gazetteerRelationTypes[i]] = null;
+                }
+                return result;
+            }();
+
             _this.$onChanges = function() {
                 if(!_this.originalPeriod){
                     return;
@@ -190,9 +198,8 @@ angular.module('chronontology.components')
                     _this.period.relations[relationName] = [];
                 }
 
-
                 _this.period.relations[relationName].push(_this.pickedRelations[relationName].resource.id);
-                _this.cachePeriod(_this.pickedRelations[relationName].resource.id);
+                _this.resourceCache[_this.pickedRelations[relationName].resource.id] = _this.pickedRelations[relationName].resource;
                 _this.pickedRelations[relationName] = null;
             };
             _this.removeRelation = function(relationName, relation) {
@@ -202,12 +209,18 @@ angular.module('chronontology.components')
             };
 
             _this.addGazetteerRelation = function(relationName) {
+                if(_this.pickedLocations[relationName] == null) {
+                    return;
+                }
+
                 if(_this.period[relationName] == undefined) {
                     _this.period[relationName] = [];
                 }
-                var newRelationInput = document.getElementById('gazetteer-relation-input-' + relationName);
-                _this.period[relationName].push(newRelationInput.value);
-                newRelationInput.value = "";
+
+                _this.period[relationName].push(_this.pickedLocations[relationName]['@id']);
+                _this.resourceCache[_this.pickedLocations[relationName]['@id']] = _this.pickedLocations[relationName];
+
+                _this.pickedLocations[relationName] = null;
             };
             _this.removeGazetteerRelation = function(relationName, relation) {
                 _this.period[relationName] = _this.period[relationName].filter(function(x){
