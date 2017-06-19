@@ -3,8 +3,8 @@
 angular.module('chronontology.services')
 // singleton service for authentication, stores credentials in browser cookie
 // if cookie is present the stored credentials get sent with every backend request
-.service('authService', ['$http', '$filter', '$cookieStore', 'md5',
-    function($http, $filter, $cookieStore, md5) {
+.service('authService', ['$http', '$filter', '$cookieStore',
+    function($http, $filter, $cookieStore) {
 
     // initialize to whatever is in the cookie, if anything
     if ($cookieStore.get('chronontology-authdata')) {
