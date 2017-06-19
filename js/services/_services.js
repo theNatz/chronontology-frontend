@@ -3,13 +3,20 @@
 angular.module('chronontology.services', [])
 
 .factory('d3', function() {
-
 	return window.d3;
-
 })
-
+.factory('ChronontologyInterceptor', function () {
+    var externalResourcePattern = /^https?:\/\//i;
+	return {
+		request: function (config) {
+			if(externalResourcePattern.test(config.url)) {
+				config.headers.Authorization = undefined;
+			}
+			return config;
+        }
+	}
+})
 .factory('periodUtils', function() {
-
 	var periodUtils = {
 
 		buildTree: function(periods) {
@@ -83,6 +90,4 @@ angular.module('chronontology.services', [])
 
 	return periodUtils;
 
-})
-
-;
+});

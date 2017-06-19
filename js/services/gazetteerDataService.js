@@ -8,10 +8,7 @@ var GazetteerDataService = function($http, chronontologySettings) {
     this.matchIdFromUriPattern = /\d+$/;
     this.getById = function(gazId, success) {
         $http.get(
-            chronontologySettings.gazetteerBaseUri + '/doc/' + gazId + '.json',
-            {
-                headers: { Authorization : undefined}
-            }
+            chronontologySettings.gazetteerBaseUri + '/doc/' + gazId + '.json'
         ).success(function(result){
             return success(result);
         });

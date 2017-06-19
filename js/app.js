@@ -25,6 +25,7 @@ angular.module('chronontology', [
             $locationProvider.html5Mode(true);
 
             $httpProvider.defaults.cache = true;
+            $httpProvider.interceptors.push('ChronontologyInterceptor');
             $routeProvider
                 .when('/', {templateUrl: 'partials/homepage.html'})
                 .when('/search', {templateUrl: 'partials/search.html'})
