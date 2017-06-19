@@ -95,7 +95,7 @@ angular.module('chronontology.components')
                 }
                 else {
                     _this.period.types = _this.period.types.filter(function (x) {
-                        return typeString != x;
+                        return typeString !== x;
                     })
                 }
             };
@@ -110,7 +110,7 @@ angular.module('chronontology.components')
 
             _this.removeTimespan = function(timespan) {
                 _this.period.hasTimespan = _this.period.hasTimespan.filter(function(x){
-                    return x['timeOriginal'] != timespan['timeOriginal'];
+                    return x['timeOriginal'] !== timespan['timeOriginal'];
                 });
             };
 
@@ -157,7 +157,7 @@ angular.module('chronontology.components')
             _this.addTag = function () {
                 var newTagInput = document.getElementById('tag-input');
 
-                if(_this.period.tags == undefined) {
+                if(_this.period.tags === undefined) {
                     _this.period.tags = [];
                 }
 
@@ -166,7 +166,7 @@ angular.module('chronontology.components')
                     return;
                 }
 
-                if(newTagInput.value == "") return;
+                if(newTagInput.value === "") return;
 
                 _this.period.tags.push(newTagInput.value);
                 newTagInput.value = "";
@@ -174,27 +174,27 @@ angular.module('chronontology.components')
 
             _this.removeTag = function (tag) {
                 _this.period.tags = _this.period.tags.filter(function (x) {
-                    return x != tag;
+                    return x !== tag;
                 })
             };
 
             _this.addPickedRelation = function (relationName) {
 
-                if(_this.pickedRelations[relationName] == null) {
+                if(_this.pickedRelations[relationName] === null) {
                     return;
                 }
 
-                if(_this.period.id == _this.pickedRelations[relationName]) {
+                if(_this.period.id === _this.pickedRelations[relationName]) {
                     console.log('Picked period is linked period, aborting.');
                     _this.pickedRelations[relationName] = null;
                     return;
                 }
 
-                if(_this.period.relations == undefined) {
+                if(_this.period.relations === undefined) {
                     _this.period.relations = [];
                 }
 
-                if(_this.period.relations[relationName] == undefined) {
+                if(_this.period.relations[relationName] === undefined) {
                     _this.period.relations[relationName] = [];
                 }
 
@@ -204,16 +204,16 @@ angular.module('chronontology.components')
             };
             _this.removeRelation = function(relationName, relation) {
                 _this.period.relations[relationName] = _this.period.relations[relationName].filter(function(x){
-                    return x != relation;
+                    return x !== relation;
                 });
             };
 
             _this.addGazetteerRelation = function(relationName) {
-                if(_this.pickedLocations[relationName] == null) {
+                if(_this.pickedLocations[relationName] === null) {
                     return;
                 }
 
-                if(_this.period[relationName] == undefined) {
+                if(_this.period[relationName] === undefined) {
                     _this.period[relationName] = [];
                 }
 
@@ -224,7 +224,7 @@ angular.module('chronontology.components')
             };
             _this.removeGazetteerRelation = function(relationName, relation) {
                 _this.period[relationName] = _this.period[relationName].filter(function(x){
-                    return x != relation;
+                    return x !== relation;
                 });
             };
         }
