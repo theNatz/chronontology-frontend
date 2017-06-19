@@ -4,11 +4,11 @@
 
 'use strict';
 
-var GazetteerDataService = function($http) {
+var GazetteerDataService = function($http, chronontologySettings) {
     this.matchIdFromUriPattern = /\d+$/;
     this.getById = function(gazId, success) {
         $http.get(
-            'https://gazetteer.dainst.org/doc/' + gazId + '.json',
+            chronontologySettings.gazetteerBaseUri + '/doc/' + gazId + '.json',
             {
                 headers: { Authorization : undefined}
             }
@@ -27,4 +27,4 @@ var GazetteerDataService = function($http) {
     }
 };
 
-angular.module('chronontology.services').service('gazetteerDataService', ["$http", GazetteerDataService]);
+angular.module('chronontology.services').service('gazetteerDataService', ["$http", "chronontologySettings", GazetteerDataService]);

@@ -36,6 +36,7 @@ angular.module('chronontology', [
 	}
 ]).constant('chronontologySettings', {
 	baseUri: "http://chronontology.dainst.org",
+    gazetteerBaseUri: "https://gazetteer.dainst.org",
     geowidgetURL: "http://chronontology.i3mainz.hs-mainz.de/spatialapi/geowidget",
 	internalRelationTypes: [
 		"isSenseOf", "hasSense",
