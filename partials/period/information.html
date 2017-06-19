@@ -3,7 +3,7 @@
 <script type="text/ng-template" id="/explicitRelations">
 	<span ng-if="period.relations[relation]">
 		<dt>{{ "relation_"+relation | transl8 }}</dt>
-		<dd ng-repeat="document in relatedDocuments[relation]" ng-include src="'/periodLink'"></dd>
+		<dd ng-repeat="periodId in period.relations[relation]" ng-include src="'/periodLink'"></dd>
 		<br>
 	</span>
 </script>
@@ -11,15 +11,15 @@
 <script type="text/ng-template" id="/derivedRelations">
 	<span ng-if="document.derived.relations[relation]">
 		<dt>{{ "relation_"+relation | transl8 }}</dt>
-		<dd ng-repeat="document in relatedDocuments.derived[relation]" ng-include src="'/periodLink'"></dd>
+		<dd ng-repeat="periodId in document.derived.relations[relation]" ng-include src="'/periodLink'"></dd>
 		<br>
 	</span>
 </script>
 
 <script type="text/ng-template" id="/periodLink">
-	<a ng-href="/period/{{document.resource.id}}">{{ document.resource.names | prefName }}</a>
-	({{ document.resource.types.join(", ") }})
-	{{ document.resource.provenance }}
+	<a ng-href="/period/{{periodId}}">{{ resourceCache[periodId].names | prefName }}</a>
+	({{ resourceCache[periodId].types.join(", ") }})
+	{{ resourceCache[periodId].provenance }}
 </script>
 
 <script type="text/ng-template" id="/intervalBoundary">
@@ -102,16 +102,16 @@
         <br>
     </span>
 
-    <span ng-repeat="gazetteerRelation in gazetteerRelations">
+    <span ng-repeat="gazetteerRelation in gazetteerRelationTypes">
         <span ng-if="period[gazetteerRelation]">
             <dt>{{ "relation_"+gazetteerRelation | transl8 }}</dt>
             <dd ng-repeat="regionUri in period[gazetteerRelation]">
-				<span ng-if="document.related[regionUri]">
+				<span ng-if="resourceCache[regionUri]">
 					<a ng-href="{{regionUri}}" target="_blank">
-						{{document.related[regionUri].prefName.title}} <span class="glyphicon glyphicon-new-window"></span>
+						{{resourceCache[regionUri].prefName.title}} <span class="glyphicon glyphicon-new-window"></span>
 					</a>
 				</span>
-				<span ng-if="!document.related[regionUri]">
+				<span ng-if="!resourceCache[regionUri]">
 					<a ng-href="{{regionUri}}" target="_blank">
 						{{regionUri}} <span class="glyphicon glyphicon-new-window"></span>
 					</a>
@@ -126,22 +126,22 @@
 
     <h5>{{ "ui_relations" | transl8 }}</h5>
 
-	<span ng-repeat="relation in internalRelations" ng-include src="'/explicitRelations'"></span>
+	<span ng-repeat="relation in internalRelationTypes" ng-include src="'/explicitRelations'"></span>
 
-	<span ng-repeat="relation in allenRelations" ng-include src="'/explicitRelations'"></span>
+	<span ng-repeat="relation in allenRelationTypes" ng-include src="'/explicitRelations'"></span>
 
     <h4>{{ "ui_derivedInfo" | transl8 }}</h4>
 
-    <span ng-repeat="gazetteerRelation in gazetteerRelations">
+    <span ng-repeat="gazetteerRelation in gazetteerRelationTypes">
         <span ng-if="document.derived[gazetteerRelation]">
             <dt>{{ "relation_"+gazetteerRelation | transl8 }}</dt>
             <dd ng-repeat="regionUri in document.derived[gazetteerRelation]">
-				<span ng-if="document.related[regionUri]">
+				<span ng-if="resourceCache[regionUri]">
 					<a ng-href="{{regionUri}}" target="_blank">
-						{{document.related[regionUri].prefName.title}} <span class="glyphicon glyphicon-new-window"></span>
+						{{resourceCache[regionUri].prefName.title}} <span class="glyphicon glyphicon-new-window"></span>
 					</a>
 				</span>
-				<span ng-if="!document.related[regionUri]">
+				<span ng-if="!resourceCache[regionUri]">
 					<a ng-href="{{regionUri}}" target="_blank">
 						{{regionUri}} <span class="glyphicon glyphicon-new-window"></span>
 					</a>
@@ -155,9 +155,9 @@
 
     <h5>{{ "ui_relations" | transl8 }}</h5>
 
-	<span ng-repeat="relation in internalRelations" ng-include src="'/derivedRelations'"></span>
+	<span ng-repeat="relation in internalRelationTypes" ng-include src="'/derivedRelations'"></span>
 
-	<span ng-repeat="relation in allenRelations" ng-include src="'/derivedRelations'"></span>
+	<span ng-repeat="relation in allenRelationTypes" ng-include src="'/derivedRelations'"></span>
 
 </span>
 

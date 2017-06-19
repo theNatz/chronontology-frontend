@@ -37,7 +37,7 @@ angular.module('chronontology', [
 ]).constant('chronontologySettings', {
 	baseUri: "http://chronontology.dainst.org",
     geowidgetURL: "http://chronontology.i3mainz.hs-mainz.de/spatialapi/geowidget",
-	internalRelations: [
+	internalRelationTypes: [
 		"isSenseOf", "hasSense",
 		"isPartOf", "hasPart",
 		"isListedIn", "lists",
@@ -46,12 +46,12 @@ angular.module('chronontology', [
 		"sameAs",
 		"isSimilarTo"
 	],
-	gazetteerRelations: [
+    gazetteerRelationTypes: [
 		"isNamedAfter",
 		"hasCoreArea",
 		"spatiallyPartOfRegion"
 	],
-	allenRelations: [
+    allenRelationTypes: [
 		"includes", "occursDuring",
 		"meetsInTimeWith", "isMetInTimeBy",
 		"occursBefore", "occursAfter",

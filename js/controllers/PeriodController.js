@@ -2,21 +2,25 @@
 
 angular.module('chronontology.controllers')
 
-.controller("PeriodController", function($scope, $location, $routeParams, $http, $sce, chronontologySettings, authService) {
+.controller("PeriodController", function($scope, $location, $routeParams, $http, $sce,
+										 chronontologySettings, authService, gazetteerDataService) {
 
 	// possible relations
 	// (labels are now in transl8 keys "relation_isSenseOf" etc.)
-	$scope.internalRelations = chronontologySettings.internalRelations;
-	$scope.gazetteerRelations = chronontologySettings.gazetteerRelations;
-	$scope.allenRelations = chronontologySettings.allenRelations;
+	$scope.internalRelationTypes = chronontologySettings.internalRelationTypes;
+    $scope.allenRelationTypes = chronontologySettings.allenRelationTypes;
 
-	$scope.internalAndAllenRelations =
-		chronontologySettings.internalRelations
-		.concat(chronontologySettings.allenRelations);
+	$scope.gazetteerRelationTypes = chronontologySettings.gazetteerRelationTypes;
+
+	$scope.combinedRelationTypes =
+		chronontologySettings.internalRelationTypes
+		.concat(chronontologySettings.allenRelationTypes);
 
 	// store related periods, should be a central app-wide cache
 	$scope.relatedDocuments = {};
 	$scope.relatedDocuments.derived = {};
+
+	$scope.resourceCache = {};
 
 	$http.get('/data/period/' + $routeParams.id).success( function(result) {
 
@@ -25,37 +29,114 @@ angular.module('chronontology.controllers')
 		$scope.period = result.resource;
 		$scope.authService = authService;
 
+        $scope.updateCache();
+
 		var geoFrameUrl = chronontologySettings.geoFrameBaseUri + "?uri=" + chronontologySettings.baseUri;
 		$scope.geoFrameUrl = $sce.trustAsResourceUrl(geoFrameUrl + "/period/" + result.resource.id);
-
-		// note: for(var relation in $scope.internalAndAllenRelations) would yield 0, 1, 2, ...
-		for (var i in $scope.internalAndAllenRelations) {
-			var relation = $scope.internalAndAllenRelations[i];
-
-			$scope.relatedDocuments[relation] = [];
-			if($scope.period.relations[relation]) $scope.period.relations[relation].forEach(function(periodUri) {
-				(function(relation) {
-					$http.get('/data/period/'+periodUri).success(function(result) {
-						$scope.relatedDocuments[relation].push(result);
-					})
-				}(relation));
-			});
-
-			$scope.relatedDocuments.derived[relation] = [];
-			if($scope.document.derived.relations[relation]) $scope.document.derived.relations[relation].forEach(function(periodUri) {
-				(function(relation) {
-					$http.get('/data/period/'+periodUri).success(function(result) {
-						$scope.relatedDocuments.derived[relation].push(result);
-					})
-				}(relation));
-			});
-		}
 
 		$http.get('/data/period/?size=1000&q=resource.provenance:' + $scope.period.provenance).success( function(result) {
 			$scope.provenancePeriods = result.results;
 		});
 
 	});
+
+	$scope.updateCache = function(){
+		$scope.updateCachedPeriods();
+        $scope.updateCachedLocations();
+	};
+
+	$scope.updateCachedPeriods = function(){
+        for(var i in $scope.combinedRelationTypes) {
+            var currentType = $scope.combinedRelationTypes[i];
+
+            // Check cache for periods.
+            if(currentType in $scope.period.relations) {
+                $scope.period.relations[currentType].forEach(function(periodId) {
+                	if(!(periodId in $scope.resourceCache)){
+                        if($scope.document.related && periodId in $scope.document.related) {
+                        	$scope.resourceCache[periodId] = $scope.document.related[periodId];
+                        }
+                        else{
+                            (function (periodId) {
+                                console.log("Relation " + periodId + " not appended to document, retrieving...");
+                                $http.get('/data/period/' + periodId).success(function (result) {
+                                    $scope.resourceCache[periodId] = result.resource;
+                                })
+                            })(periodId)
+                        }
+					}
+
+                })
+            }
+
+            // Check cache for derived periods.
+            if(currentType in $scope.document.derived.relations) {
+                $scope.document.derived.relations[currentType].forEach(function(periodId) {
+                	if(!(periodId in $scope.resourceCache)){
+                        if($scope.document.related && periodId in $scope.document.related) {
+							$scope.resourceCache[periodId] = $scope.document.related[periodId];
+                        }
+                        else {
+                            (function (periodId) {
+                                console.log("Derived relation " + periodId + " not appended to document, retrieving...");
+                                $http.get('/data/period/' + periodId).success(function (result) {
+                                    $scope.resourceCache[periodId] = result.resource;
+                                })
+                            })(periodId)
+                        }
+					}
+                })
+            }
+        }
+	};
+
+	$scope.updateCachedLocations = function () {
+        for(var i in $scope.gazetteerRelationTypes) {
+            var currentType = $scope.gazetteerRelationTypes[i];
+
+            // Check cache for locations.
+            if(currentType in $scope.period) {
+                $scope.period[currentType].forEach(function(gazetteerUri) {
+                    if(!(gazetteerUri in $scope.resourceCache)){
+                        if($scope.document.related && gazetteerUri in $scope.document.related){
+                            $scope.resourceCache[gazetteerUri] = $scope.document.related[gazetteerUri];
+                        }
+                        else {
+                            (function(gazetteerUri){
+                                console.log("Relation " + gazetteerUri + " not appended to document, retrieving...");
+                                gazetteerDataService.getByUri(gazetteerUri, function(result){
+                                    $scope.resourceCache[gazetteerUri] = {
+                                        'prefName': result['prefName']
+                                    };
+                                })
+                            })(gazetteerUri)
+                        }
+                    }
+                })
+            }
+
+            // Check cache for derived locations.
+            if(currentType in $scope.document.derived) {
+                $scope.document.derived[currentType].forEach(function(gazetteerUri) {
+                    if(!(gazetteerUri in $scope.resourceCache)){
+                        if($scope.document.related && gazetteerUri in $scope.document.related) {
+                            $scope.resourceCache[gazetteerUri] = $scope.document.related[gazetteerUri];
+                        }
+                        else {
+                            (function(gazetteerUri){
+                                console.log("Derived relation " + gazetteerUri + " not appended to document, retrieving...");
+                                gazetteerDataService.getByUri(gazetteerUri, function(result){
+                                    $scope.resourceCache[gazetteerUri] = {
+                                        'prefName': result['prefName']
+                                    };
+                                })
+                            })(gazetteerUri)
+                        }
+                    }
+                })
+            }
+        }
+    };
 
 	$scope.exportJSON = function() {
 		var JSONexport = angular.toJson($scope.document, true);
