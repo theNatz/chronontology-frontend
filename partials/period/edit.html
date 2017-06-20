@@ -1,10 +1,11 @@
 <div>
-    <h3>Edit</h3>
+    <h3 ng-show="$ctrl.createPeriod">Create</h3>
 
-    <div class="row">
+    <h3 ng-show="!$ctrl.createPeriod">Edit</h3>
+    <div ng-show="!$ctrl.createPeriod" class="row">
         <h4>ID</h4>
         <form class="form-group">
-            <input required type="text" class="form-control" ng-model="$ctrl.period.id" readonly>
+            <input type="text" class="form-control" ng-model="$ctrl.period.id" readonly>
         </form>
     </div>
 
@@ -182,35 +183,39 @@
                ng-checked="$ctrl.period.ongoing"
                ng-click="$ctrl.period.ongoing = !$ctrl.period.ongoing">
 
-        <p/>
+        <p></p>
+
         <div ng-init="timespanIndex = $index"
              ng-repeat="timespan in $ctrl.period.hasTimespan track by $index">
             <div class="row">
-                <div class="col-md-1">
+                <div class="col-md-12">
                     <span class="input-group-btn">
-                         <button class="btn btn-danger"
+                         <button class="btn btn-danger btn-lg btn-block"
                                  ng-click="$ctrl.removeTimespan(timespan)"
                                  type="button">
                              <span class="glyphicon glyphicon-minus-sign" aria-hidden="true"></span>
                          </button>
                     </span>
                 </div>
-                <div class="col-md-11">
+                <div class="col-md-12">
                     <div>
                         {{ "ui_source" | transl8 }}
                         <input type="text"
                                class="form-control col-md-4"
+                               placeholder="{{'ui_add_value' | transl8}}..."
                                ng-model="$ctrl.period.hasTimespan[timespanIndex].sourceOriginal">
                     </div>
                     <div>
                         {{ "ui_source_url" | transl8 }}
                         <input type="text"
                                class="form-control col-md-4"
+                               placeholder="{{'ui_add_value' | transl8}}..."
                                ng-model="$ctrl.period.hasTimespan[timespanIndex].sourceURL">
                     </div>
                     <div>
-                        {{ "ui_original_name" | transl8 }}
+                        {{ "period_description" | transl8 }}
                         <textarea class="form-control" rows="3"
+                                  placeholder="{{'ui_add_value' | transl8}}..."
                                   ng-model="$ctrl.period.hasTimespan[timespanIndex].timeOriginal">
                         </textarea>
                     </div>
@@ -218,6 +223,7 @@
                         {{ "temporal_calendar" | transl8 }}
                         <input type="text"
                                class="form-control col-md-4"
+                               placeholder="{{'ui_add_value' | transl8}}..."
                                ng-model="$ctrl.period.hasTimespan[timespanIndex].calendar">
                     </div>
 
@@ -226,6 +232,7 @@
                             {{ "temporal_begin" | transl8 }}:
                             <input type="text"
                                    class="form-control col-md-4"
+                                   placeholder="{{'ui_add_value' | transl8}}..."
                                    ng-model="$ctrl.period.hasTimespan[timespanIndex].begin.at">
                         </div>
 
@@ -234,6 +241,7 @@
                             {{ "temporal_at_precision" | transl8 }}:
                             <input type="text"
                                    class="form-control col-md-4"
+                                   placeholder="{{'ui_add_value' | transl8}}..."
                                    ng-model="$ctrl.period.hasTimespan[timespanIndex].begin.atPrecision">
                         </div>
                     </div>
@@ -243,6 +251,7 @@
                             {{ "temporal_end" | transl8 }}:
                             <input type="text"
                                    class="form-control col-md-4"
+                                   placeholder="{{'ui_add_value' | transl8}}..."
                                    ng-model="$ctrl.period.hasTimespan[timespanIndex].end.at">
                         </div>
 
@@ -250,6 +259,7 @@
                             {{ "temporal_at_precision" | transl8 }}:
                             <input type="text"
                                    class="form-control col-md-4"
+                                   placeholder="{{'ui_add_value' | transl8}}..."
                                    ng-model="$ctrl.period.hasTimespan[timespanIndex].end.atPrecision">
                         </div>
                     </div>
@@ -257,73 +267,22 @@
             </div>
         </div>
 
-        <p/>
+
+        <p></p>
+
         <div>
             <div class="row">
-                <div class="col-md-1">
+                <div class="col-md-12">
                     <span class="input-group-btn">
-                         <button class="btn btn-success"
+                         <button class="btn btn-success btn-lg btn-block"
                                  ng-click="$ctrl.addTimespan()"
                                  type="button">
                              <span class="glyphicon glyphicon-plus-sign" aria-hidden="true"></span>
                          </button>
                     </span>
                 </div>
-                <div class="col-md-11">
-                    <div>
-                        {{ "ui_source" | transl8 }}
-                        <input type="text"
-                               class="form-control" id="timespan-source-input"
-                               placeholder="{{'ui_add_value' | transl8}}...">
-                    </div>
-                    <div>
-                        {{ "ui_source_url" | transl8 }}
-                        <input type="text"
-                               class="form-control" id="timespan-source-url-input"
-                               placeholder="{{'ui_add_value' | transl8}}...">
-                    </div>
-                    <div>
-                        {{ "period_description" | transl8 }}
-                        <textarea class="form-control" rows="3" id="timespan-original-input"
-                                  placeholder="{{'ui_add_value' | transl8}}..."></textarea>
-                    </div>
-                    <div>
-                        {{ "temporal_calendar" | transl8 }}
-                        <input type="text" class="form-control" id="timespan-calendar-input"
-                               placeholder="{{'ui_add_value' | transl8}}...">
-                    </div>
-
-                    <div class="row">
-                        <div class="col-md-6">
-                            {{ "temporal_begin" | transl8 }}:
-                            <input type="text" class="form-control" id="timespan-begin-at-input"
-                                   placeholder="{{'ui_add_value' | transl8}}...">
-                        </div>
-
-                        <div class="col-md-6">
-                            {{ "temporal_at_precision" | transl8 }}:
-                            <input type="text" class="form-control"
-                                   id="timespan-begin-at-precision-input" placeholder="{{'ui_add_value' | transl8}}...">
-                        </div>
-                    </div>
-
-                    <div class="row">
-                        <div class="col-md-6">
-                            {{ "temporal_end" | transl8 }}:
-                            <input type="text" class="form-control" id="timespan-end-at-input"
-                                   placeholder="{{'ui_add_value' | transl8}}...">
-                        </div>
-
-                        <div class="col-md-6">
-                            {{ "temporal_at_precision" | transl8 }}:
-                            <input type="text" class="form-control"
-                                   id="timespan-end-at-precision-input" placeholder="{{'ui_add_value' | transl8}}...">
-                        </div>
-                    </div>
-                </div>
             </div>
         </div>
-
 
     </div>
     <div class="row form-group">

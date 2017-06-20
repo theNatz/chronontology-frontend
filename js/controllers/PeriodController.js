@@ -60,7 +60,9 @@ angular.module('chronontology.controllers')
             var currentType = $scope.combinedRelationTypes[i];
 
             // Check cache for periods.
-            if(currentType in $scope.period.relations) {
+
+            if(currentType in $scope.period.relations
+                && $scope.period.relations[currentType].constructor === Array) { // hack "includes" key is present in every generic javascript object
                 $scope.period.relations[currentType].forEach(function(periodId) {
                 	if(!(periodId in $scope.resourceCache)){
                         if($scope.document.related && periodId in $scope.document.related) {
@@ -80,7 +82,7 @@ angular.module('chronontology.controllers')
             }
 
             // Check cache for derived periods.
-            if(currentType in $scope.document.derived.relations) {
+            if($scope.document.derived && currentType in $scope.document.derived.relations) {
                 $scope.document.derived.relations[currentType].forEach(function(periodId) {
                 	if(!(periodId in $scope.resourceCache)){
                         if($scope.document.related && periodId in $scope.document.related) {
@@ -126,7 +128,7 @@ angular.module('chronontology.controllers')
             }
 
             // Check cache for derived locations.
-            if(currentType in $scope.document.derived) {
+            if($scope.document.derived && currentType in $scope.document.derived) {
                 $scope.document.derived[currentType].forEach(function(gazetteerUri) {
                     if(!(gazetteerUri in $scope.resourceCache)){
                         if($scope.document.related && gazetteerUri in $scope.document.related) {
@@ -154,9 +156,12 @@ angular.module('chronontology.controllers')
 		saveAs(blob, 'period-' + $scope.period.id + ".json");
 	};
 
-	$scope.savePeriod = function(updatedPeriod) {
+	$scope.saveUpdatedPeriod = function(period) {
 
-        $scope.period = angular.copy(updatedPeriod);
+        console.log("Saving new period.");
+        console.dir(period);
+
+        $scope.period = angular.copy(period);
         $scope.document.resource = $scope.period;
         $http.put("/data/period/" + $scope.period.id, JSON.stringify($scope.document))
 			.success(function (data) {
@@ -169,5 +174,27 @@ angular.module('chronontology.controllers')
                 console.log("error");
                 console.dir(data);
 		});
+    };
+
+    $scope.saveCreatedPeriod = function(period) {
+
+        console.log("Saving new period.");
+        console.dir(period);
+
+        $scope.period = angular.copy(period);
+        $scope.document = {};
+        $scope.document.resource = $scope.period;
+
+        $http.post("/data/period/", JSON.stringify($scope.document))
+            .success(function (data) {
+                console.log("success");
+                console.dir(data);
+
+                $location.path('/period/' + data.resource.id)
+            })
+            .error(function (data) {
+                console.log("error");
+                console.dir(data);
+            });
     }
 });

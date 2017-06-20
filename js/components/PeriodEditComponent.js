@@ -7,6 +7,7 @@ angular.module('chronontology.components')
         templateUrl: '../../partials/period/edit.html',
         bindings:
         {
+            createPeriod: '<',
             originalPeriod: '<',
             resourceCache: '=',
             onSave: '&'
@@ -48,15 +49,21 @@ angular.module('chronontology.components')
             }();
 
             _this.$onChanges = function() {
+                if(_this.createPeriod === true){
+                    _this.period = {};
+                    return;
+                }
+
                 if(!_this.originalPeriod){
                     return;
                 }
+
                 _this.copyOriginal();
             };
 
             _this.saveChanges = function () {
                 _this.onSave({
-                    updatedPeriod: _this.period
+                    period: _this.period
                 });
             };
 
@@ -70,7 +77,12 @@ angular.module('chronontology.components')
 
             _this.addLanguage = function () {
                 var newLanguageInput = document.getElementById('language-input');
-                _this.period.names.push({'lang':newLanguageInput.value, 'content':[]});
+
+                if(!('names' in _this.period)) _this.period['names'] = {};
+                if(newLanguageInput.value in _this.period.names) return;
+                if(newLanguageInput.value.trim() === "") return;
+
+                _this.period.names[newLanguageInput.value] = [];
                 newLanguageInput.value = "";
             };
 
@@ -79,6 +91,8 @@ angular.module('chronontology.components')
             };
 
             _this.addName = function (lang) {
+                if(!_this.period.names[lang]) _this.period.names[lang] = [];
+
                 var newNameInput = document.getElementById('name-input-' + lang);
                 _this.period.names[lang].push(newNameInput.value);
                 newNameInput.value = null;
@@ -108,50 +122,34 @@ angular.module('chronontology.components')
                 _this.period.types = [];
             };
 
-            _this.removeTimespan = function(timespan) {
-                _this.period.hasTimespan = _this.period.hasTimespan.filter(function(x){
-                    return x['timeOriginal'] !== timespan['timeOriginal'];
-                });
-            };
-
             _this.addTimespan = function() {
 
                 if(!_this.period.hasTimespan) {
                     _this.period.hasTimespan = [];
                 }
 
-                var source = document.getElementById('timespan-source-input');
-                var sourceUrl = document.getElementById('timespan-source-url-input');
-                var original = document.getElementById('timespan-original-input');
-                var calendar = document.getElementById('timespan-calendar-input');
-                var beginAt = document.getElementById('timespan-begin-at-input');
-                var beginAtPrecision = document.getElementById('timespan-begin-at-precision-input');
-                var endAt = document.getElementById('timespan-end-at-input');
-                var endAtPrecision = document.getElementById('timespan-end-at-precision-input');
-
-                _this.period.hasTimespan.push({
-                    "sourceOriginal": source.value,
-                    "sourceURL": sourceUrl.value,
-                    "timeOriginal": original.value,
-                    "calendar": calendar.value,
+                var emptyTimespanObject = {
+                    "sourceOriginal": null,
+                    "sourceURL": null,
+                    "timeOriginal": null,
+                    "calendar": null,
                     "begin": {
-                        "at": beginAt.value,
-                        "atPrecision": beginAtPrecision.value
+                        "at": null,
+                        "atPrecision": null
                     },
                     "end": {
-                        "at": endAt.value,
-                        "atPrecision": endAtPrecision.value
+                        "at": null,
+                        "atPrecision": null
                     }
-                });
+                };
 
-                source.value = "";
-                sourceUrl.value = "";
-                original.value = "";
-                calendar.value = "";
-                beginAt.value = "";
-                beginAtPrecision.value = "";
-                endAt.value = "";
-                endAtPrecision.value = "";
+                _this.period.hasTimespan.push(emptyTimespanObject);
+            };
+
+            _this.removeTimespan = function(timespan) {
+                _this.period.hasTimespan = _this.period.hasTimespan.filter(function(x){
+                    return x['timeOriginal'] !== timespan['timeOriginal'];
+                });
             };
 
             _this.addTag = function () {
@@ -190,16 +188,16 @@ angular.module('chronontology.components')
                     return;
                 }
 
-                if(_this.period.relations === undefined) {
-                    _this.period.relations = [];
+                if(_this.period.relations === undefined || _this.period.relations.constructor === Array) {
+                    _this.period.relations = {};
                 }
 
-                if(_this.period.relations[relationName] === undefined) {
+                if(_this.period.relations[relationName] === undefined ) {
                     _this.period.relations[relationName] = [];
                 }
 
                 _this.period.relations[relationName].push(_this.pickedRelations[relationName].resource.id);
-                _this.resourceCache[_this.pickedRelations[relationName].resource.id] = _this.pickedRelations[relationName].resource;
+                _this.resourceCache[_this.pickedRelations[relationName].resource.id] = angular.copy(_this.pickedRelations[relationName].resource);
                 _this.pickedRelations[relationName] = null;
             };
             _this.removeRelation = function(relationName, relation) {
