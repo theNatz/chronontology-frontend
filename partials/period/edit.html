@@ -57,7 +57,7 @@
                          </div>
                      </div>
                      <div class="input-group">
-                         <input type="text" class="form-control" id="name-input-{{language}}" placeholder="Add name...">
+                         <input type="text" class="form-control" id="name-input-{{language}}" placeholder="{{'ui_add_name' | transl8}}...">
                          <span class="input-group-btn">
                              <button class="btn btn-success" ng-click="$ctrl.addName(language)" type="button">
                                  <span class="glyphicon glyphicon-plus-sign" aria-hidden="true"></span>
@@ -75,7 +75,7 @@
                         <span class="glyphicon glyphicon-plus-sign" aria-hidden="true"></span>
                     </button>
                 </span>
-                <input type="text" class="form-control" id="language-input" placeholder="Add language...">
+                <input type="text" class="form-control" id="language-input" placeholder="{{'ui_add_language' | transl8}}...">
             </div>
         </div>
     </div>
@@ -156,7 +156,7 @@
                         <span class="glyphicon glyphicon-plus-sign" aria-hidden="true"></span>
                     </button>
                 </span>
-                <input type="text" class="form-control" id="tag-input" placeholder="Add tag...">
+                <input type="text" class="form-control" id="tag-input" placeholder="{{'ui_add_tag' | transl8}}...">
             </div>
         </div>
     </div>
@@ -274,36 +274,36 @@
                         {{ "ui_source" | transl8 }}
                         <input type="text"
                                class="form-control" id="timespan-source-input"
-                               placeholder="Add value...">
+                               placeholder="{{'ui_add_value' | transl8}}...">
                     </div>
                     <div>
                         {{ "ui_source_url" | transl8 }}
                         <input type="text"
                                class="form-control" id="timespan-source-url-input"
-                               placeholder="Add value...">
+                               placeholder="{{'ui_add_value' | transl8}}...">
                     </div>
                     <div>
-                        {{ "ui_original_name" | transl8 }}
+                        {{ "period_description" | transl8 }}
                         <textarea class="form-control" rows="3" id="timespan-original-input"
-                                  placeholder="Add value..."></textarea>
+                                  placeholder="{{'ui_add_value' | transl8}}..."></textarea>
                     </div>
                     <div>
                         {{ "temporal_calendar" | transl8 }}
                         <input type="text" class="form-control" id="timespan-calendar-input"
-                               placeholder="Add value...">
+                               placeholder="{{'ui_add_value' | transl8}}...">
                     </div>
 
                     <div class="row">
                         <div class="col-md-6">
                             {{ "temporal_begin" | transl8 }}:
                             <input type="text" class="form-control" id="timespan-begin-at-input"
-                                   placeholder="Add value...">
+                                   placeholder="{{'ui_add_value' | transl8}}...">
                         </div>
 
                         <div class="col-md-6">
                             {{ "temporal_at_precision" | transl8 }}:
                             <input type="text" class="form-control"
-                                   id="timespan-begin-at-precision-input" placeholder="Add value...">
+                                   id="timespan-begin-at-precision-input" placeholder="{{'ui_add_value' | transl8}}...">
                         </div>
                     </div>
 
@@ -311,13 +311,13 @@
                         <div class="col-md-6">
                             {{ "temporal_end" | transl8 }}:
                             <input type="text" class="form-control" id="timespan-end-at-input"
-                                   placeholder="Add value...">
+                                   placeholder="{{'ui_add_value' | transl8}}...">
                         </div>
 
                         <div class="col-md-6">
                             {{ "temporal_at_precision" | transl8 }}:
                             <input type="text" class="form-control"
-                                   id="timespan-end-at-precision-input" placeholder="Add value...">
+                                   id="timespan-end-at-precision-input" placeholder="{{'ui_add_value' | transl8}}...">
                         </div>
                     </div>
                 </div>
