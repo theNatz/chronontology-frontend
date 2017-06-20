@@ -54,7 +54,13 @@
                 </ul>
 
                 <div ng-show="activeTab == 'info'" style="margin: 30px 0;">
-                    <period-information/>
+                    <period-information period="period"
+                                        internal-relation-types="internalRelationTypes"
+                                        allen-relation-types="allenRelationTypes"
+                                        gazetteer-relation-types="gazetteerRelationTypes"
+                                        document="document"
+                                        resource-cache="resourceCache">
+                    </period-information>
                 </div>
 
                 <div ng-show="activeTab == 'edit'" style="margin: 30px 0;">
