@@ -1,73 +1,79 @@
 <div class="container-fluid">
     <div ng-controller="PeriodController">
 
-        <h2>{{ period.names | prefName }}
-            <small>{{ period.types.join(", ") }}</small>
-            <br/>
-            <small>http://chronontology.dainst.org/period/{{ document.resource.id }}</small>
-        </h2>
+        <div ng-show="mode == 'create'">
 
-        <div class="row">
-            &nbsp;
         </div>
+        <div ng-show="mode == 'view'">
 
-        <div class="row">
+            <h2>{{ period.names | prefName }}
+                <small>{{ period.types.join(", ") }}</small>
+                <br/>
+                <small>http://chronontology.dainst.org/period/{{ document.resource.id }}</small>
+            </h2>
 
-            <div class="col-md-5">
-
-                <div class="well well-sm timeline-container-small">
-                    <timeline periods="provenancePeriods" selected-period-id="document.resource.id"></timeline>
-                </div>
-
-                <div class="well well-sm timeline-container-small mapheight">
-                    <geomap g-1='{{ "relation_spatiallyPartOfRegion" | transl8 }}'
-                            g-2='{{ "relation_isNamedAfter" | transl8 }}'
-                            g-3='{{ "relation_hasCoreArea" | transl8 }}'>
-                    </geomap>
-                </div>
-
+            <div class="row">
+                &nbsp;
             </div>
 
-            <div class="col-md-7">
+            <div class="row">
 
-                <ul class="nav nav-tabs">
-                    <li ng-class="{ 'active': (activeTab == 'info') }">
-                        <a href="#" ng-click="activeTab = 'info'">
-                            {{ "ui_infoTab" | transl8 }}
-                        </a>
-                    </li>
-                    <li ng-show="authService.getUser() != undefined" ng-class="{ 'active': (activeTab == 'edit') }">
-                        <a href="#" ng-click="activeTab = 'edit'">
-                            <span class="glyphicon glyphicon-edit"></span>
-                            {{ "ui_editTab" | transl8 }}
-                        </a>
-                    </li>
+                <div class="col-md-5">
 
-                    <li>
-                        <button type="button"
-                                class="btn btn-primary"
-                                style="margin-top: 5px;"
-                                ng-click="exportJSON()">
-                            <span class="glyphicon glyphicon-floppy-disk" aria-hidden="true"></span>Download JSON
-                        </button>
-                    </li>
-                </ul>
+                    <div class="well well-sm timeline-container-small">
+                        <timeline periods="provenancePeriods" selected-period-id="document.resource.id"></timeline>
+                    </div>
 
-                <div ng-show="activeTab == 'info'" style="margin: 30px 0;">
-                    <period-information period="period"
-                                        internal-relation-types="internalRelationTypes"
-                                        allen-relation-types="allenRelationTypes"
-                                        gazetteer-relation-types="gazetteerRelationTypes"
-                                        document="document"
-                                        resource-cache="resourceCache">
-                    </period-information>
+                    <div class="well well-sm timeline-container-small mapheight">
+                        <geomap g-1='{{ "relation_spatiallyPartOfRegion" | transl8 }}'
+                                g-2='{{ "relation_isNamedAfter" | transl8 }}'
+                                g-3='{{ "relation_hasCoreArea" | transl8 }}'>
+                        </geomap>
+                    </div>
+
                 </div>
 
-                <div ng-show="activeTab == 'edit'" style="margin: 30px 0;">
-                    <period-edit original-period="period"
-                                 resource-cache="resourceCache"
-                                 on-save="savePeriod(updatedPeriod)">
-                    </period-edit>
+                <div class="col-md-7">
+
+                    <ul class="nav nav-tabs">
+                        <li ng-class="{ 'active': (activeTab == 'info') }">
+                            <a href="#" ng-click="activeTab = 'info'">
+                                {{ "ui_infoTab" | transl8 }}
+                            </a>
+                        </li>
+                        <li ng-show="authService.getUser() != undefined" ng-class="{ 'active': (activeTab == 'edit') }">
+                            <a href="#" ng-click="activeTab = 'edit'">
+                                <span class="glyphicon glyphicon-edit"></span>
+                                {{ "ui_editTab" | transl8 }}
+                            </a>
+                        </li>
+
+                        <li>
+                            <button type="button"
+                                    class="btn btn-primary"
+                                    style="margin-top: 5px;"
+                                    ng-click="exportJSON()">
+                                <span class="glyphicon glyphicon-floppy-disk" aria-hidden="true"></span>Download JSON
+                            </button>
+                        </li>
+                    </ul>
+
+                    <div ng-show="activeTab == 'info'" style="margin: 30px 0;">
+                        <period-information period="period"
+                                            internal-relation-types="internalRelationTypes"
+                                            allen-relation-types="allenRelationTypes"
+                                            gazetteer-relation-types="gazetteerRelationTypes"
+                                            document="document"
+                                            resource-cache="resourceCache">
+                        </period-information>
+                    </div>
+
+                    <div ng-show="activeTab == 'edit'" style="margin: 30px 0;">
+                        <period-edit original-period="period"
+                                     resource-cache="resourceCache"
+                                     on-save="savePeriod(updatedPeriod)">
+                        </period-edit>
+                    </div>
                 </div>
             </div>
         </div>

@@ -9,36 +9,46 @@ angular.module('chronontology.controllers')
 	// (labels are now in transl8 keys "relation_isSenseOf" etc.)
 	$scope.internalRelationTypes = chronontologySettings.internalRelationTypes;
     $scope.allenRelationTypes = chronontologySettings.allenRelationTypes;
+    $scope.combinedRelationTypes =
+        chronontologySettings.internalRelationTypes
+            .concat(chronontologySettings.allenRelationTypes);
 
 	$scope.gazetteerRelationTypes = chronontologySettings.gazetteerRelationTypes;
-
-	$scope.combinedRelationTypes =
-		chronontologySettings.internalRelationTypes
-		.concat(chronontologySettings.allenRelationTypes);
-
-	// store related periods, should be a central app-wide cache
-	$scope.relatedDocuments = {};
-	$scope.relatedDocuments.derived = {};
-
+    $scope.authService = authService;
 	$scope.resourceCache = {};
 
-	$http.get('/data/period/' + $routeParams.id).success( function(result) {
+    $scope.setupCreateMode = function() {
 
-		$scope.activeTab = 'info';
-		$scope.document = result;
-		$scope.period = result.resource;
-		$scope.authService = authService;
+    };
 
-        $scope.updateCache();
+	$scope.setupViewMode = function() {
+        $scope.activeTab = 'info';
 
-		var geoFrameUrl = chronontologySettings.geoFrameBaseUri + "?uri=" + chronontologySettings.baseUri;
-		$scope.geoFrameUrl = $sce.trustAsResourceUrl(geoFrameUrl + "/period/" + result.resource.id);
+        $http.get('/data/period/' + $routeParams.id).success( function(result) {
+            $scope.document = result;
+            $scope.period = result.resource;
 
-		$http.get('/data/period/?size=1000&q=resource.provenance:' + $scope.period.provenance).success( function(result) {
-			$scope.provenancePeriods = result.results;
-		});
+            $scope.updateCache();
 
-	});
+            var geoFrameUrl = chronontologySettings.geoFrameBaseUri + "?uri=" + chronontologySettings.baseUri;
+            $scope.geoFrameUrl = $sce.trustAsResourceUrl(geoFrameUrl + "/period/" + result.resource.id);
+
+            $http.get('/data/period/?size=1000&q=resource.provenance:' + $scope.period.provenance).success( function(result) {
+                $scope.provenancePeriods = result.results;
+            });
+        });
+    };
+
+    if($routeParams.id === 'create'){
+        console.log("Setting mode to create.");
+        $scope.mode = 'create';
+        $scope.setupCreateMode();
+    }
+    else {
+        console.log("Setting mode to view.");
+        $scope.mode = 'view';
+        $scope.setupViewMode();
+    }
 
 	$scope.updateCache = function(){
 		$scope.updateCachedPeriods();
