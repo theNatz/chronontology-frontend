@@ -155,21 +155,7 @@ angular.module('chronontology.components')
             };
 
             _this.addTag = function () {
-                var newTagInput = document.getElementById('tag-input');
-
-                if(_this.period.tags === undefined) {
-                    _this.period.tags = [];
-                }
-
-                if(_this.period.tags.includes(newTagInput.value)){
-                    newTagInput.value = "";
-                    return;
-                }
-
-                if(newTagInput.value === "") return;
-
-                _this.period.tags.push(newTagInput.value);
-                newTagInput.value = "";
+                _this.period.tags.push("");
             };
 
             _this.removeTag = function (tag) {

@@ -157,32 +157,24 @@
                     </span>
                     <input type="text"
                            class="form-control"
-                           ng-model="$ctrl.period.tags[$index]">
+                           ng-model="$ctrl.period.tags[$index]"
+                           placeholder="{{'ui_add_tag' | transl8}}...">
                 </div>
             </div>
         </div>
         <p/>
-        <div class="row col-md-12">
-            <div class="input-group">
-                <span class="input-group-btn">
-                    <button class="btn btn-success" ng-click="$ctrl.addTag()" type="button">
-                        <span class="glyphicon glyphicon-plus-sign" aria-hidden="true"></span>
-                    </button>
-                </span>
-                <input type="text" class="form-control" id="tag-input" placeholder="{{'ui_add_tag' | transl8}}...">
-            </div>
+        <div class="row">
+            <span class="col-md-12">
+                <button class="btn btn-success btn-block" ng-click="$ctrl.addTag()" type="button">
+                    <span class="glyphicon glyphicon-plus-sign" aria-hidden="true"></span>
+                </button>
+            </span>
         </div>
     </div>
 
     <div class="row">
         <h4>{{ "period_note" | transl8 }}</h4>
         <textarea class="form-control" rows="3" ng-model="$ctrl.period.note"></textarea>
-    </div>
-
-    <div class="row">
-        <div class="row">
-
-        </div>
     </div>
 
     <div class="row form-group">
@@ -201,13 +193,11 @@
              ng-repeat="timespan in $ctrl.period.hasTimespan track by $index">
             <div class="row">
                 <div class="col-md-12">
-                    <span class="input-group-btn">
-                         <button class="btn btn-danger btn-lg btn-block"
-                                 ng-click="$ctrl.removeTimespan(timespan)"
-                                 type="button">
-                             <span class="glyphicon glyphicon-minus-sign" aria-hidden="true"></span>
-                         </button>
-                    </span>
+                     <button class="btn btn-danger btn-block"
+                             ng-click="$ctrl.removeTimespan(timespan)"
+                             type="button">
+                         <span class="glyphicon glyphicon-minus-sign" aria-hidden="true"></span>
+                     </button>
                 </div>
                 <div class="col-md-12">
                     <div>
@@ -277,16 +267,14 @@
                     </div>
                 </div>
             </div>
+            <p></p>
         </div>
-
-
-        <p></p>
 
         <div>
             <div class="row">
                 <div class="col-md-12">
                     <span class="input-group-btn">
-                         <button class="btn btn-success btn-lg btn-block"
+                         <button class="btn btn-success btn-block"
                                  ng-click="$ctrl.addTimespan()"
                                  type="button">
                              <span class="glyphicon glyphicon-plus-sign" aria-hidden="true"></span>
@@ -424,11 +412,11 @@
 			</div>
         </div>
     </div>
-
-    <p>
-        <div class="row">
-            <button class="btn btn-primary" ng-click="$ctrl.saveChanges()">Save changes</button>
-            <button class="btn btn-default" ng-click="$ctrl.reset()">Reset changes</button>
-        </div>
-    </p>
 </div>
+
+<p>
+    <div class="row">
+        <button class="btn btn-primary" ng-click="$ctrl.saveChanges()">Save changes</button>
+        <button class="btn btn-default" ng-click="$ctrl.reset()">Reset changes</button>
+    </div>
+</p>
