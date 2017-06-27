@@ -26,6 +26,8 @@ angular.module('chronontology.components')
             _this.relatedPeriods = null;
             _this.relatedLocations = null;
 
+            _this.activeEditTab = 'core';
+
             _this.pickedRelations = function(){
                 var result = {};
 

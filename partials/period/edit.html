@@ -1,7 +1,19 @@
-<div>
-    <h3 ng-show="$ctrl.createPeriod">Create</h3>
+<h3 ng-show="$ctrl.createPeriod">{{ 'create_period' | transl8 }}</h3>
 
-    <h3 ng-show="!$ctrl.createPeriod">Edit</h3>
+<h3 ng-show="!$ctrl.createPeriod">{{ 'ui_editTab' | transl8 }}</h3>
+
+<nav aria-label="Page navigation">
+    <ul class="pagination pagination-lg">
+        <li ng-class="{ 'active': ($ctrl.activeEditTab == 'core') }">
+            <a ng-click="$ctrl.activeEditTab = 'core'">{{'core_fields' | transl8}}</a>
+        </li>
+        <li ng-class="{ 'active': ($ctrl.activeEditTab == 'relations') }">
+            <a ng-click="$ctrl.activeEditTab = 'relations'">{{'relation_fields' | transl8}}</a>
+        </li>
+    </ul>
+</nav>
+
+<div ng-show="$ctrl.activeEditTab == 'core'">
     <div ng-show="!$ctrl.createPeriod" class="row">
         <h4>ID</h4>
         <form class="form-group">
@@ -285,6 +297,9 @@
         </div>
 
     </div>
+</div>
+
+<div ng-show="$ctrl.activeEditTab == 'relations'">
     <div class="row form-group">
         <h4>{{ "ui_relations" | transl8 }}</h4>
 
