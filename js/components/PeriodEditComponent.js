@@ -28,6 +28,8 @@ angular.module('chronontology.components')
 
             _this.activeEditTab = 'core';
 
+            _this.newLanguageInput = document.getElementById('language-input');
+
             _this.pickedRelations = function(){
                 var result = {};
 
@@ -78,14 +80,12 @@ angular.module('chronontology.components')
             };
 
             _this.addLanguage = function () {
-                var newLanguageInput = document.getElementById('language-input');
-
                 if(!('names' in _this.period)) _this.period['names'] = {};
-                if(newLanguageInput.value in _this.period.names) return;
-                if(newLanguageInput.value.trim() === "") return;
+                if(_this.newLanguageInput.value in _this.period.names) return;
+                if(_this.newLanguageInput.value.trim() === "") return;
 
-                _this.period.names[newLanguageInput.value] = [];
-                newLanguageInput.value = "";
+                _this.period.names[_this.newLanguageInput.value] = [];
+                _this.newLanguageInput.value = "";
             };
 
             _this.removeLanguage = function(lang) {
@@ -94,10 +94,7 @@ angular.module('chronontology.components')
 
             _this.addName = function (lang) {
                 if(!_this.period.names[lang]) _this.period.names[lang] = [];
-
-                var newNameInput = document.getElementById('name-input-' + lang);
-                _this.period.names[lang].push(newNameInput.value);
-                newNameInput.value = null;
+                _this.period.names[lang].push("");
             };
 
             _this.removeName = function(lang, index) {
