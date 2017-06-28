@@ -1,13 +1,13 @@
 <div class="container-fluid">
     <div ng-controller="PeriodController">
 
-        <div ng-show="mode == 'create'">
+        <div ng-if="mode == 'create'">
             <period-edit create-period="true"
                          resource-cache="resourceCache"
                          on-save="saveCreatedPeriod(period)">
             </period-edit>
         </div>
-        <div ng-show="mode == 'view'">
+        <div ng-if="mode == 'view'">
 
             <h2>{{ period.names | prefName }}
                 <small>{{ period.types.join(", ") }}</small>
