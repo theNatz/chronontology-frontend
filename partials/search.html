@@ -14,7 +14,10 @@
                 </a>
             </li>
 
-            {{"ui_page"|transl8}} {{getCurrentPage()}} / {{getTotalPages()}}
+            <strong ng-if="total">
+                {{"ui_page"|transl8}} {{getCurrentPage()|transl8Number}} / {{getTotalPages()|transl8Number}}
+                — {{"ui_total"|transl8}} {{total|transl8Number}} {{"ui_entries"|transl8}}
+            </strong>
 
             <li  ng-if="getNext() >= total" class="next disabled">
                 <a>
