@@ -1,6 +1,31 @@
 <div class="container">
     <div ng-controller="SearchController">
 
+        <nav aria-label="...">
+          <ul class="pager">
+            <li ng-if="previous() < 0" class="previous disabled">
+                <a>
+                    <span aria-hidden="true">&larr;</span> {{"ui_previous"|transl8}}
+                </a>
+            </li>
+            <li ng-if="previous() >= 0" class="previous">
+                <a ng-href="/search?q={{query.q}}&amp;from={{previous()}}">
+                    <span aria-hidden="true">&larr;</span> {{"ui_previous"|transl8}}
+                </a>
+            </li>
+            <li  ng-if="next() >= total" class="next disabled">
+                <a>
+                    {{"ui_next"|transl8}} <span aria-hidden="true">&rarr;</span>
+                </a>
+            </li>
+            <li  ng-if="next() < total" class="next">
+                <a ng-href="/search?q={{query.q}}&amp;from={{next()}}">
+                    {{"ui_next"|transl8}} <span aria-hidden="true">&rarr;</span>
+                </a>
+            </li>
+          </ul>
+        </nav>
+
         <table class="table table-striped" style="height:300px">
 
             <thead>
@@ -14,7 +39,8 @@
 
             <tbody>
 
-            <tr ui-scroll="period in dataSource">
+
+            <tr ng-repeat="period in periods">
                 <td><a ng-href="/period/{{ period.resource.id }}">{{ period.resource.names | prefName }}</a></td>
                 <td>{{ getRegion(period) }}</td>
                 <td>{{period.resource.types.join(", ")}}</td>
