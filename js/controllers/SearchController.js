@@ -14,11 +14,18 @@ angular.module('chronontology.controllers')
         $scope.total = result.total;
     });
 
-    $scope.previous = function(){
+    $scope.getPrevious = function(){
         return $scope.query.from - $scope.query.size;
     }
-    $scope.next = function(){
+    $scope.getNext = function(){
         return parseInt($scope.query.from) + parseInt($scope.query.size);
+    }
+
+    $scope.getCurrentPage = function(){
+        return $scope.query.from / $scope.query.size + 1;
+    }
+    $scope.getTotalPages = function(){
+        return Math.ceil($scope.total / $scope.query.size);
     }
 
     $scope.getRegion = function(doc) {

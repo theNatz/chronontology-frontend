@@ -3,23 +3,26 @@
 
         <nav aria-label="...">
           <ul class="pager">
-            <li ng-if="previous() < 0" class="previous disabled">
+            <li ng-if="getPrevious() < 0" class="previous disabled">
                 <a>
                     <span aria-hidden="true">&larr;</span> {{"ui_previous"|transl8}}
                 </a>
             </li>
-            <li ng-if="previous() >= 0" class="previous">
-                <a ng-href="/search?q={{query.q}}&amp;from={{previous()}}">
+            <li ng-if="getPrevious() >= 0" class="previous">
+                <a ng-href="/search?q={{query.q}}&amp;from={{getPrevious()}}">
                     <span aria-hidden="true">&larr;</span> {{"ui_previous"|transl8}}
                 </a>
             </li>
-            <li  ng-if="next() >= total" class="next disabled">
+
+            {{"ui_page"|transl8}} {{getCurrentPage()}} / {{getTotalPages()}}
+
+            <li  ng-if="getNext() >= total" class="next disabled">
                 <a>
                     {{"ui_next"|transl8}} <span aria-hidden="true">&rarr;</span>
                 </a>
             </li>
-            <li  ng-if="next() < total" class="next">
-                <a ng-href="/search?q={{query.q}}&amp;from={{next()}}">
+            <li  ng-if="getNext() < total" class="next">
+                <a ng-href="/search?q={{query.q}}&amp;from={{getNext()}}">
                     {{"ui_next"|transl8}} <span aria-hidden="true">&rarr;</span>
                 </a>
             </li>
