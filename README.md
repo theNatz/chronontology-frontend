@@ -36,8 +36,8 @@ In order to run the e2e tests use the following command:
 ```
 npm run e2e
 ```
-The development server has to run at [localhost:8085/](http://localhost:8085/). Either by serving running `npm start` in 
-parallel or by deploying and serving a build via webserver.
+The application has to be already running at [localhost:8085/](http://localhost:8085/): Either by running `npm start` in 
+parallel or by deploying and serving a build at that address via your web-server of choice.
 
 ## Deployment
 
