@@ -1,61 +1,82 @@
-<div class="container">
-    <div ng-controller="SearchController">
+<div class="container" ng-controller="SearchController">
+    <div class="row">
 
-        <nav aria-label="...">
-          <ul class="pager">
-            <li ng-if="getPrevious() < 0" class="previous disabled">
-                <a>
-                    <span aria-hidden="true">&larr;</span> {{"ui_previous"|transl8}}
+        <div class="col-md-3">
+            <h3>Filter</h3>
+            <h4>Provenance</h4>
+            <span ng-repeat="facet in facets['resource.provenance'].buckets">
+                <a ng-href="/search?q={{query.q}}&amp;fq=provenance:{{facet.key}}">
+                    {{facet.key}} {{facet.doc_count}}
                 </a>
-            </li>
-            <li ng-if="getPrevious() >= 0" class="previous">
-                <a ng-href="/search?q={{query.q}}&amp;from={{getPrevious()}}">
-                    <span aria-hidden="true">&larr;</span> {{"ui_previous"|transl8}}
+                <br/>
+            </span>
+
+            <h4>Types</h4>
+            <span ng-repeat="facet in facets['resource.types'].buckets">
+                <a ng-href="/search?q={{query.q}}&amp;fq=types:{{facet.key}}">
+                    {{facet.key}} {{facet.doc_count}}
                 </a>
-            </li>
+                <br/>
+            </span>
 
-            <strong ng-if="total">
-                {{"ui_page"|transl8}} {{getCurrentPage()|transl8Number}} / {{getTotalPages()|transl8Number}}
-                — {{"ui_total"|transl8}} {{total|transl8Number}} {{"ui_entries"|transl8}}
-            </strong>
+        </div>
 
-            <li  ng-if="getNext() >= total" class="next disabled">
-                <a>
-                    {{"ui_next"|transl8}} <span aria-hidden="true">&rarr;</span>
-                </a>
-            </li>
-            <li  ng-if="getNext() < total" class="next">
-                <a ng-href="/search?q={{query.q}}&amp;from={{getNext()}}">
-                    {{"ui_next"|transl8}} <span aria-hidden="true">&rarr;</span>
-                </a>
-            </li>
-          </ul>
-        </nav>
+        <div class="col-md-9">
+            <nav aria-label="...">
+              <ul class="pager">
+                <li ng-if="getPrevious() < 0" class="previous disabled">
+                    <a>
+                        <span aria-hidden="true">&larr;</span> {{"ui_previous"|transl8}}
+                    </a>
+                </li>
+                <li ng-if="getPrevious() >= 0" class="previous">
+                    <a ng-href="/search?q={{query.q}}{{getFacetValues()}}&amp;from={{getPrevious()}}">
+                        <span aria-hidden="true">&larr;</span> {{"ui_previous"|transl8}}
+                    </a>
+                </li>
 
-        <table class="table table-striped" style="height:300px">
+                <strong ng-if="total">
+                    {{"ui_page"|transl8}} {{getCurrentPage()|transl8Number}} / {{getTotalPages()|transl8Number}}
+                    — {{"ui_total"|transl8}} {{total|transl8Number}} {{"ui_entries"|transl8}}
+                </strong>
 
-            <thead>
-            <tr>
-                <th style="width: 40%">{{ "period_prefName" | transl8 }}</th>
-                <th style="width: 20%">{{ "period_region" | transl8 }}</th>
-                <th style="width: 20%">{{ "period_type" | transl8 }}</th>
-                <th style="width: 20%">{{ "period_provenance" | transl8 }}</th>
-            </tr>
-            </thead>
+                <li  ng-if="getNext() >= total" class="next disabled">
+                    <a>
+                        {{"ui_next"|transl8}} <span aria-hidden="true">&rarr;</span>
+                    </a>
+                </li>
+                <li  ng-if="getNext() < total" class="next">
+                    <a ng-href="/search?q={{query.q}}{{getFacetValues()}}&amp;from={{getNext()}}">
+                        {{"ui_next"|transl8}} <span aria-hidden="true">&rarr;</span>
+                    </a>
+                </li>
+              </ul>
+            </nav>
 
-            <tbody>
+            <table class="table table-striped" style="height:300px">
+
+                <thead>
+                <tr>
+                    <th style="width: 40%">{{ "period_prefName" | transl8 }}</th>
+                    <th style="width: 20%">{{ "period_region" | transl8 }}</th>
+                    <th style="width: 20%">{{ "period_type" | transl8 }}</th>
+                    <th style="width: 20%">{{ "period_provenance" | transl8 }}</th>
+                </tr>
+                </thead>
+
+                <tbody>
 
 
-            <tr ng-repeat="period in periods">
-                <td><a ng-href="/period/{{ period.resource.id }}">{{ period.resource.names | prefName }}</a></td>
-                <td>{{ getRegion(period) }}</td>
-                <td>{{period.resource.types.join(", ")}}</td>
-                <td><a ng-href="/thesaurus/{{ period.resource.provenance }}">{{ period.resource.provenance }}</a></td>
-            </tr>
+                <tr ng-repeat="period in periods">
+                    <td><a ng-href="/period/{{ period.resource.id }}">{{ period.resource.names | prefName }}</a></td>
+                    <td>{{ getRegion(period) }}</td>
+                    <td>{{period.resource.types.join(", ")}}</td>
+                    <td><a ng-href="/thesaurus/{{ period.resource.provenance }}">{{ period.resource.provenance }}</a></td>
+                </tr>
 
-            </tbody>
-
-        </table>
+                </tbody>
+            </table>
+        </div>
 
     </div>
 </div>

@@ -12,6 +12,7 @@ angular.module('chronontology.controllers')
     searchService.search($scope.query).then(function(result){
         $scope.periods = result.results;
         $scope.total = result.total;
+        $scope.facets = result.facets;
     });
 
     $scope.getPrevious = function(){
@@ -26,6 +27,11 @@ angular.module('chronontology.controllers')
     }
     $scope.getTotalPages = function(){
         return Math.ceil($scope.total / $scope.query.size);
+    }
+
+    $scope.getFacetValues = function(){
+        if (!$scope.query.fq) return "";
+        return "&fq="+$scope.query.fq;
     }
 
     $scope.getRegion = function(doc) {
