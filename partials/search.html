@@ -5,7 +5,7 @@
             <h3>Filter</h3>
             <h4>Provenance</h4>
             <span ng-repeat="facet in facets['resource.provenance'].buckets">
-                <a ng-href="/search?q={{query.q}}&amp;fq=provenance:{{facet.key}}">
+                <a ng-href="/search?q={{query.q}}{{getFacetValues()}}&amp;fq=provenance:{{facet.key}}">
                     {{facet.key}} {{facet.doc_count}}
                 </a>
                 <br/>
@@ -13,7 +13,7 @@
 
             <h4>Types</h4>
             <span ng-repeat="facet in facets['resource.types'].buckets">
-                <a ng-href="/search?q={{query.q}}&amp;fq=types:{{facet.key}}">
+                <a ng-href="/search?q={{query.q}}{{getFacetValues()}}&amp;fq=types:{{facet.key}}">
                     {{facet.key}} {{facet.doc_count}}
                 </a>
                 <br/>

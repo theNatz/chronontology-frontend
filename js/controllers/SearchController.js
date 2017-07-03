@@ -30,8 +30,11 @@ angular.module('chronontology.controllers')
     }
 
     $scope.getFacetValues = function(){
-        if (!$scope.query.fq) return "";
-        return "&fq="+$scope.query.fq;
+        // Frontend-URI: ohne "resource."
+        var fq = $scope.query.fq;
+        if (fq == null) return "";
+        if (typeof fq === 'string') return "&fq="+fq;
+        return "&fq=" + fq.join("&fq=");
     }
 
     $scope.getRegion = function(doc) {
