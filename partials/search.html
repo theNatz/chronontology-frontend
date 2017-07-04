@@ -3,22 +3,24 @@
 
         <div class="col-md-3">
             <h3>Filter</h3>
-            <h4>Provenance</h4>
-            <span ng-repeat="facet in facets['resource.provenance'].buckets">
-                <a ng-href="/search?q={{query.q}}{{getFacetValues()}}&amp;fq=provenance:{{facet.key}}">
-                    {{facet.key}} {{facet.doc_count}}
-                </a>
-                <br/>
-            </span>
 
-            <h4>Types</h4>
-            <span ng-repeat="facet in facets['resource.types'].buckets">
-                <a ng-href="/search?q={{query.q}}{{getFacetValues()}}&amp;fq=types:{{facet.key}}">
-                    {{facet.key}} {{facet.doc_count}}
-                </a>
-                <br/>
+            <span ng-repeat="facette in ['provenance', 'types']">
+                <h4>{{facette}}</h4>
+                <span ng-repeat="facet in facets[addResource(facette)].buckets">
+                    <span ng-if="isFacetValueSelected(facette, facet.key)">
+                        {{facet.key}}
+                        <a ng-href="/search?q={{query.q}}{{getFacetValuesExcept(facette, facet.key)}}">
+                            (X)
+                        </a>
+                    </span>
+                    <span ng-if="!isFacetValueSelected(facette, facet.key)">
+                        <a ng-href="/search?q={{query.q}}{{getFacetValues()}}&amp;fq={{facette}}:{{facet.key}}">
+                            {{facet.key}} {{facet.doc_count}}
+                        </a>
+                    </span>
+                    <br/>
+                </span>
             </span>
-
         </div>
 
         <div class="col-md-9">
