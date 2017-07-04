@@ -152,6 +152,9 @@ angular.module('chronontology.components')
             };
 
             _this.addTag = function () {
+                if(_this.period.tags == undefined){
+                  _this.period.tags = [];
+                }
                 _this.period.tags.push("");
             };
 
