@@ -4,7 +4,7 @@
         <div class="col-md-3">
             <h3>Filter</h3>
 
-            <span ng-repeat="facette in ['provenance', 'types']">
+            <span ng-repeat="facette in facetList">
                 <h4>{{facette}}</h4>
                 <span ng-repeat="facet in facets[addResource(facette)].buckets">
                     <span ng-if="isFacetValueSelected(facette, facet.key)">

@@ -71,6 +71,9 @@ angular.module('chronontology', [
     ],
     validProvenances: [
         'chronontology', 'Arachne', 'aat'
+    ],
+    facetList: [
+        'provenance', 'types'
     ]
 }).constant('componentsSettings', {
     transl8Uri: 'https://arachne.dainst.org/transl8/translation/jsonp?application=chronontology_frontend&application=shared&lang={LANG}&callback=JSON_CALLBACK',
