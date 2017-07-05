@@ -1,15 +1,17 @@
 <h4>{{$ctrl.facette}}</h4>
-<span ng-repeat="facet in $ctrl.facets[$ctrl.addResource($ctrl.facette)].buckets">
-	<span ng-if="$ctrl.isFacetValueSelected($ctrl.facette, facet.key)">
-		{{facet.key}}
-		<a ng-href="/search?q={{query.q}}{{$ctrl.getFacetValuesExcept($ctrl.facette, facet.key)}}">
-			(remove)
-		</a>
+<div class="list-group">
+	<span ng-repeat="facet in $ctrl.facets[$ctrl.addResource($ctrl.facette)].buckets">
+		<span ng-if="!$ctrl.isFacetValueSelected($ctrl.facette, facet.key)">
+			<a class="list-group-item"
+				ng-href="/search?q={{query.q}}{{$ctrl.getFacetValues()}}&amp;fq={{$ctrl.facette}}:{{facet.key}}">
+				{{facet.key}} <span style="float:right;" class="badge">{{facet.doc_count}}</span>
+			</a>
+		</span>
+		<span ng-if="$ctrl.isFacetValueSelected($ctrl.facette, facet.key)">
+			<a class="list-group-item active"
+				ng-href="/search?q={{query.q}}{{$ctrl.getFacetValuesExcept($ctrl.facette, facet.key)}}">
+				{{facet.key}} <span style="float:right;" class="badge">remove</span>
+			</a>
+		</span>
 	</span>
-	<span ng-if="!$ctrl.isFacetValueSelected($ctrl.facette, facet.key)">
-		<a ng-href="/search?q={{query.q}}{{$ctrl.getFacetValues()}}&amp;fq={{$ctrl.facette}}:{{facet.key}}">
-			{{facet.key}} {{facet.doc_count}}
-		</a>
-	</span>
-	<br/>
-</span>
+</div>
