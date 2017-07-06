@@ -32,6 +32,14 @@ angular.module('chronontology.controllers')
         return Math.ceil($scope.total / $scope.query.size);
     }
 
+    $scope.getFacetValues = function(){
+        // aus der Frontend-URI: ohne "resource."
+        var fq = $scope.query.fq;
+        if (fq == null) return "";
+        if (typeof fq === 'string') return "&fq="+fq;
+        return "&fq=" + fq.join("&fq=");
+    }
+
     $scope.addResource = function(text){
         return "resource." + text;
     }
