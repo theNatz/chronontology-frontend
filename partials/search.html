@@ -58,7 +58,7 @@
                 <tbody>
 
 
-                <tr ng-repeat="period in periods">
+                <tr ng-repeat="period in periods" style="border-bottom: 1px solid #ddd;">
                     <td><a ng-href="/period/{{ period.resource.id }}">{{ period.resource.names | prefName }}</a></td>
                     <td>{{ getRegion(period) }}</td>
                     <td>{{period.resource.types.join(", ")}}</td>
