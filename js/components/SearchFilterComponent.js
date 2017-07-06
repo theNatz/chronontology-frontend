@@ -49,5 +49,12 @@ angular.module('chronontology.components')
                 return "resource." + text;
             }
 
+            this.addOrRemoveFacetValue = function(facette, facetvalue){
+                if (this.isFacetValueSelected(facette, facetvalue)) {
+                    return this.getFacetValuesExcept(facette, facetvalue);
+                } else {
+                    return this.getFacetValues()+"&fq="+facette+":"+facetvalue;
+                }
+            }
         }
     });
