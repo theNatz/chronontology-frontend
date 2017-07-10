@@ -23,6 +23,7 @@ angular.module('chronontology.controllers')
 
 	$scope.setupViewMode = function() {
         $scope.activeTab = 'info';
+		$scope.part = 'resource.id,resource.names,resource.hasTimespan,resource.relations,resource.relations.follows';
 
         $http.get('/data/period/' + $routeParams.id).success( function(result) {
             $scope.document = result;
@@ -33,7 +34,7 @@ angular.module('chronontology.controllers')
             var geoFrameUrl = chronontologySettings.geoFrameBaseUri + "?uri=" + chronontologySettings.baseUri;
             $scope.geoFrameUrl = $sce.trustAsResourceUrl(geoFrameUrl + "/period/" + result.resource.id);
 
-            $http.get('/data/period/?size=1000&q=resource.provenance:' + $scope.period.provenance).success( function(result) {
+            $http.get('/data/period/?size=1000&q=resource.provenance:' + $scope.period.provenance + '&part='+$scope.part).success( function(result) {
                 $scope.provenancePeriods = result.results;
             });
         });
