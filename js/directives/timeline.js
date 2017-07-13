@@ -206,6 +206,8 @@ angular.module('chronontology.directives')
                       var label = "";
                       if (scope.periods[i].resource.names)
                         label = $filter('prefName')(scope.periods[i].resource.names);
+                      if (!scope.periods[i].resource.relations)
+                        scope.periods[i].resource.relations = {};
                       var period = {
                           id: scope.periods[i].resource.id,
                           name: label,

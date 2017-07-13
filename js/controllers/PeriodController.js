@@ -23,7 +23,13 @@ angular.module('chronontology.controllers')
 
 	$scope.setupViewMode = function() {
         $scope.activeTab = 'info';
-		$scope.part = 'resource.id,resource.names,resource.hasTimespan,resource.relations,resource.relations.follows';
+		var relevantParts =
+			'resource.id,resource.names,resource.hasTimespan,'+            // ok
+//			'resource.relations.isSenseOf,resource.relations.hasSense,'+   // wird nicht verwendet
+			'resource.relations.isPartOf,resource.relations.hasPart,'+     // ok
+//			'resource.relations.isListedIn,resource.relations.lists,'+     // wird nicht verwendet
+//			'resource.relations.fallsWithin,resource.relations.contains,'+ // wird nicht verwendet
+			'resource.relations.follows,resource.relations.isFollowedBy';  // isFollowedBy ok
 
         $http.get('/data/period/' + $routeParams.id).success( function(result) {
             $scope.document = result;
@@ -34,7 +40,7 @@ angular.module('chronontology.controllers')
             var geoFrameUrl = chronontologySettings.geoFrameBaseUri + "?uri=" + chronontologySettings.baseUri;
             $scope.geoFrameUrl = $sce.trustAsResourceUrl(geoFrameUrl + "/period/" + result.resource.id);
 
-            $http.get('/data/period/?size=1000&q=resource.provenance:' + $scope.period.provenance + '&part='+$scope.part).success( function(result) {
+            $http.get('/data/period/?size=1000&q=resource.provenance:' + $scope.period.provenance + '&part='+relevantParts).success( function(result) {
                 $scope.provenancePeriods = result.results;
             });
         });
