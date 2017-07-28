@@ -12,7 +12,7 @@ angular.module('chronontology.components')
             // set div to loading
             document.getElementById("map").innerHTML = "<h1 class='maploading'>map is loading...</h1>";
             // load data
-            var geowidgetParam = "?uri=" + chronontologySettings.baseUri + "/period/";
+            var geowidgetParam = "?id=";
             $http.get(chronontologySettings.geowidgetURL + geowidgetParam + $routeParams.id, {
                     headers: { 'Authorization': undefined }
             }).success(function(geojson){
