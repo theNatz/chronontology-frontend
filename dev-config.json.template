@@ -1,5 +1,6 @@
 {
 	"backendUri": "http://localhost:4567",
+	"spiUri": "http://chronontology.i3mainz.hs-mainz.de/spi",
 	"paths": {
 		"build": "dist/",
 		"lib": "node_modules/"
