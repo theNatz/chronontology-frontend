@@ -172,16 +172,12 @@ angular.module('chronontology.directives')
                       return y(data.row) + data.row * (barHeight + 5) + barHeight / 2 + 5;
                   })
                   .text(function(data) {
-                      return data.name;
-                  })
-                  .text(function(data) {
-                      if (this.getComputedTextLength() > x(data.to) - x(data.from)) {
-                          data.textVisible = false;
-                          return "";
-                      }
-                      else {
+                      if (doesTextFitInBar(data.name, x(data.to) - x(data.from))) {
                           data.textVisible = true;
                           return data.name;
+                      } else {
+                          data.textVisible = false;
+                          return "";
                       }
                   });
 
@@ -189,6 +185,10 @@ angular.module('chronontology.directives')
                   .text(function() { return formatTickText(d3.select(this).text()); });
 
               removeOverlappingTicks(axisElement.selectAll('.tick'));
+          }
+
+          function doesTextFitInBar(text, barWidth) {
+              return !(text.length * 7 > barWidth);
           }
 
           function showPeriod(period) {
