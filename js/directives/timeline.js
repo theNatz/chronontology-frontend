@@ -15,8 +15,8 @@ angular.module('chronontology.directives')
           // These variables should be constant variables. Set to var because of an error with safari.
           var barHeight = 20;
           var margin = 15;
-          var minYear = -10000;
-          var maxYear = new Date().getFullYear();
+          var minStartYear = -10000;
+          var maxStartYear = new Date().getFullYear();
           var maxZoomYears = 5;
           // These variables should be constant variables. Set to var because of an error with safari.
 
@@ -38,18 +38,18 @@ angular.module('chronontology.directives')
           d3.select(window).on('resize', resize);
 
           function initialize() {
-              var width = getWidth();
+              var width = getWidth();                  // Größe des zur Verfügung stehenden Fensters
               var height = getHeight();
 
-              y = d3.scale.linear()
-                  .domain([0, barHeight * 20])
-                  .range([0, parseInt(height) - 30]);
+              y = d3.scale.linear()                    // y-Skala erstellen
+                  .domain([0, barHeight * 20])         // Anzahl Hierarchie-Ebenen
+                  .range([0, parseInt(height) - 30]);  // auf welcher Pixel-Fläche, minus Skalenbeschriftung
 
               var periodsData = prepareData();
 
               x = d3.scale.linear()
-                  .domain(startXDomain)
-                  .range([0, parseInt(width)]);
+                  .domain(startXDomain)                // z.B. -10.000 bis 2000 n.Chr.
+                  .range([0, parseInt(width)]);        // auf welcher Pixel-Fläche
 
               y.domain(startYDomain);
 
@@ -62,10 +62,10 @@ angular.module('chronontology.directives')
                   .attr('width', parseInt(width))
                   .attr('height', parseInt(height) - 30);
 
-              axis = d3.svg.axis()
+              axis = d3.svg.axis()                    // Skalenbeschriftung
                   .scale(x)
                   .orient("bottom")
-                  .ticks(7)
+                  .ticks(7)                           // Anzahl Skalenschritte
                   .tickSize(10, 0);
 
               axisElement = timeline.append('svg')
@@ -82,13 +82,13 @@ angular.module('chronontology.directives')
                   .scaleExtent([minZoom, maxZoom])
                   .on("zoom", function () {
                       axisElement.call(axis);
-                      updateBars();
+                      updateBars();              // aktualisiert die Achsen, nochmal neu gemalt
                   });
 
               drag = d3.behavior.drag()
                   .on("drag", function() {
                       var domain = y.domain();
-                      domain[0] -= d3.event.dy;
+                      domain[0] -= d3.event.dy;     // Verschiebung unten/oben
                       domain[1] -= d3.event.dy;
                       y.domain(domain);
                       axisElement.call(axis);
@@ -101,9 +101,9 @@ angular.module('chronontology.directives')
                   .append('div')
                   .classed('timeline-tooltip', true);
 
-              bars = canvas.selectAll('g').data(periodsData).enter();
+              bars = canvas.selectAll('g').data(periodsData).enter(); // bar = Rechteck von einer Period, bars = alle diese Rechtecke
               barRects = bars.append('g')
-                  .attr("class", function(d) { return "bar group" + d.colorGroup + " level" + (d.groupRow + 1) })
+                  .attr("class", function(d) { return "bar group" + d.colorGroup + " level" + (d.groupRow + 1) }) // CSS class für richtige Farbe und Helligkeit
                   .append('rect')
                   .attr('rx','5')
                   .attr('ry','5')
@@ -146,14 +146,14 @@ angular.module('chronontology.directives')
           }
 
           function getWidth() {
-              return element[0].parentNode.clientWidth - margin;
+              return element[0].parentNode.clientWidth - margin; // margin: für weiße Ränder
           }
 
           function getHeight() {
               return element[0].parentNode.clientHeight - margin;
           }
 
-          function updateBars() {
+          function updateBars() {  // aus Datenwerten Pixel berechnen
               barRects.attr('width', function(data) {
                       return x(data.to) - x(data.from);
                   })
@@ -198,7 +198,7 @@ angular.module('chronontology.directives')
           }
 
           function prepareData() {
-              var periodsToDisplay = [];
+              var periodsToDisplay = []; // zwei Weisen, auf die Daten zuzugreifen
               var periodsMap = {};
 
               for (var i in scope.periods) {
@@ -207,26 +207,26 @@ angular.module('chronontology.directives')
                       if (scope.periods[i].resource.names)
                         label = $filter('prefName')(scope.periods[i].resource.names);
                       if (!scope.periods[i].resource.relations)
-                        scope.periods[i].resource.relations = {};
-                      var period = {
+                        scope.periods[i].resource.relations = {}; // evtl. in getrennte Methode
+                      var period = { // wird für jede für die Timeline validierte Period angelegt
                           id: scope.periods[i].resource.id,
                           name: label,
                           from: parseInt(scope.periods[i].resource.hasTimespan[0].begin.at),
                           to: parseInt(scope.periods[i].resource.hasTimespan[0].end.at),
-                          successor: scope.periods[i].resource.relations.isFollowedBy
+                          successor: scope.periods[i].resource.relations.isFollowedBy // anlegen läuft von links nach rechts
                               ? scope.periods[i].resource.relations.isFollowedBy[0] : undefined,
-                          parent: scope.periods[i].resource.relations.isPartOf,
-                          children: scope.periods[i].resource.relations.hasPart,
-                          row: -1
+                          parent: scope.periods[i].resource.relations.isPartOf,  // array
+                          children: scope.periods[i].resource.relations.hasPart, // array
+                          row: -1 // der Period wurde noch keine Reihe zugewiesen
                       };
-                      if (!totalXDomain[0] || period.from < totalXDomain[0]) totalXDomain[0] = period.from;
-                      if (!totalXDomain[1] || period.to > totalXDomain[1]) totalXDomain[1] = period.to;
-                      periodsToDisplay.push(period);
+                      if (!totalXDomain[0] || period.from < totalXDomain[0]) totalXDomain[0] = period.from; // am weitesten links / rechts ?
+                      if (!totalXDomain[1] || period.to > totalXDomain[1]) totalXDomain[1] = period.to; // am Ende hat man die bounding box
+                      periodsToDisplay.push(period); // jeweils eintragen
                       periodsMap[period.id] = period;
                   }
               }
 
-              determinePeriodRows(periodsToDisplay, periodsMap);
+              determinePeriodRows(periodsToDisplay, periodsMap);  // jeder Period wird eine Reihe zugewiesen
 
               var selectedPeriod;
               if (scope.selectedPeriodId && (selectedPeriod = periodsMap[scope.selectedPeriodId]))
@@ -281,8 +281,8 @@ angular.module('chronontology.directives')
               }
           }
 
-          function assignPeriodsToGroups(periods, periodsMap) {
-              periods.sort(function(a, b) {
+          function assignPeriodsToGroups(periods, periodsMap) { // periods werden sortiert nach Anzahl ihrer Kinder
+              periods.sort(function(a, b) {                     // (Gruppen mit vielen Kindern werden zuerst behandelt)
                   if (a.children && a.children.indexOf(b.id) > -1) return -1;
                   if (b.children && b.children.indexOf(a.id) > -1) return 1;
                   return a.from - b.from;
@@ -293,12 +293,12 @@ angular.module('chronontology.directives')
               for (var i in periods) {
                   if (!periods[i].periodGroup) {
                       var period = periods[i];
-                      while (period.parent && period.parent[0]) {
-                          if (period.parent[0] in periodsMap)
+                      while (period.parent && period.parent[0]) { // finde höchsten parent in der Hierarchie
+                          if (period.parent[0] in periodsMap)  // wenn parent valide ist
                               period = periodsMap[period.parent[0]];
                           else break;
                       }
-                      addToGroup(period, periodsMap, null, 0, periodGroups);
+                      addToGroup(period, periodsMap, null, 0, periodGroups); // null = lege neue Gruppe an, 0 = Reihennummer innerhalb der Gruppe
                       if (periodGroups.indexOf(period.periodGroup) == -1)
                           periodGroups.push(period.periodGroup);
                   }
@@ -312,13 +312,13 @@ angular.module('chronontology.directives')
 
           function addToGroup(period, periodsMap, group, row, periodGroups) {
 
-              if (period.periodGroup) return;
+              if (period.periodGroup) return; // Gruppe nicht doppelt zuweisen
 
               if (!group) {
                   group = {
-                      rows: [],
+                      rows: [], // array von Reihen, Reihe ist array aller Periods in dieser Reihe
                       periodsCount: 0,
-                      from: NaN,
+                      from: NaN, // zeitliche Ausdehnung der Gruppe
                       to: NaN
                   };
               }
@@ -500,10 +500,10 @@ angular.module('chronontology.directives')
           function setStandardStartDomains() {
               startXDomain[0] = totalXDomain[0];
               startXDomain[1] = totalXDomain[1];
-              if (startXDomain[0] < minYear)
-                  startXDomain[0] = minYear;
-              if (startXDomain[1] > maxYear)
-                  startXDomain[1] = maxYear;
+              if (startXDomain[0] < minStartYear)
+                  startXDomain[0] = minStartYear;
+              if (startXDomain[1] > maxStartYear)
+                  startXDomain[1] = maxStartYear;
 
               startYDomain = [0, barHeight * 20];
           }
