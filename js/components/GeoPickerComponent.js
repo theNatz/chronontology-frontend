@@ -6,7 +6,8 @@ function GeoPickerController($http) {
     document.getElementById("map").innerHTML = "<h1 class='maploading'>map is loading...</h1>";
 
     this.loadPlaces = function(bbox) {
-        $http.get("/spi/place?bbox=" + bbox, {
+        // should set to "/spi/place?bbox=" + bbox
+        $http.get("/spi/GetDummy?multi=true", {
             headers: { 'Authorization': undefined }
         }).success(function(geojson){
             _this.places = geojson;
@@ -15,7 +16,8 @@ function GeoPickerController($http) {
     };
 
     this.loadPlace = function(type, placeId) { // load on select by map or id
-        $http.get("/spi/place/"+ type + "/" + placeId, {
+        // "/spi/place/"+ type + "/" + placeId
+        $http.get("/spi/GetDummy", {
             headers: { 'Authorization': undefined }
         }).success(function(geojson){
             _this.onPlaceSelected(geojson);
