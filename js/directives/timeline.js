@@ -30,6 +30,7 @@ angular.module('chronontology.directives')
           var canvas;
           var axis, axisElement;
           var zoom, drag;
+          var initialized = false;
 
           scope.$watch('periods', function() {
              if (scope.periods) initialize();
@@ -124,9 +125,13 @@ angular.module('chronontology.directives')
               addTooltipBehavior(barTexts, tooltip);
 
               updateBars();
+
+              initialized = true;
           }
 
           function resize() {
+              if (!initialized) return;
+
               var width = getWidth();
               var height = getHeight();
 
