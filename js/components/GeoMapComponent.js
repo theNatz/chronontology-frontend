@@ -1,19 +1,14 @@
 angular.module('chronontology.components')
     .component('geomap',{
         templateUrl: '../../partials/geo/map.html',
-        bindings: {
-            g1:'@', //spatiallyPartOfRegion
-            g2:'@', //isNamedAfter
-            g3:'@'  //hasCoreArea
-        },
-        controller: function($scope, $location, $routeParams, $http, $sce, chronontologySettings){
+        controller: function($scope, $location, $routeParams, $http, $sce, chronontologySettings, $filter){
             var _this = this;
             var popupinfo = [];
             // set div to loading
             document.getElementById("map").innerHTML = "<h1 class='maploading'>map is loading...</h1>";
             // load data
             var geowidgetParam = "?id=";
-            $http.get(chronontologySettings.geowidgetURL + geowidgetParam + $routeParams.id, {
+            $http.get("/spi/GetGeoJSONT" + geowidgetParam + $routeParams.id, {
                     headers: { 'Authorization': undefined }
             }).success(function(geojson){
                 _this.geojson = geojson;
@@ -76,13 +71,13 @@ angular.module('chronontology.components')
                     for (var feature in geojson.features) {
                         if (geojson.features[feature].properties.relation) {
                             if (geojson.features[feature].properties.relation.indexOf("spatiallyPartOfRegion") !== -1 && !stopA) {
-                                div.innerHTML += '<box style="border-color:' + colors.spatiallyPartOfRegion + '"></box><content>' + _this.g1 + '</content>';
+                                div.innerHTML += '<box style="border-color:' + colors.spatiallyPartOfRegion + '"></box><content>' + $filter('transl8')('relation_spatiallyPartOfRegion') + '</content>';
                                 stopA = true;
                             } else if (geojson.features[feature].properties.relation.indexOf("isNamedAfter") !== -1 && !stopB) {
-                                div.innerHTML += '<box style="border-color:' + colors.isNamedAfter + '"></box><content>' + _this.g2 + '</content>';
+                                div.innerHTML += '<box style="border-color:' + colors.isNamedAfter + '"></box><content>' + $filter('transl8')('relation_isNamedAfter') + '</content>';
                                 stopB = true;
                             } else if (geojson.features[feature].properties.relation.indexOf("hasCoreArea") !== -1 && !stopC) {
-                                div.innerHTML += '<box style="border-color:' + colors.hasCoreArea + '"></box><content>' + _this.g3 + '</content>';
+                                div.innerHTML += '<box style="border-color:' + colors.hasCoreArea + '"></box><content>' + $filter('transl8')('relation_hasCoreArea') + '</content>';
                                 stopC = true;
                             }
                         }
@@ -111,9 +106,9 @@ angular.module('chronontology.components')
                         this._div.innerHTML = this._div.innerHTML.replace("<span>parent geometry: geom origin</span>","");
                         this._div.innerHTML = this._div.innerHTML.replace("<br><span>parent ID: null</span>","");
                     }
-                    this._div.innerHTML = this._div.innerHTML.replace("spatiallyPartOfRegion",_this.g1);
-                    this._div.innerHTML = this._div.innerHTML.replace("isNamedAfter",_this.g2);
-                    this._div.innerHTML = this._div.innerHTML.replace("hasCoreArea",_this.g3);
+                    this._div.innerHTML = this._div.innerHTML.replace("spatiallyPartOfRegion", $filter('transl8')('relation_spatiallyPartOfRegion'));
+                    this._div.innerHTML = this._div.innerHTML.replace("isNamedAfter", $filter('transl8')('relation_isNamedAfter'));
+                    this._div.innerHTML = this._div.innerHTML.replace("hasCoreArea", $filter('transl8')('relation_hasCoreArea'));
                 };
                 _this.infoLegend.addTo(_this.map);
                 // add markers and polygons

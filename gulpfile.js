@@ -184,14 +184,18 @@ gulp.task('clean', function () {
 // runs the development server and sets up browser reloading
 gulp.task('server', ['build'], function () {
 
-    var proxyOptions = url.parse(cfg.backendUri);
-    proxyOptions.route = '/data';
+    var dataProxyOptions = url.parse(cfg.dataUri);
+    dataProxyOptions.route = '/data';
+
+    var spiProxyOptions = url.parse(cfg.spiUri);
+    spiProxyOptions.route = '/spi';
 
     browserSync({
         server: {
             baseDir: 'dist',
             middleware: [
-                proxy(proxyOptions),
+                proxy(dataProxyOptions),
+                proxy(spiProxyOptions),
                 // rewrite for AngularJS HTML5 mode, redirect all non-file urls to index.html
                 modRewrite(['!\\.html|\\.js|\\.svg|\\.css|\\.png|\\.jpg|\\.gif|\\.json|\\.woff2|\\.woff|\\.ttf$ /index.html [L]']),
             ]
