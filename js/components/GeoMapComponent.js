@@ -1,10 +1,9 @@
-function GeomapController($scope, $location, $routeParams, $http, $sce, chronontologySettings, $filter) {
+function GeoMapController($scope, $location, $routeParams, $http, $sce, chronontologySettings, $filter) {
 
     var _this = this;
     var popupinfo = [];
     // set div to loading
     document.getElementById("map").innerHTML = "<h1 class='maploading'>map is loading...</h1>";
-
 
     this.$onChanges = function(changes) {
         if (changes.selectedPeriodId && _this.selectedPeriodId) {
@@ -150,7 +149,7 @@ function GeomapController($scope, $location, $routeParams, $http, $sce, chronont
         _this.map.setView([_this.mapY, _this.mapX], _this.mapZoom);
         // zoom to bounds
         _this.map.fitBounds(_this.marker.getBounds());
-        
+
     };
 
     this.onEachFeature = function(feature, layer) {
@@ -193,5 +192,5 @@ angular.module('chronontology.components')
         bindings: {
             selectedPeriodId: '<'
         },
-        controller: GeomapController
+        controller: GeoMapController
     });
