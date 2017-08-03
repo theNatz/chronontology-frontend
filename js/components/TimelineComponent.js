@@ -253,7 +253,7 @@ function TimelineController(timelineDataService, $location, $element, $scope) {
 
         var centralRow = selectedPeriod.row;
         if (centralRow < 5) centralRow = 5;
-        var yPos = centralRow + y.invert(centralRow * (barHeight + 5));
+        var yPos = centralRow + y.invert(centralRow * (barHeight + 5)) - 5;
         startYDomain = [yPos - barHeight * 10, yPos + barHeight * 10];
     };
 
