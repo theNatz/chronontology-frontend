@@ -7,7 +7,8 @@ angular.module('chronontology.directives')
       restrict: 'EA',
       scope: {
           periods: '=',
-          selectedPeriodId: '='
+          selectedPeriodId: '=',
+          axisTicks: '@'
       },
       templateUrl: 'partials/timeline.html',
       link: function(scope, element, attrs) {
@@ -66,7 +67,7 @@ angular.module('chronontology.directives')
               axis = d3.svg.axis()                    // Skalenbeschriftung
                   .scale(x)
                   .orient("bottom")
-                  .ticks(7)                           // Anzahl Skalenschritte
+                  .ticks(parseInt(scope.axisTicks))                           // Anzahl Skalenschritte
                   .tickSize(10, 0);
 
               axisElement = timeline.append('svg')
@@ -188,12 +189,14 @@ angular.module('chronontology.directives')
 
               axisElement.selectAll('.tick text')
                   .text(function() { return formatTickText(d3.select(this).text()); });
-
-              removeOverlappingTicks(axisElement.selectAll('.tick'));
           }
 
           function doesTextFitInBar(text, barWidth) {
-              return !(text.length * 7 > barWidth);
+              return !(getApproximatedTextLength(text) > barWidth);
+          }
+
+          function getApproximatedTextLength(text) {
+              return text.length * 7;
           }
 
           function showPeriod(period) {
@@ -469,22 +472,6 @@ angular.module('chronontology.directives')
                       .style("left", (d3.event.pageX + 10) + "px");
               })
               .on("mouseout", function() { return tooltip.style("visibility", "hidden"); });
-          }
-
-          function removeOverlappingTicks(ticksSelection) {
-              for (var i = 0; i < ticksSelection[0].length; i++) {
-                  var currentTick = ticksSelection[0][i];
-                  var nextTick = ticksSelection[0][i+1];
-                  if (!currentTick || !nextTick || !currentTick.getBoundingClientRect() || !nextTick.getBoundingClientRect())
-                      continue;
-                  while (currentTick.getBoundingClientRect().right > nextTick.getBoundingClientRect().left) {
-                      d3.select(nextTick).remove();
-                      i++;
-                      nextTick = ticksSelection[0][i+1];
-                      if (!nextTick)
-                          break;
-                  }
-              }
           }
 
           function setStartDomainsToSelection(selectedPeriod) {
