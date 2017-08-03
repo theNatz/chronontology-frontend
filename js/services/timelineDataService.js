@@ -21,12 +21,15 @@ var TimelineDataService = function($filter) {
 
     function createPeriodObjects(periods, periodsToDisplay, periodsMap, xDomain) {
 
+        var periodNumberCounter = 0;
+
         for (var i in periods) {
-            if (validatePeriod(periods[i])) createPeriodObject(periods[i], periodsToDisplay, periodsMap, xDomain);
+            if (validatePeriod(periods[i])) createPeriodObject(periods[i], periodNumberCounter++, periodsToDisplay,
+                periodsMap, xDomain);
         }
     }
     
-    function createPeriodObject(period, periodsToDisplay, periodsMap, xDomain) {
+    function createPeriodObject(period, periodNumber, periodsToDisplay, periodsMap, xDomain) {
         
         var label = '';
         if (period.resource.names)
@@ -36,6 +39,7 @@ var TimelineDataService = function($filter) {
 
         var periodObject = { // wird für jede für die Timeline validierte Period angelegt
             id: period.resource.id,
+            number: periodNumber,
             name: label,
             from: parseInt(period.resource.hasTimespan[0].begin.at),
             to: parseInt(period.resource.hasTimespan[0].end.at),
@@ -81,7 +85,12 @@ var TimelineDataService = function($filter) {
         var periodGroups = assignPeriodsToGroups(periods, periodsMap);
 
         periodGroups.sort(function (a, b) {
-            return b.periodsCount - a.periodsCount;
+            var diff = b.periodsCount - a.periodsCount;
+            if (diff == 0) {
+                return b.number - a.number;
+            } else {
+                return diff;
+            }
         });
 
         var rows = [];
@@ -104,10 +113,16 @@ var TimelineDataService = function($filter) {
         periods.sort(function (a, b) {                      // (Gruppen mit vielen Kindern werden zuerst behandelt)
             if (a.children && a.children.indexOf(b.id) > -1) return -1;
             if (b.children && b.children.indexOf(a.id) > -1) return 1;
-            return a.from - b.from;
+            var diff = a.from - b.from;
+            if (diff == 0) {
+                return b.number - a.number;
+            } else {
+                return diff;
+            }
         });
 
         var periodGroups = [];
+        var groupNumberCounter = 0;
 
         for (var i in periods) {
             if (!periods[i].periodGroup) {
@@ -117,7 +132,7 @@ var TimelineDataService = function($filter) {
                         period = periodsMap[period.parent[0]];
                     else break;
                 }
-                addToGroup(period, periodsMap, null, 0, periodGroups); // null = lege neue Gruppe an, 0 = Reihennummer innerhalb der Gruppe
+                addToGroup(period, periodsMap, createGroup(groupNumberCounter++), 0, periodGroups); // null = lege neue Gruppe an, 0 = Reihennummer innerhalb der Gruppe
                 if (periodGroups.indexOf(period.periodGroup) == -1)
                     periodGroups.push(period.periodGroup);
             }
@@ -129,18 +144,20 @@ var TimelineDataService = function($filter) {
         return periodGroups;
     }
 
+    function createGroup(groupNumber) {
+
+        return {
+            number: groupNumber,
+            rows: [], // array von Reihen, Reihe ist array aller Periods in dieser Reihe
+            periodsCount: 0,
+            from: NaN, // zeitliche Ausdehnung der Gruppe
+            to: NaN
+        };
+    }
+
     function addToGroup(period, periodsMap, group, row, periodGroups) {
 
         if (period.periodGroup) return; // Gruppe nicht doppelt zuweisen
-
-        if (!group) {
-            group = {
-                rows: [], // array von Reihen, Reihe ist array aller Periods in dieser Reihe
-                periodsCount: 0,
-                from: NaN, // zeitliche Ausdehnung der Gruppe
-                to: NaN
-            };
-        }
 
         setPeriodGroup(period, group, row);
 
@@ -198,7 +215,12 @@ var TimelineDataService = function($filter) {
                 if (!rows[rowNumber + i]) rows[rowNumber + i] = [];
                 rows[rowNumber + i].push(group.rows[i][j]);
                 rows[rowNumber + i].sort(function (a, b) {
-                    return a.from - b.from;
+                    var diff = a.from - b.from;
+                    if (diff == 0) {
+                        return b.number - a.number;
+                    } else {
+                        return diff;
+                    }
                 });
             }
         }
