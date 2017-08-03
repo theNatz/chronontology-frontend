@@ -9,7 +9,7 @@ angular.module('chronontology.controllers')
 		'resource.relations.isPartOf,resource.relations.hasPart,'+
 		'resource.relations.follows,resource.relations.isFollowedBy';
 
-	$http.get('/data/period/?size=1000&q=resource.provenance:' + $routeParams.provenance + '&part='+relevantParts).success( function(result) {
+	$http.get('/data/period/?size=20000&q=resource.provenance:' + $routeParams.provenance + '&part='+relevantParts).success( function(result) {
 		$scope.periods = result.results;
 	});
 })
