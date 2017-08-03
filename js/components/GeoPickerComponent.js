@@ -1,9 +1,6 @@
 function GeoPickerController($http) {
 
     var _this = this;
-    var popupinfo = [];
-    // set div to loading
-    document.getElementById("map").innerHTML = "<h1 class='maploading'>map is loading...</h1>";
 
     this.loadPlaces = function(bbox) {
         // should set to "/spi/place?bbox=" + bbox
@@ -27,7 +24,7 @@ function GeoPickerController($http) {
 }
 
 angular.module('chronontology.components')
-    .component('geomap',{
+    .component('geopicker',{
         templateUrl: '../../partials/geo/picker.html',
         bindings: {
             onPlaceSelected: '&'
