@@ -12,7 +12,7 @@ function GeoMapController($scope, $location, $routeParams, $http, $sce, chronont
     };
 
     this.loadData = function() {
-        $http.get("/spi/GetGeoJSONT?id=" + _this.selectedPeriodId, {
+        $http.get("/spi/GetGeoJSON?id=" + _this.selectedPeriodId, {
                 headers: { 'Authorization': undefined }
         }).success(function(geojson){
             _this.geojson = geojson;
