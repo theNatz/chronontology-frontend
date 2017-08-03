@@ -40,7 +40,7 @@ angular.module('chronontology.controllers')
             var geoFrameUrl = chronontologySettings.geoFrameBaseUri + "?uri=" + chronontologySettings.baseUri;
             $scope.geoFrameUrl = $sce.trustAsResourceUrl(geoFrameUrl + "/period/" + result.resource.id);
 
-            $http.get('/data/period/?size=20000&q=resource.provenance:' + $scope.period.provenance + '&part='+relevantParts).success( function(result) {
+            $http.get('/data/period/?size=10000&q=resource.provenance:' + $scope.period.provenance + '&part='+relevantParts).success( function(result) {
                 $scope.provenancePeriods = result.results;
             });
         });
