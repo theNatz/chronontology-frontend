@@ -14,7 +14,6 @@ angular.module('chronontology', [
     'idai.components',
     'angulartics.piwik',
     'chronontology.services',
-    'chronontology.directives',
     'chronontology.controllers',
     'chronontology.filters',
     'chronontology.components'

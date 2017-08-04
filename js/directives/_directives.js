@@ -1,1 +1,0 @@
-angular.module('chronontology.directives', [])
