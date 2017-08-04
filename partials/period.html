@@ -25,7 +25,7 @@
 
                     <div class="well well-sm timeline-container-small">
                         <timeline periods="provenancePeriods" selected-period-id="{{document.resource.id}}"
-                                  axis-ticks="4"></timeline>
+                                  axis-ticks="4" inactive="!hasValidTimespan(document)"></timeline>
                     </div>
                     <geomap selected-period-id="document.resource.id"></geomap>
 

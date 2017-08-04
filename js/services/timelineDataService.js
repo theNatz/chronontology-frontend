@@ -80,6 +80,8 @@ var TimelineDataService = function($filter) {
         return true;
     }
 
+    this.validatePeriod = validatePeriod;
+
     function determinePeriodRows(periods, periodsMap) {
 
         var periodGroups = assignPeriodsToGroups(periods, periodsMap);

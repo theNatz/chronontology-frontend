@@ -3,7 +3,8 @@
 angular.module('chronontology.controllers')
 
 .controller("PeriodController", function($scope, $location, $routeParams, $http, $sce,
-										 chronontologySettings, authService, gazetteerDataService) {
+										 chronontologySettings, authService, gazetteerDataService,
+                                         timelineDataService) {
 
 	// possible relations
 	// (labels are now in transl8 keys "relation_isSenseOf" etc.)
@@ -203,5 +204,10 @@ angular.module('chronontology.controllers')
                 console.log("error");
                 console.dir(data);
             });
-    }
+    };
+
+    $scope.hasValidTimespan = function(period) {
+
+        return timelineDataService.validatePeriod(period);
+    };
 });

@@ -2,10 +2,16 @@ $maxLevel: 6;
 $maxGroups: 10;
 
 .timeline {
-  cursor: move;
+
+  &:not(.inactive) {
+    cursor: move;
+  }
+
+  &.inactive {
+    cursor: default;
+  }
 
   g.bar {
-    cursor: pointer;
     transition: fill .5s ease;
 
     rect.selected {
@@ -13,7 +19,22 @@ $maxGroups: 10;
       stroke-width: 1px;
     }
 
+    &:not(.inactive) {
+      cursor: pointer;
+    }
+
+    &.inactive {
+      $baseColor: grey;
+      @for $j from 1 to ($maxLevel+1) {
+        &.level#{$j} {
+          $color: darken($baseColor, percentage(0.5 / $maxLevel * $j));
+          fill: rgba($color, 0.7);
+        }
+      }
+    }
+
     @for $i from 0 to ($maxGroups) {
+
       &.group#{$i+1} {
         $baseColor: hsl( (360 / $maxGroups) * $i + 60, 60%, 50%);
         $defaultColor: darken($baseColor, 50%);
@@ -37,9 +58,12 @@ $maxGroups: 10;
   .text {
     font-size: 14px;
     text-anchor: middle;
-    cursor: pointer;
     fill: white;
     font-weight: 200;
+
+    &:not(.inactive) {
+      cursor: pointer;
+    }
   }
 
   .axis {

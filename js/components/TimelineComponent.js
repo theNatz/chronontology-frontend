@@ -57,6 +57,8 @@ function TimelineController(timelineDataService, $location, $element, $scope) {
             .attr('height', parseInt(height))
             .classed('timeline', true);
 
+        if (this.inactive) timeline.classed('inactive', true);
+
         canvas = timeline.append('svg')
             .attr('width', parseInt(width))
             .attr('height', parseInt(height) - 30);
@@ -73,41 +75,52 @@ function TimelineController(timelineDataService, $location, $element, $scope) {
             .classed('axis', true)
             .call(axis);
 
-        var minZoom = (startXDomain[1] - startXDomain[0])
-            / (totalXDomain[1] - totalXDomain[0]);
-        var maxZoom = (startXDomain[1] - startXDomain[0]) / maxZoomYears;
 
-        zoom = d3.behavior.zoom()
-            .x(x)
-            .scaleExtent([minZoom, maxZoom])
-            .on('zoom', function () {
-                axisElement.call(axis);
-                _this.updateBars();              // aktualisiert die Achsen, nochmal neu gemalt
-            });
+        if (!this.inactive) {
+            var minZoom = (startXDomain[1] - startXDomain[0])
+                / (totalXDomain[1] - totalXDomain[0]);
+            var maxZoom = (startXDomain[1] - startXDomain[0]) / maxZoomYears;
 
-        drag = d3.behavior.drag()
-            .on('drag', function() {
-                var domain = y.domain();
-                domain[0] -= d3.event.dy;     // Verschiebung unten/oben
-                domain[1] -= d3.event.dy;
-                y.domain(domain);
-                axisElement.call(axis);
-                _this.updateBars();
-            });
+            zoom = d3.behavior.zoom()
+                .x(x)
+                .scaleExtent([minZoom, maxZoom])
+                .on('zoom', function () {
+                    axisElement.call(axis);
+                    _this.updateBars();              // aktualisiert die Achsen, nochmal neu gemalt
+                });
 
-        timeline.call(zoom).call(drag);
+            drag = d3.behavior.drag()
+                .on('drag', function () {
+                    var domain = y.domain();
+                    domain[0] -= d3.event.dy;     // Verschiebung unten/oben
+                    domain[1] -= d3.event.dy;
+                    y.domain(domain);
+                    axisElement.call(axis);
+                    _this.updateBars();
+                });
 
-        tooltip = d3.select('body')
-            .append('div')
-            .classed('timeline-tooltip', true);
+            timeline.call(zoom).call(drag);
+
+            tooltip = d3.select('body')
+                .append('div')
+                .classed('timeline-tooltip', true);
+        }
 
         bars = canvas.selectAll('g').data(timelineData.periods).enter(); // bar = Rechteck von einer Period, bars = alle diese Rechtecke
         barRects = bars.append('g')
-            .attr('class', function(d) { return 'bar group' + d.colorGroup + ' level' + (d.level + 1) }) // CSS class für richtige Farbe und Helligkeit
+            .attr('class', function(d) { // CSS class für richtige Farbe und Helligkeit
+                var barClass = 'bar level' + (d.level + 1);
+                if (_this.inactive) {
+                    barClass += ' inactive';
+                } else {
+                    barClass += ' group' + d.colorGroup;
+                }
+                return barClass;
+            })
             .append('rect')
-            .attr('rx','5')
-            .attr('ry','5')
-            .on('click', _this.showPeriod);
+            .attr('rx', '5')
+            .attr('ry', '5');
+        if (!this.inactive) barRects.on('click', _this.showPeriod);
         this.addTooltipBehavior(barRects);
 
         if (this.selectedPeriodId) {
@@ -120,6 +133,7 @@ function TimelineController(timelineDataService, $location, $element, $scope) {
             .append('text')
             .classed('text', true)
             .on('click', _this.showPeriod);
+        if (this.inactive) barTexts.classed('inactive', true);
         this.addTooltipBehavior(barTexts, tooltip);
 
         this.updateBars();
@@ -275,7 +289,8 @@ angular.module('chronontology.components').component('timeline', {
     bindings: {
         periods: '<',
         selectedPeriodId: '@',
-        axisTicks: '@'
+        axisTicks: '@',
+        inactive: '<'
     },
     controller: TimelineController
 });
