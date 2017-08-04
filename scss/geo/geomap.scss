@@ -5,8 +5,21 @@
 }
 .maploading {
   text-align:center;
-  line-height:450px;
-  font-family: Roboto, sans-serif;
+  margin: 180px;
+  font-size: 40px;
+
+  .glyphicon {
+      animation-name: spin;
+      animation-duration: 8000ms;
+      animation-iteration-count: infinite;
+      animation-timing-function: linear;
+  }
+}
+.mapempty {
+  text-align: center;
+  height: 450px;
+  padding-top: 190px;
+  font-size: 20px;
 }
 .legend {
   line-height: 14px;

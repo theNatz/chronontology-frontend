@@ -2,8 +2,9 @@ function GeoMapController($scope, $location, $routeParams, $http, $sce, chronont
 
     var _this = this;
     var popupinfo = [];
-    // set div to loading
-    document.getElementById("map").innerHTML = "<h1 class='maploading'>map is loading...</h1>";
+
+    _this.loading = true;
+    _this.empty = false;
 
     this.$onChanges = function(changes) {
         if (changes.selectedPeriodId && _this.selectedPeriodId) {
@@ -15,8 +16,10 @@ function GeoMapController($scope, $location, $routeParams, $http, $sce, chronont
         $http.get("/spi/GetGeoJSON?id=" + _this.selectedPeriodId, {
                 headers: { 'Authorization': undefined }
         }).success(function(geojson){
+            _this.loading = false;
             _this.geojson = geojson;
-            _this.initMap(geojson);
+            if (geojson.features.length > 0) _this.initMap(geojson);
+            else _this.empty = true;
         });
     };
 
