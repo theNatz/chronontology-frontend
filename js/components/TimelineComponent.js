@@ -103,7 +103,7 @@ function TimelineController(timelineDataService, $location, $element, $scope) {
 
         bars = canvas.selectAll('g').data(timelineData.periods).enter(); // bar = Rechteck von einer Period, bars = alle diese Rechtecke
         barRects = bars.append('g')
-            .attr('class', function(d) { return 'bar group' + d.colorGroup + ' level' + (d.groupRow + 1) }) // CSS class für richtige Farbe und Helligkeit
+            .attr('class', function(d) { return 'bar group' + d.colorGroup + ' level' + (d.level + 1) }) // CSS class für richtige Farbe und Helligkeit
             .append('rect')
             .attr('rx','5')
             .attr('ry','5')

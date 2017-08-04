@@ -132,7 +132,7 @@ var TimelineDataService = function($filter) {
                         period = periodsMap[period.parent[0]];
                     else break;
                 }
-                addToGroup(period, periodsMap, createGroup(groupNumberCounter++), 0, periodGroups); // null = lege neue Gruppe an, 0 = Reihennummer innerhalb der Gruppe
+                addToGroup(period, periodsMap, createGroup(groupNumberCounter++), 0, 0, periodGroups); // null = lege neue Gruppe an, 0 = Reihennummer innerhalb der Gruppe
                 if (periodGroups.indexOf(period.periodGroup) == -1)
                     periodGroups.push(period.periodGroup);
             }
@@ -155,15 +155,21 @@ var TimelineDataService = function($filter) {
         };
     }
 
-    function addToGroup(period, periodsMap, group, row, periodGroups) {
+    function addToGroup(period, periodsMap, group, row, hierarchyLevel, periodGroups) {
 
         if (period.periodGroup) return; // Gruppe nicht doppelt zuweisen
 
-        setPeriodGroup(period, group, row);
+        setPeriodGroup(period, group, row, hierarchyLevel);
 
         for (var i in period.children) {
             if (period.children[i] in periodsMap && period.id != period.children[i]) {
-                addToGroup(periodsMap[period.children[i]], periodsMap, group, row + 1, periodGroups);
+                var rowNumber = row + 1;
+                while (group.rows[rowNumber]
+                        && !doesPeriodFitInRow(periodsMap[period.children[i]], group.rows[rowNumber])) {
+                    rowNumber++;
+                }
+                addToGroup(periodsMap[period.children[i]], periodsMap, group, rowNumber, hierarchyLevel + 1,
+                    periodGroups);
             }
         }
     }
@@ -174,22 +180,33 @@ var TimelineDataService = function($filter) {
             var successor = periodsMap[period.successor];
             if (successor.periodGroup.periodsCount == 1) {
                 periodGroups.splice(periodGroups.indexOf(successor.periodGroup), 1);
-                setPeriodGroup(successor, period.periodGroup, period.groupRow);
+                setPeriodGroup(successor, period.periodGroup, period.groupRow, period.level);
                 addSuccessorToGroup(successor, periodsMap, periodGroups);
             }
         }
     }
 
-    function setPeriodGroup(period, group, row) {
+    function setPeriodGroup(period, group, row, hierarchyLevel) {
 
         period.periodGroup = group;
         period.groupRow = row;
         if (!group.rows[row]) group.rows[row] = [];
+        period.level = hierarchyLevel;
         group.rows[row].push(period);
         group.periodsCount++;
 
         if (isNaN(group.from) || group.from > period.from) group.from = period.from;
         if (isNaN(group.to) || group.to < period.to) group.to = period.to;
+    }
+
+    function doesPeriodFitInRow(period, row) {
+
+        for (var i in row) {
+            if (!(row[i].to <= period.from || row[i].from >= period.to)) {
+                return false;
+            }
+        }
+        return true;
     }
 
     function doesPeriodGroupFitInRow(group, rowNumber, rows) {
@@ -233,7 +250,7 @@ var TimelineDataService = function($filter) {
         var loops = 0;
         do {
             colorGroupNumber = (colorGroupNumber == 10) ? 1 : colorGroupNumber + 1;
-        } while (doAdjacentPeriodGroupsHaveColorGroup(group, colorGroupNumber, rows) && loops++ < 10)
+        } while (doAdjacentPeriodGroupsHaveColorGroup(group, colorGroupNumber, rows) && loops++ < 10);
 
         return colorGroupNumber;
     }
