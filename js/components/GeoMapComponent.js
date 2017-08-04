@@ -121,9 +121,7 @@ function GeoMapController($scope, $location, $routeParams, $http, $sce, chronont
             this._div.innerHTML +=  (props ?
                 "<span><b>" + props.name + "</b></span>" +
                 "<br><span><i>" + props.relation + "</i></span>" +
-                "<br><span>Gazetteer ID: " + props.id + "</span>" +
-                "<br><hr class=\"linehr\"><span>parent geometry: " + props.parentGeometry.name + "</span>" +
-                "<br><span>parent ID: " + props.parentGeometry.id + "</span>"
+                "<br><span>Gazetteer ID: " + props.id + "</span>"
                 : "<span>no geometry selected</span>");
             if (this._div.innerHTML.indexOf("geom origin") != -1) {
                 this._div.innerHTML = this._div.innerHTML.replace("<hr class=\"linehr\">","");
