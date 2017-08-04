@@ -381,9 +381,7 @@
     </div>
 
     <div class="row form-group">
-        <h4>{{ "ui_relations" | transl8 }} - <a href="https://gazetteer.dainst.org"
-                                                target="_blank">iDAI.gazetteer</a>
-        </h4>
+        <h4>Geo-{{ "ui_relations" | transl8 }}</h4>
 
         <div class="col-md-12" ng-init="relationIndex = $index"
              ng-repeat="relationName in $ctrl.gazetteerRelationTypes">
@@ -415,6 +413,7 @@
                                  result-field="result"
                                  title-field="gazId + ': ' + prefName.title"
                                  selected-item="$ctrl.pickedLocations[relationName]"></idai-picker>
+                    <!--<geopicker on-place-selected="$ctrl.pickedLocations[relationName].push(place)"></geopicker>-->
 				</div>
 			</div>
         </div>
