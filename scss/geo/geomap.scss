@@ -1,12 +1,19 @@
 @charset "utf-8";
 @import url(https://fonts.googleapis.com/css?family=Roboto:400,100italic,900italic,900,700italic,700,500italic,500,400italic,300italic,300,100);
-.mapheight {
+.map-container {
   height: 500px !important;
+   position: relative;
+   &.empty {
+       filter: grayscale(100%);
+   }
 }
 .maploading {
+  position: absolute;
+  width: 100%;
   text-align:center;
-  margin: 180px;
+  margin-top: 180px;
   font-size: 40px;
+  z-index: 3;
 
   .glyphicon {
       animation-name: spin;
@@ -16,10 +23,13 @@
   }
 }
 .mapempty {
+  position: absolute;
+  width: 100%;
   text-align: center;
   height: 450px;
   padding-top: 190px;
   font-size: 20px;
+  z-index: 3;
 }
 .legend {
   line-height: 14px;

@@ -1,8 +1,9 @@
-<div class="well well-sm timeline-container-small mapheight">
+<div class="well well-sm timeline-container-small map-container"
+        ng-class="{'empty': $ctrl.loading || $ctrl.empty}">
+    <div ng-show="$ctrl.loading" class="maploading">
+        <span class="glyphicon glyphicon-hourglass"></span>
+    </div>
+    <h1 ng-show="$ctrl.empty" class="mapempty">{{ 'no_map_data' | transl8 }}</h1>
     <div id="map" style="height:480px;">
-        <div ng-show="$ctrl.loading" class='maploading'>
-            <span class="glyphicon glyphicon-hourglass"></span>
-        </div>
-        <h1 ng-show="$ctrl.empty" class='mapempty'>{{ 'no_map_data' | transl8 }}</h1>
     </div>
 </div>

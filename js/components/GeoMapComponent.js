@@ -8,6 +8,7 @@ function GeoMapController($scope, $location, $routeParams, $http, $sce, chronont
 
     this.$onChanges = function(changes) {
         if (changes.selectedPeriodId && _this.selectedPeriodId) {
+            this.initMap();
             _this.loadData();
         }
     };
@@ -18,15 +19,42 @@ function GeoMapController($scope, $location, $routeParams, $http, $sce, chronont
         }).success(function(geojson){
             _this.loading = false;
             _this.geojson = geojson;
-            if (geojson.features.length > 0) _this.initMap(geojson);
+            if (geojson.features.length > 0) _this.initPlaces(geojson);
             else _this.empty = true;
         });
     };
 
-    this.initMap = function(geojson) {
+    this.initMap = function() {
 
-        // clear map div
-        document.getElementById("map").innerHTML = "";
+        // init map
+        _this.mapY = 0;
+        _this.mapX = 0;
+        _this.markersArea = 0;
+        _this.mapZoom = 1;
+        _this.baseLayer = L.tileLayer('http://{s}.tiles.mapbox.com/v3/isawnyu.map-knmctlkh/{z}/{x}/{y}.png', {
+            maxZoom: 15,
+            attribution: "<a href='javascript:alert(\"Tiles (c) MapBox (http://mapbox.com), Data (c) OpenStreetMap (http://www.openstreetmap.org) and contributors, CC-BY-SA, Tiles and Data (c) 2013 AWMC (http://www.awmc.unc.edu) CC-BY-NC 3.0 (http://creativecommons.org/licenses/by-nc/3.0/deed.en_US)\");'>Attribution</a>"
+        });
+        _this.map = L.map("map", {
+            fullscreenControl: {pseudoFullscreen: false},
+            center: [_this.mapY, _this.mapX],
+            zoom: _this.mapZoom,
+            layers: [_this.baseLayer]
+        });
+        // disable interaction
+        _this.map.dragging.disable();
+        _this.map.touchZoom.disable();
+        _this.map.doubleClickZoom.disable();
+        _this.map.scrollWheelZoom.disable();
+        _this.map.boxZoom.disable();
+        _this.map.keyboard.disable();
+        if (_this.map.tap) _this.map.tap.disable();
+        document.getElementById('map').style.cursor = 'default';
+
+    };
+
+    this.initPlaces = function(geojson) {
+
         // set styles and stle params
         var colors = {};
         colors.spatiallyPartOfRegion = "#ff0000";
@@ -54,21 +82,7 @@ function GeoMapController($scope, $location, $routeParams, $http, $sce, chronont
             opacity: styleattr.opacity,
             fillOpacity: styleattr.fillOpacity
         };
-        // init map
-        _this.mapY = 0;
-        _this.mapX = 0;
-        _this.markersArea = 0;
-        _this.mapZoom = 1;
-        _this.baseLayer = L.tileLayer('http://{s}.tiles.mapbox.com/v3/isawnyu.map-knmctlkh/{z}/{x}/{y}.png', {
-            maxZoom: 15,
-            attribution: "<a href='javascript:alert(\"Tiles (c) MapBox (http://mapbox.com), Data (c) OpenStreetMap (http://www.openstreetmap.org) and contributors, CC-BY-SA, Tiles and Data (c) 2013 AWMC (http://www.awmc.unc.edu) CC-BY-NC 3.0 (http://creativecommons.org/licenses/by-nc/3.0/deed.en_US)\");'>Attribution</a>"
-        });
-        _this.map = L.map("map", {
-            fullscreenControl: {pseudoFullscreen: false},
-            center: [_this.mapY, _this.mapX],
-            zoom: _this.mapZoom,
-            layers: [_this.baseLayer]
-        });
+
         // add scale
         L.control.scale().addTo(_this.map);
         // add legend
@@ -153,7 +167,16 @@ function GeoMapController($scope, $location, $routeParams, $http, $sce, chronont
         // zoom to bounds
         _this.map.fitBounds(_this.marker.getBounds());
 
-    };
+        // enable interaction
+        _this.map.dragging.enable();
+        _this.map.touchZoom.enable();
+        _this.map.doubleClickZoom.enable();
+        _this.map.scrollWheelZoom.enable();
+        _this.map.boxZoom.enable();
+        _this.map.keyboard.enable();
+        if (_this.map.tap) _this.map.tap.enable();
+        document.getElementById('map').style.cursor='grab';
+    }
 
     this.onEachFeature = function(feature, layer) {
         layer.on({
