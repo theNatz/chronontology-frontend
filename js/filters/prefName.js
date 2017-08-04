@@ -42,6 +42,8 @@ angular.module('chronontology.filters')
 
 			var num = (typeof nu === 'string' && !isNaN(nu)) ? +nu : nu;
 
+			if (Math.abs(num) < 10000) return num.toString();
+
             if (language.currentLanguage()==COMPONENTS_GERMAN_LANG) {
                 return num.toLocaleString(COMPONENTS_GERMAN_LANG+"-DE");
             } else {
