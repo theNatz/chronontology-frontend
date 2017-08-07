@@ -32,7 +32,7 @@ angular.module('chronontology.filters')
 			}
 		}
 	}])
-	.filter('transl8Number2', ['language',function(language){
+	.filter('transl8Year', ['language',function(language){
 
         var filterFunction = function(nu) {
 
