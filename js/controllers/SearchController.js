@@ -49,8 +49,8 @@ angular.module('chronontology.controllers')
         if (!doc.related) {
             return '-';
         }
-		for (var i in chronontologySettings.gazetteerRelations) {
-			var relation = chronontologySettings.gazetteerRelations[i];
+		for (var i in chronontologySettings.gazetteerRelationTypes) {
+			var relation = chronontologySettings.gazetteerRelationTypes[i];
 			if (doc.resource[relation]) {
 				for (var j in doc.resource[relation]) {
 					var uri = doc.resource[relation][j];
