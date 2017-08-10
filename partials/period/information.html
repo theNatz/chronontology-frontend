@@ -26,8 +26,8 @@
 		{{ "temporal_"+boundary | transl8 }}
 		<span ng-if="timespan[boundary].at">
 			{{ timespan[boundary].at | transl8Year }}
-			<span ng-if="timespan[boundary].atPrecision">
-				({{ timespan[boundary].atPrecision }})
+			<span ng-if="timespan[boundary].isImprecise">
+				(ca.)
 			</span>
 		</span>
 		<span ng-if="timespan[boundary].notBefore">{{ "temporal_notBefore" | transl8 }} {{ timespan[boundary].notBefore }}</span>

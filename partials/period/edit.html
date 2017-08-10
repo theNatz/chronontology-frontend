@@ -247,11 +247,13 @@
 
 
                         <div class="col-md-6">
+                            <br/>
                             {{ "temporal_at_precision" | transl8 }}:
-                            <input type="text"
-                                   class="form-control col-md-4"
-                                   placeholder="{{'ui_add_value' | transl8}}..."
-                                   ng-model="$ctrl.period.hasTimespan[timespanIndex].begin.atPrecision">
+                            <input type="checkbox"
+                                   name="toggleBeginIsImprecise"
+                                   value="{{$ctrl.period.hasTimespan[timespanIndex].begin.isImprecise}}"
+                                   ng-checked="$ctrl.period.hasTimespan[timespanIndex].begin.isImprecise"
+                                   ng-click="$ctrl.period.hasTimespan[timespanIndex].begin.isImprecise = !$ctrl.period.hasTimespan[timespanIndex].begin.isImprecise">
                         </div>
                     </div>
 
@@ -265,11 +267,13 @@
                         </div>
 
                         <div class="col-md-6">
+                            <br/>
                             {{ "temporal_at_precision" | transl8 }}:
-                            <input type="text"
-                                   class="form-control col-md-4"
-                                   placeholder="{{'ui_add_value' | transl8}}..."
-                                   ng-model="$ctrl.period.hasTimespan[timespanIndex].end.atPrecision">
+                            <input type="checkbox"
+                                   name="toggleEndIsImprecise"
+                                   value="{{$ctrl.period.hasTimespan[timespanIndex].end.isImprecise}}"
+                                   ng-checked="$ctrl.period.hasTimespan[timespanIndex].end.isImprecise"
+                                   ng-click="$ctrl.period.hasTimespan[timespanIndex].end.isImprecise = !$ctrl.period.hasTimespan[timespanIndex].end.isImprecise">
                         </div>
                     </div>
                 </div>

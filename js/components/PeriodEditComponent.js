@@ -134,11 +134,11 @@ angular.module('chronontology.components')
                     "calendar": null,
                     "begin": {
                         "at": null,
-                        "atPrecision": null
+                        "isImprecise": null
                     },
                     "end": {
                         "at": null,
-                        "atPrecision": null
+                        "isImprecise": null
                     }
                 };
 
