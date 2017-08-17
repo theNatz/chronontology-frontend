@@ -3,7 +3,7 @@ angular.module('chronontology.components')
 
         this.loadPlaces = function(bbox) {
             // should set to "/spi/place?bbox=" + bbox
-            $http.get("/spi/GetDummy?multi=true", {
+            $http.get("/spi/place?dummy=Feature&type=0", {
                 headers: { 'Authorization': undefined }
             }).success(function(geojson){
                 _this.places = geojson;
