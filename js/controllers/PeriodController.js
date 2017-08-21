@@ -32,9 +32,10 @@ angular.module('chronontology.controllers')
 //			'resource.relations.fallsWithin,resource.relations.contains,'+ // wird nicht verwendet
 			'resource.relations.follows,resource.relations.isFollowedBy';  // isFollowedBy ok
 
-        $http.get('/data/period/' + $routeParams.id).success( function(result) {
+        $http.get('/data/period/' + $routeParams.id).success(function(result) {
             $scope.document = result;
             $scope.period = result.resource;
+            $scope.hasValidTimespan = timelineDataService.validatePeriod($scope.document);
 
             $scope.updateCache();
 
@@ -206,8 +207,4 @@ angular.module('chronontology.controllers')
             });
     };
 
-    $scope.hasValidTimespan = function(period) {
-
-        return timelineDataService.validatePeriod(period);
-    };
 });
