@@ -25,12 +25,9 @@ angular.module('chronontology.controllers')
 	$scope.setupViewMode = function() {
         $scope.activeTab = 'info';
 		var relevantParts =
-			'resource.id,resource.names,resource.hasTimespan,'+            // ok
-//			'resource.relations.isSenseOf,resource.relations.hasSense,'+   // wird nicht verwendet
-			'resource.relations.isPartOf,resource.relations.hasPart,'+     // ok
-//			'resource.relations.isListedIn,resource.relations.lists,'+     // wird nicht verwendet
-//			'resource.relations.fallsWithin,resource.relations.contains,'+ // wird nicht verwendet
-			'resource.relations.follows,resource.relations.isFollowedBy';  // isFollowedBy ok
+			'resource.id,resource.names,resource.hasTimespan,'+
+			'resource.relations.isPartOf,resource.relations.hasPart,'+
+			'resource.relations.follows,resource.relations.isFollowedBy';
 
         $http.get('/data/period/' + $routeParams.id).success(function(result) {
             $scope.document = result;
