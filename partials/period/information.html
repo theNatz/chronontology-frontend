@@ -30,10 +30,39 @@
 				(ca.)
 			</span>
 		</span>
-		<span ng-if="timespan[boundary].notBefore">{{ "temporal_notBefore" | transl8 }} {{ timespan[boundary].notBefore }}</span>
-		<span ng-if="timespan[boundary].notAfter">{{ "temporal_notAfter" | transl8 }} {{ timespan[boundary].notAfter }}</span>
+		<span ng-if="timespan[boundary].notBefore">
+			({{ "temporal_notBefore" | transl8 }} {{ timespan[boundary].notBefore }})
+		</span>
+		<span ng-if="timespan[boundary].notAfter">
+			({{ "temporal_notAfter" | transl8 }} {{ timespan[boundary].notAfter }})
+		</span>
 		<br>
 	</span>
+</script>
+
+<script type="text/ng-template" id="/hasTimespan">
+	<dt>{{ "period_temporalExtent" | transl8 }}</dt>
+	<span ng-if="hasTimespan.ongoing">
+		<dd>{{ "period_ongoing" | transl8 }}</dd>
+		<br>
+	</span>
+	<dd ng-repeat="timespan in hasTimespan">
+		<span ng-if="timespan.timeOriginal">
+			Original text: {{ timespan.timeOriginal }}
+			<br>
+		</span>
+		<span ng-repeat="boundary in ['begin', 'end']" ng-include src="'/intervalBoundary'"></span>
+		<span ng-if="timespan.calendar">{{ "temporal_calendar" | transl8 }} {{ timespan.calendar }}<br></span>
+		<span ng-if="timespan.sourceOriginal">{{ "ui_source" | transl8 }} {{ timespan.sourceOriginal }}<br></span>
+		<span ng-if="timespan.sourceURL"><a ng-href="{{timespan.sourceURL}}">{{timespan.sourceURL}}</a><br></span>
+		<span ng-if="timespan.derivedFrom">
+			derived from:
+			<ul>
+				<li ng-repeat="periodId in timespan.derivedFrom" ng-include src="'/periodLink'"/>
+			</ul>
+		</span>
+	</dd>
+	<br>
 </script>
 
 
@@ -84,21 +113,9 @@
         <br>
     </span>
 
-    <span ng-if="$ctrl.period.hasTimespan">
-        <dt>{{ "period_temporalExtent" | transl8 }}</dt>
-        <span ng-if="$ctrl.period.ongoing">
-            <dd>{{ "period_ongoing" | transl8 }}</dd>
-            <br>
-        </span>
-        <dd ng-repeat="timespan in $ctrl.period.hasTimespan">
-            {{ timespan.timeOriginal }}
-            <br>
-            <span ng-repeat="boundary in ['begin', 'end']" ng-include src="'/intervalBoundary'"></span>
-            <span ng-if="timespan.calendar">{{ "temporal_calendar" | transl8 }} {{ timespan.calendar }}<br></span>
-            <span ng-if="timespan.sourceOriginal">{{ "ui_source" | transl8 }} {{ timespan.sourceOriginal }}<br></span>
-            <span ng-if="timespan.sourceURL"><a ng-href="{{timespan.sourceURL}}">{{timespan.sourceURL}}</a><br></span>
-        </dd>
-        <br>
+	<span ng-if="$ctrl.period.hasTimespan"
+		ng-init="hasTimespan = $ctrl.period.hasTimespan"
+		ng-include src="'/hasTimespan'">
     </span>
 
     <span ng-repeat="gazetteerRelation in $ctrl.gazetteerRelationTypes">
@@ -148,6 +165,11 @@
             </dd>
             <br>
         </span>
+    </span>
+
+	<span ng-if="$ctrl.document.derived.hasTimespan"
+		ng-init="hasTimespan = $ctrl.document.derived.hasTimespan"
+		ng-include src="'/hasTimespan'">
     </span>
 
 <span ng-if="$ctrl.document.derived.relations">
