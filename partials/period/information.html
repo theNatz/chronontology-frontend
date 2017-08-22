@@ -17,8 +17,12 @@
 
 <script type="text/ng-template" id="/periodLink">
 	<a ng-href="/period/{{periodId}}">{{ $ctrl.resourceCache[periodId].names | prefName }}</a>
-	({{ $ctrl.resourceCache[periodId].types.join(", ") }})
-	{{ $ctrl.resourceCache[periodId].provenance }}
+	<span ng-if="$ctrl.resourceCache[periodId].types.join(', ') != $ctrl.period.types.join(', ') ">
+		({{ $ctrl.resourceCache[periodId].types.join(", ") }})
+	</span>
+	<span ng-if="$ctrl.resourceCache[periodId].provenance != $ctrl.period.provenance ">
+		{{ $ctrl.resourceCache[periodId].provenance }}
+	</span>
 </script>
 
 <script type="text/ng-template" id="/intervalBoundary">
