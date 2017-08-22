@@ -10,7 +10,11 @@
         <div ng-if="mode == 'view'">
 
             <h2>{{ period.names | prefName }}
-                <small>{{ period.types.join(", ") }}</small>
+                <small>{{ period.types.join(", ") }}
+                    <span ng-if="(document|getRegion) != '-'">
+                        ({{document|getRegion}})
+                    </span>
+                </small>
                 <br/>
                 <small>http://chronontology.dainst.org/period/{{ document.resource.id }}</small>
             </h2>
