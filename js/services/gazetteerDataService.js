@@ -9,8 +9,8 @@ var GazetteerDataService = function($http, chronontologySettings) {
     this.getById = function(gazId, success) {
         $http.get(
             chronontologySettings.gazetteerBaseUri + '/doc/' + gazId + '.json'
-        ).success(function(result){
-            return success(result);
+        ).then(function successfn(result){
+            return success(result.data);
         });
     };
 

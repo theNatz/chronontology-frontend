@@ -4,9 +4,8 @@ angular.module('chronontology.filters')
 
     .filter('getRegion',['chronontologySettings', function(chronontologySettings) {
 
-        return function(doc) {
-
-            if (!doc.related) {
+        return function getRegionFunction(doc) {
+            if (angular.isUndefined(doc) || !doc.related) {
                 return '-';
             }
     		for (var i in chronontologySettings.gazetteerRelationTypes) {

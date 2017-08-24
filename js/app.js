@@ -74,7 +74,7 @@ angular.module('chronontology', [
         'provenance', 'types'
     ]
 }).constant('componentsSettings', {
-    transl8Uri: 'https://arachne.dainst.org/transl8/translation/jsonp?application=chronontology_frontend&application=shared&lang={LANG}&callback=JSON_CALLBACK',
+    transl8Uri: 'https://arachne.dainst.org/transl8/translation/jsonp?application=chronontology_frontend&application=shared&lang={LANG}',
     // searchUri: 'https://arachne.dainst.org/data/suggest?q=',
     mailTo: 'idai.chronontology@dainst.org'
 }).run(['$rootScope', function($rootScope) {

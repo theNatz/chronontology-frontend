@@ -5,8 +5,8 @@ angular.module('chronontology.components')
             // should set to "/spi/place?bbox=" + bbox
             $http.get("/spi/place?dummy=Feature&type=0", {
                 headers: { 'Authorization': undefined }
-            }).success(function(geojson){
-                _this.places = geojson;
+            }).then(function success(geojson){
+                _this.places = geojson.data;
                 // init map
             });
         };

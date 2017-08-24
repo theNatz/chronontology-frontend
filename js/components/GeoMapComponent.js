@@ -16,11 +16,13 @@ function GeoMapController($scope, $location, $routeParams, $http, $sce, chronont
     this.loadData = function() {
         $http.get("/spi/place?periodid=" + _this.selectedPeriodId, {
                 headers: { 'Authorization': undefined }
-        }).success(function(geojson){
+        }).then(function success(geojson){
             _this.loading = false;
-            _this.geojson = geojson;
-            if (geojson.features.length > 0) _this.initPlaces(geojson);
+            _this.geojson = geojson.data;
+            if (geojson.data.features.length > 0) _this.initPlaces(geojson.data);
             else _this.empty = true;
+        }, function error(err) {
+            console.warn(err) // TODO show error message
         });
     };
 

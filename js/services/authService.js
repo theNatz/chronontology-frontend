@@ -21,19 +21,23 @@ angular.module('chronontology.services')
             var encoded = $filter('base64')(username + ':' + password);
 
             $http.get('/data/user/login', { headers: { 'Authorization': 'Basic ' + encoded } })
-                .success(function(response) {
-                    $http.defaults.headers.common.Authorization = 'Basic ' + encoded;
-                    $cookieStore.put('chronontology-authdata', encoded);
-                    $cookieStore.put('chronontology-user', { username: username, groupID: response.groupID });
+                .then(
+                    function success(r) {
+                        var response = r.data;
+                        $http.defaults.headers.common.Authorization = 'Basic ' + encoded;
+                        $cookieStore.put('chronontology-authdata', encoded);
+                        $cookieStore.put('chronontology-user', { username: username, groupID: response.groupID });
 
-                    if (response.datasetGroups !== undefined) {
-                        $cookieStore.put('chronontology-datasetgroups', response.datasetGroups);
+                        if (response.datasetGroups !== undefined) {
+                            $cookieStore.put('chronontology-datasetgroups', response.datasetGroups);
+                        }
+
+                        successMethod();
+                    },
+                    function error(response) {
+                        errorMethod(response.data);
                     }
-
-                    successMethod();
-                }).error(function(response) {
-                    errorMethod(response);
-                });
+                );
         },
 
         clearCredentials: function () {

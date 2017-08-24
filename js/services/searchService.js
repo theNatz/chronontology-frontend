@@ -21,11 +21,15 @@ var SearchService = function($http, $q) {
 		}
 
 		var uri = '/data/period/?q=' + query.q + from + size + facetlist + fq;
-		$http.get(uri).success(function(result) {
-			deferred.resolve(result);
-		}).error(function() {
-			deferred.reject();
-		});
+		$http.get(uri).then(
+			function success(result) {
+				deferred.resolve(result.data);
+			},
+			function error(err) {
+				console.warn(err);
+				deferred.reject();
+			}
+		);
 
 		return deferred.promise;
 	}

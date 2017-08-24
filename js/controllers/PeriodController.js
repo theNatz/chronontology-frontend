@@ -29,19 +29,21 @@ angular.module('chronontology.controllers')
 			'resource.relations.isPartOf,resource.relations.hasPart,'+
 			'resource.relations.follows,resource.relations.isFollowedBy';
 
-        $http.get('/data/period/' + $routeParams.id).success(function(result) {
-            $scope.document = result;
-            $scope.period = result.resource;
+        $http.get('/data/period/' + $routeParams.id).then(function success(result) {
+            $scope.document = result.data;
+            $scope.period = result.data.resource;
             $scope.hasValidTimespan = timelineDataService.validatePeriod($scope.document);
 
             $scope.updateCache();
 
             var geoFrameUrl = chronontologySettings.geoFrameBaseUri + "?uri=" + chronontologySettings.baseUri;
-            $scope.geoFrameUrl = $sce.trustAsResourceUrl(geoFrameUrl + "/period/" + result.resource.id);
+            $scope.geoFrameUrl = $sce.trustAsResourceUrl(geoFrameUrl + "/period/" + result.data.resource.id);
 
-            $http.get('/data/period/?size=10000&q=resource.provenance:' + $scope.period.provenance + '&part='+relevantParts).success( function(result) {
-                $scope.provenancePeriods = result.results;
-            });
+            $http.get('/data/period/?size=10000&q=resource.provenance:' + $scope.period.provenance + '&part='+relevantParts).then(
+                function success(result) {
+                    $scope.provenancePeriods = result.data.results;
+                }
+            );
         });
     };
 
@@ -66,7 +68,6 @@ angular.module('chronontology.controllers')
             var currentType = $scope.combinedRelationTypes[i];
 
             // Check cache for periods.
-
             if(currentType in $scope.period.relations
                 && $scope.period.relations[currentType].constructor === Array) { // hack "includes" key is present in every generic javascript object
                 $scope.period.relations[currentType].forEach(function(periodId) {
@@ -77,8 +78,9 @@ angular.module('chronontology.controllers')
                         else{
                             (function (periodId) {
                                 console.log("Relation " + periodId + " not appended to document, retrieving...");
-                                $http.get('/data/period/' + periodId).success(function (result) {
-                                    $scope.resourceCache[periodId] = result.resource;
+                                $http.get('/data/period/' + periodId).then(
+                                    function success(result) {
+                                    $scope.resourceCache[periodId] = result.data.resource;
                                 })
                             })(periodId)
                         }
@@ -97,8 +99,8 @@ angular.module('chronontology.controllers')
                         else {
                             (function (periodId) {
                                 console.log("Derived relation " + periodId + " not appended to document, retrieving...");
-                                $http.get('/data/period/' + periodId).success(function (result) {
-                                    $scope.resourceCache[periodId] = result.resource;
+                                $http.get('/data/period/' + periodId).then(function success(result) {
+                                    $scope.resourceCache[periodId] = result.data.resource;
                                 })
                             })(periodId)
                         }
@@ -170,16 +172,18 @@ angular.module('chronontology.controllers')
         $scope.period = angular.copy(period);
         $scope.document.resource = $scope.period;
         $http.put("/data/period/" + $scope.period.id, JSON.stringify($scope.document))
-			.success(function (data) {
-				console.log("success");
-				console.dir(data);
+			.then(
+			    function success(data) {
+				    console.log("success");
+				    console.dir(data.data);
 
-				$scope.activeTab = 'info';
-		})
-			.error(function (data) {
-                console.log("error");
-                console.dir(data);
-		});
+				    $scope.activeTab = 'info';
+		        },
+                function error(data) {
+                    console.log("error");
+                    console.dir(data);
+                }
+		   );
     };
 
     $scope.saveCreatedPeriod = function(period) {
@@ -192,16 +196,18 @@ angular.module('chronontology.controllers')
         $scope.document.resource = $scope.period;
 
         $http.post("/data/period/", JSON.stringify($scope.document))
-            .success(function (data) {
-                console.log("success");
-                console.dir(data);
+            .then(
+                function success(data) {
+                    console.log("success");
+                    console.dir(data.data);
 
-                $location.path('/period/' + data.resource.id)
-            })
-            .error(function (data) {
-                console.log("error");
-                console.dir(data);
-            });
+                    $location.path('/period/' + data.data.resource.id)
+                },
+                function error(data) {
+                    console.log("error");
+                    console.dir(data);
+                }
+            );
     };
 
 });
