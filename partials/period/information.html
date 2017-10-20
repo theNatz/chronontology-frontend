@@ -144,47 +144,44 @@
 
 <dl class="dl-horizontal">
 
-    <h5>{{ "ui_relations" | transl8 }}</h5>
+	<span ng-if="$ctrl.hasRelationsInResource($ctrl.period)">
+    	<h5>{{ "ui_relations" | transl8 }}</h5>
+		<span ng-repeat="relation in $ctrl.internalRelationTypes" ng-include src="'/explicitRelations'"></span>
+		<span ng-repeat="relation in $ctrl.allenRelationTypes" ng-include src="'/explicitRelations'"></span>
+	</span>
 
-	<span ng-repeat="relation in $ctrl.internalRelationTypes" ng-include src="'/explicitRelations'"></span>
-
-	<span ng-repeat="relation in $ctrl.allenRelationTypes" ng-include src="'/explicitRelations'"></span>
-
-    <h4>{{ "ui_derivedInfo" | transl8 }}</h4>
-
-    <span ng-repeat="gazetteerRelation in $ctrl.gazetteerRelationTypes">
-        <span ng-if="$ctrl.document.derived[gazetteerRelation]">
-            <dt>{{ "relation_"+gazetteerRelation | transl8 }}</dt>
-            <dd ng-repeat="regionUri in $ctrl.document.derived[gazetteerRelation]">
-				<span ng-if="$ctrl.resourceCache[regionUri]">
-					<a ng-href="{{regionUri}}" target="_blank">
-						{{$ctrl.resourceCache[regionUri].prefName.title}} <span class="glyphicon glyphicon-new-window"></span>
-					</a>
-				</span>
-				<span ng-if="!$ctrl.resourceCache[regionUri]">
-					<a ng-href="{{regionUri}}" target="_blank">
-						{{regionUri}} <span class="glyphicon glyphicon-new-window"></span>
-					</a>
-				</span>
-            </dd>
-            <br>
-        </span>
-    </span>
-
-	<span ng-if="$ctrl.document.derived.hasTimespan"
-		ng-init="hasTimespan = $ctrl.document.derived.hasTimespan"
-		ng-include src="'/hasTimespan'">
-    </span>
-
-<span ng-if="$ctrl.document.derived.relations">
-
-    <h5>{{ "ui_relations" | transl8 }}</h5>
-
-	<span ng-repeat="relation in $ctrl.internalRelationTypes" ng-include src="'/derivedRelations'"></span>
-
-	<span ng-repeat="relation in $ctrl.allenRelationTypes" ng-include src="'/derivedRelations'"></span>
-
-</span>
+	<span ng-if="$ctrl.hasDerivedInformation($ctrl.document)">
+    	<h4>{{ "ui_derivedInfo" | transl8 }}</h4>
+		<span ng-if="$ctrl.hasGazetteerRelationsInDerived($ctrl.document)">
+    		<span ng-repeat="gazetteerRelation in $ctrl.gazetteerRelationTypes">
+        		<span ng-if="$ctrl.document.derived[gazetteerRelation]">
+            		<dt>{{ "relation_"+gazetteerRelation | transl8 }}</dt>
+            		<dd ng-repeat="regionUri in $ctrl.document.derived[gazetteerRelation]">
+						<span ng-if="$ctrl.resourceCache[regionUri]">
+							<a ng-href="{{regionUri}}" target="_blank">
+								{{$ctrl.resourceCache[regionUri].prefName.title}} <span class="glyphicon glyphicon-new-window"></span>
+							</a>
+						</span>
+						<span ng-if="!$ctrl.resourceCache[regionUri]">
+							<a ng-href="{{regionUri}}" target="_blank">
+								{{regionUri}} <span class="glyphicon glyphicon-new-window"></span>
+							</a>
+						</span>
+            		</dd>
+            		<br>
+        		</span>
+    		</span>
+		</span>
+		<span ng-if="$ctrl.hasTimespanInDerived($ctrl.document)"
+			ng-init="hasTimespan = $ctrl.document.derived.hasTimespan"
+			ng-include src="'/hasTimespan'">
+    	</span>
+		<span ng-if="$ctrl.hasRelationsInDerived($ctrl.document)">
+    		<h5>{{ "ui_relations" | transl8 }}</h5>
+			<span ng-repeat="relation in $ctrl.internalRelationTypes" ng-include src="'/derivedRelations'"></span>
+			<span ng-repeat="relation in $ctrl.allenRelationTypes" ng-include src="'/derivedRelations'"></span>
+		</span>
+	</span>
 
 </dl>
 
