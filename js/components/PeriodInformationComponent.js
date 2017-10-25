@@ -10,7 +10,9 @@ angular.module('chronontology.components')
             document: '<',
             resourceCache: '<'
         },
-        controller: function (chronontologySettings) {
+        controller: function (authService, chronontologySettings) {
+
+            this.authService = authService;
 
             this.hasRelationsInResource = function(period){
                 return period.hasOwnProperty('relations');
