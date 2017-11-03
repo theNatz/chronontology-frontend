@@ -2,12 +2,11 @@ angular.module('chronontology.components')
 .controller('GeoPickerModalController', function($uibModalInstance) {
 
         this.loadPlaces = function(bbox) {
-            // should set to "/spi/place?bbox=" + bbox
-            $http.get("/spi/place?dummy=Feature&type=0", {
+            $http.get("/spi/place?bbox=50.082665;8.161050;50.082665;8.371850;49.903887;8.161050;49.903887;8.371850&type=getty", {
                 headers: { 'Authorization': undefined }
             }).then(function success(geojson){
+                 console.log(geojson);
                 _this.places = geojson.data;
-                // init map
             });
         };
 
