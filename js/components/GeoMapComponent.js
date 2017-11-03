@@ -95,14 +95,14 @@ function GeoMapController($scope, $location, $routeParams, $http, $sce, chronont
             var stopB = false;
             var stopC = false;
             for (var feature in geojson.features) {
-                if (geojson.features[feature].properties.relation) {
-                    if (geojson.features[feature].properties.relation.indexOf("spatiallyPartOfRegion") !== -1 && !stopA) {
+                if (geojson.features[feature].properties.gazetteerrelation) {
+                    if (geojson.features[feature].properties.gazetteerrelation.indexOf("spatiallyPartOfRegion") !== -1 && !stopA) {
                         div.innerHTML += '<box style="border-color:' + colors.spatiallyPartOfRegion + '"></box><content>' + $filter('transl8')('relation_spatiallyPartOfRegion') + '</content>';
                         stopA = true;
-                    } else if (geojson.features[feature].properties.relation.indexOf("isNamedAfter") !== -1 && !stopB) {
+                    } else if (geojson.features[feature].properties.gazetteerrelation.indexOf("isNamedAfter") !== -1 && !stopB) {
                         div.innerHTML += '<box style="border-color:' + colors.isNamedAfter + '"></box><content>' + $filter('transl8')('relation_isNamedAfter') + '</content>';
                         stopB = true;
-                    } else if (geojson.features[feature].properties.relation.indexOf("hasCoreArea") !== -1 && !stopC) {
+                    } else if (geojson.features[feature].properties.gazetteerrelation.indexOf("hasCoreArea") !== -1 && !stopC) {
                         div.innerHTML += '<box style="border-color:' + colors.hasCoreArea + '"></box><content>' + $filter('transl8')('relation_hasCoreArea') + '</content>';
                         stopC = true;
                     }
@@ -121,15 +121,10 @@ function GeoMapController($scope, $location, $routeParams, $http, $sce, chronont
         _this.infoLegend.update = function (props) {
             this._div.innerHTML = "<h4>Geometry Information</h4>";
             this._div.innerHTML +=  (props ?
-                "<span><b>" + props.name + "</b></span>" +
-                "<br><span><i>" + props.relation + "</i></span>" +
-                "<br><span>Gazetteer ID: " + props.id + "</span>"
+                "<span><b>" + props.names.prefName.name + "</b></span>" +
+                "<br><span><i>" + props.gazetteerrelation + "</i></span>" +
+                "<br><span>" + props.gazetteertype + ": " + props.gazetteerid + "</span>"
                 : "<span>no geometry selected</span>");
-            if (this._div.innerHTML.indexOf("geom origin") != -1) {
-                this._div.innerHTML = this._div.innerHTML.replace("<hr class=\"linehr\">","");
-                this._div.innerHTML = this._div.innerHTML.replace("<span>parent geometry: geom origin</span>","");
-                this._div.innerHTML = this._div.innerHTML.replace("<br><span>parent ID: null</span>","");
-            }
             this._div.innerHTML = this._div.innerHTML.replace("spatiallyPartOfRegion", $filter('transl8')('relation_spatiallyPartOfRegion'));
             this._div.innerHTML = this._div.innerHTML.replace("isNamedAfter", $filter('transl8')('relation_isNamedAfter'));
             this._div.innerHTML = this._div.innerHTML.replace("hasCoreArea", $filter('transl8')('relation_hasCoreArea'));
@@ -139,11 +134,11 @@ function GeoMapController($scope, $location, $routeParams, $http, $sce, chronont
         _this.marker = L.geoJson(geojson, {
           onEachFeature: _this.onEachFeature,
           style: function (feature, latlng) {
-              if (feature.properties.relation === "spatiallyPartOfRegion") {
+              if (feature.properties.gazetteerrelation === "spatiallyPartOfRegion") {
                 return spatiallyPartOfRegion;
-              } else if (feature.properties.relation === "isNamedAfter") {
+              } else if (feature.properties.gazetteerrelation === "isNamedAfter") {
                 return isNamedAfter;
-              } else if (feature.properties.relation === "hasCoreArea") {
+              } else if (feature.properties.gazetteerrelation === "hasCoreArea") {
                 return hasCoreArea;
               } else {
                 return spatiallyPartOfRegion;
