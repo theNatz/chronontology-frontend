@@ -34,6 +34,7 @@ var jsDeps = [
     paths.lib + 'leaflet/dist/leaflet.js',
     paths.lib + 'leaflet-fullscreen/dist/Leaflet.fullscreen.min.js',
     paths.lib + 'leaflet.markercluster/dist/leaflet.markercluster.js',
+    paths.lib + 'leaflet-draw/dist/leaflet.draw.js',
     paths.lib + 'turf/turf.min.js',
     paths.lib + 'angular/angular.min.js',
     paths.lib + 'angular-route/angular-route.min.js',
