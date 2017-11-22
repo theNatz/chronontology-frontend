@@ -6,18 +6,15 @@ function GeoSearchResultsController($scope, $location, $routeParams, $http, $sce
     _this.loading = false;
     _this.empty = false;
 
-    this.$onChanges = function(changes) {
-        if (changes.selectedPeriodId && _this.selectedPeriodId) {
-            this.initMap();
-        }
+    this.$onChanges = function() {
+        this.initMap();
+        this.loadData();
     };
 
-    this.loadData = function(upperright, upperleft, lowerleft, lowerright, e) {
-        var bbox = upperleft + ";" + lowerleft + ";" + upperright + ";" + lowerright;
-        console.log("http://ls-dev.i3mainz.hs-mainz.de/spi/place?bbox="+bbox+"&type=getty");
+    this.loadData = function() {
         _this.loading = true;
         _this.empty = true;
-        $http.get("/spi/place?bbox="+bbox+"&type=getty", {
+        $http.get(_this.datasource, {
                 headers: { 'Authorization': undefined }
         }).then(function success(geojson){
             _this.loading = false;
@@ -51,61 +48,6 @@ function GeoSearchResultsController($scope, $location, $routeParams, $http, $sce
         });
         // add scale
         L.control.scale().addTo(_this.map);
-        // add draw control
-		_this.drawnItems = new L.FeatureGroup();
-		L.drawLocal.draw.toolbar.buttons.rectangle = 'Draw a boundingbox for selection';
-		_this.drawControl = new L.Control.Draw({
-			position: 'topleft',
-			draw: {
-				polyline: false,
-				polygon: false,
-				circle: false,
-                circlemarker: false,
-				marker: false,
-				rectangle: {
-					metric: true,
-					shapeOptions: {
-						color: '#0000FF'
-					}
-				}
-			},
-			edit: {
-				featureGroup: _this.drawnItems,
-				remove: false,
-				edit: false
-			}
-		});
-		_this.map.addControl(_this.drawControl);
-        // add bbox action
-        _this.map.on('draw:created', function (e) {
-            if (_this.markers) {
-                _this.map.removeLayer(_this.markers);
-            }
-            if (e.layer._latlngs) {
-                var maxAreaSize = 25000;
-                var upperright = e.layer._latlngs[0].lat + ";" + e.layer._latlngs[0].lng;
-    			var upperleft = e.layer._latlngs[1].lat + ";" + e.layer._latlngs[1].lng;
-    			var lowerleft = e.layer._latlngs[2].lat + ";" + e.layer._latlngs[2].lng;
-    			var lowerright = e.layer._latlngs[3].lat + ";" + e.layer._latlngs[3].lng;
-    			var x = ((e.layer._latlngs[0].lng) + (e.layer._latlngs[3].lng)) / 2;
-    			var y = ((e.layer._latlngs[0].lat) + (e.layer._latlngs[2].lat)) / 2;
-    			var area = (LGeo.area(e.layer) / 1000000).toFixed(2);
-    			var currentZoom = _this.map.getZoom();
-    			if (area < maxAreaSize) {
-                    _this.loadData(upperright, upperleft, lowerleft, lowerright, e);
-    				setTimeout(function () {
-    					_this.map.setView([y, x], 8);
-    				}, 1);
-    			} else {
-                    alert("selected area is too big: " + area + " km2");
-    				setTimeout(function () {
-    					_this.map.setView([y, x], currentZoom);
-    				}, 1);
-    			}
-    		} else {
-    			console.log("latlng=" + e.layer._latlng.lat + ";" + e.layer._latlng.lng);
-    		}
-    	});
     };
 
     this.initPlaces = function(geojson) {
@@ -151,7 +93,7 @@ angular.module('chronontology.components')
     .component('geosearchresults',{
         templateUrl: '../../partials/geo/searchResults.html',
         bindings: {
-            selectedPeriodId: '<'
+            datasource: '@datasource'
         },
         controller: GeoSearchResultsController
     });
