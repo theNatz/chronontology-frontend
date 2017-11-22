@@ -13,6 +13,13 @@
        filter: grayscale(100%);
    }
 }
+.map3-container {
+  height: 500px !important;
+   position: relative;
+   &.empty {
+       filter: grayscale(100%);
+   }
+}
 .maploading {
   position: absolute;
   width: 100%;
