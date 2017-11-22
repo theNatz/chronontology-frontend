@@ -6,18 +6,15 @@ function GeoSearchController($scope, $location, $routeParams, $http, $sce, chron
     _this.loading = false;
     _this.empty = false;
 
-    this.$onChanges = function(changes) {
-        if (changes.selectedPeriodId && _this.selectedPeriodId) {
-            this.initMap();
-        }
+    this.$onChanges = function() {
+        this.initMap();
     };
 
     this.loadData = function(upperright, upperleft, lowerleft, lowerright, e) {
-        var bbox = upperleft + ";" + lowerleft + ";" + upperright + ";" + lowerright;
-        console.log("http://ls-dev.i3mainz.hs-mainz.de/spi/place?bbox="+bbox+"&type=getty");
         _this.loading = true;
         _this.empty = true;
-        $http.get("/spi/place?bbox="+bbox+"&type=getty", {
+        var bbox = upperleft + ";" + lowerleft + ";" + upperright + ";" + lowerright;
+        $http.get("/spi/place?bbox="+bbox+"&type="+_this.datasource, {
                 headers: { 'Authorization': undefined }
         }).then(function success(geojson){
             _this.loading = false;
@@ -151,7 +148,7 @@ angular.module('chronontology.components')
     .component('geosearch',{
         templateUrl: '../../partials/geo/search.html',
         bindings: {
-            selectedPeriodId: '<'
+            datasource: '@datasource'
         },
         controller: GeoSearchController
     });
