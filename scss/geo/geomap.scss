@@ -27,6 +27,12 @@
        filter: grayscale(100%);
    }
 }
+table.widget {
+    width: 100%;
+}
+th.widget, td.widget {
+    border: 1px solid black;
+}
 .maploading {
   position: absolute;
   width: 100%;
