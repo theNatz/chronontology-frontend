@@ -115,10 +115,11 @@ function GeoSearchController($scope, $location, $routeParams, $http, $sce, chron
 		_this.markers = L.markerClusterGroup();
 
         // add markers and polygons
+        _this.orangeBowlIcon = L.icon({iconUrl: 'img/Icone_Boule_Orange.png', iconSize: [30, 30], iconAnchor: [15, 15]}),
         _this.marker = L.geoJson(geojson, {
           onEachFeature: _this.onEachFeature,
           pointToLayer: function (feature, latlng) {
-              return L.circleMarker(latlng, {radius: 10, fillColor: "blue", color: "blue", weight: 1, opacity: 1, fillOpacity: 1});
+              return L.marker(latlng, {icon: _this.orangeBowlIcon});
             }
         });
         _this.markers.addLayer(_this.marker);
