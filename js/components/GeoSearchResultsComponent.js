@@ -19,9 +19,14 @@ function GeoSearchResultsController($scope, $location, $routeParams, $http, $sce
         }).then(function success(geojson){
             _this.loading = false;
             _this.geojson = geojson.data;
-            if (geojson.data.features.length > 0) {
+            if (geojson.data.geometry) {
                 _this.empty = false;
                 _this.initPlaces(geojson.data);
+            } else if (geojson.data.features) {
+                if (geojson.data.features.length > 0) {
+                    _this.empty = false;
+                    _this.initPlaces(geojson.data);
+                }
             } else {
                 _this.empty = true;
             }
