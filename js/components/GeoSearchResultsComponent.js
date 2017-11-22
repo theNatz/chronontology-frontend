@@ -61,12 +61,25 @@ function GeoSearchResultsController($scope, $location, $routeParams, $http, $sce
         _this.marker = L.geoJson(geojson, {
           onEachFeature: _this.onEachFeature,
           pointToLayer: function (feature, latlng) {
-              return L.marker(latlng, {icon: _this.orangeBowlIcon});
+              return L.marker(latlng, {icon: _this.orangeBowlIcon, name: feature.properties.names.prefName.name});
             }
         });
         _this.markers.addLayer(_this.marker);
         // add marker as layer
         _this.map.addLayer(_this.markers);
+        // init search
+        _this.controlSearch = new L.Control.Search({
+    		position:'topleft',
+    		layer: _this.markers,
+            initial: false,
+            propertyName: 'name',
+    		marker: false,
+            zoom: 13
+    	});
+        _this.controlSearch.on('search:locationfound', function(e) {
+    		e.layer.openPopup();
+    	});
+        _this.map.addControl(_this.controlSearch);
         // calc layer center
         _this.mapY = _this.marker.getBounds().getCenter().lat;
         _this.mapX = _this.marker.getBounds().getCenter().lng;
