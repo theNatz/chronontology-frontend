@@ -46,29 +46,34 @@ function GeoSearchResultsListController($scope, $location, $routeParams, $http, 
         } else {
             html += "<p><i>"+geojson.features.length+" Ergebnisse</i></p>";
         }
-        html += "<table class='widget'>";
-        html += "<thead class='widget'>";
-        html += "<tr class='widget'>";
-        html += "<th class='widget'>prefName</th>";
+        html += "<div class='table-wrapper'>";
+        html += "<table class='widget' id='searchresultlist'>";
+        html += "<thead>";
+        html += "<tr>";
         if (mode==="q") {
-            html += "<th class='widget'>n.lev.</th>";
+            html += "<th>prefName</th>";
+            html += "<th data-sort-default>n.lev.</th>";
+        } else {
+            html += "<th data-sort-default>prefName</th>";
         }
-        html += "<th class='widget'>URL</th>";
+        html += "<th>URL</th>";
         html += "</tr>";
         html += "</thead>";
-        html += "<tbody class='widget'>";
+        html += "<tbody>";
         for (var item in geojson.features) {
-            html += "<tr class='widget'>";
-            html += "<td class='widget'>"+geojson.features[item].properties.names.prefName.name+"</td>";
+            html += "<tr>";
+            html += "<td >"+geojson.features[item].properties.names.prefName.name+"</td>";
             if (mode==="q") {
-                html += "<td class='widget'>"+geojson.features[item].properties.similarity.normalizedlevenshtein+"</td>";
+                html += "<td>"+geojson.features[item].properties.similarity.normalizedlevenshtein+"</td>";
             }
-            html += "<td class='widget'><a href='"+geojson.features[item].properties["@id"]+"' target='_blank'>"+geojson.features[item].properties.gazetteertype+":"+geojson.features[item].properties.gazetteerid+"</a></td>";
+            html += "<td><a href='"+geojson.features[item].properties["@id"]+"' target='_blank'>"+geojson.features[item].properties.gazetteertype+":"+geojson.features[item].properties.gazetteerid+"</a></td>";
             html += "</tr>";
         }
         html += "</tbody>";
         html += "</table>";
+        html += "</div>";
         document.getElementById("map4").innerHTML = html;
+        new Tablesort(document.getElementById('searchresultlist'));
     };
 
 }
