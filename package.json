@@ -36,6 +36,7 @@
     "leaflet-geodesy": "0.2.1",
     "leaflet-search": "2.3.7",
     "leaflet.markercluster": "0.5.0",
+    "tablesort": "5.0.2",
     "turf": "3.0.14"
   },
   "devDependencies": {

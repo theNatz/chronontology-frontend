@@ -38,6 +38,7 @@ var jsDeps = [
     paths.lib + 'leaflet-geodesy/leaflet-geodesy.js',
     paths.lib + 'leaflet-search/dist/leaflet-search.min.js',
     paths.lib + 'turf/turf.min.js',
+    paths.lib + 'tablesort/dist/tablesort.min.js',
     paths.lib + 'angular/angular.min.js',
     paths.lib + 'angular-route/angular-route.min.js',
     paths.lib + 'angular-ui-bootstrap/dist/ui-bootstrap.js',

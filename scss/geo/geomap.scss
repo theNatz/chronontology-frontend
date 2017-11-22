@@ -28,11 +28,58 @@
    }
 }
 table.widget {
-    width: 100%;
+  width: 100%;
+  background:#fff;
+  max-width:100%;
+  border-spacing:0;
+  width:100%;
+  margin:10px 0;
+  border:1px solid #ddd;
+  border-collapse:separate;
 }
-th.widget, td.widget {
-    border: 1px solid black;
+table.widget th,
+table.widget td {
+  padding:8px;
+  line-height:18px;
+  text-align:left;
+  border-top:1px solid #ddd;
 }
+table.widget th {
+  background:#eee;
+  background:-webkit-gradient(linear, left top, left bottom, from(#f6f6f6), to(#eee));
+  background:-moz-linear-gradient(top, #f6f6f6, #eee);
+  text-shadow:0 1px 0 #fff;
+  font-weight:bold;
+  vertical-align:bottom;
+}
+table.widget td {
+  vertical-align:top;
+}
+table.widget thead:first-child tr th,
+table.widget thead:first-child tr td {
+  border-top:0;
+}
+table.widget tbody + tbody {
+  border-top:2px solid #ddd;
+}
+table.widget th + th,
+table.widget td + td,
+table.widget th + td,
+table.widget td + th {
+  border-left:1px solid #ddd;
+}
+table.widget thead:first-child tr:first-child th,
+table.widget tbody:first-child tr:first-child th,
+table.widget tbody:first-child tr:first-child td {
+  border-top:0;
+}
+
+.table-wrapper {
+  width: 100%;
+  height: 90%;
+  overflow: auto;
+}
+
 .maploading {
   position: absolute;
   width: 100%;
