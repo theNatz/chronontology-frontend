@@ -42,6 +42,9 @@
                     <!-- datasource="/spi/place/geonames/2874225" -->
                     <geosearchresultslist datasource="/spi/place?q=Mainz&type=getty"></geosearchresultslist>
 
+                    <!-- Picker -->
+                    <geopicker on-place-selected="$ctrl.pickedLocations[relationName].push(place)"></geopicker>
+
                 </div>
 
                 <div class="col-md-7">
