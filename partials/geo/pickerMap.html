@@ -1,0 +1,37 @@
+<div class="idai-picker">
+    <script type="text/ng-template" id="geopickerMap_modal.html">
+        <div class="panel panel-default picker-modal" width="100%">
+            <div class="panel-heading">
+                <form class="input-group">
+                    <select id="gazetteertype">
+                        <option value="dai">idai.gazetteer</option>
+                        <option value="getty" selected>Getty TGN</option>
+                        <option value="geonames">GeoNames</option>
+                        <option value="pleiades">Pleiades</option>
+                    </select>
+                    <input type="text"></input>
+                    <geosearch datasource="getty"></geosearch>
+                </form>
+            </div>
+        </div>
+    </script>
+
+    <div class="input-group">
+        <span class="input-group-btn">
+            <button class="btn btn-default" type="button" ng-click="$ctrl.openModal()">
+                <span class="glyphicon glyphicon-globe"></span>
+            </button>
+        </span>
+        <span class="form-control">
+            <span ng-show="!selectedItem" class="ng-binding">Wählen Sie einen Eintrag</span>
+            <a ng-show="selectedItem &amp;&amp; selectedItem['@id']" ng-href=""
+                target="_blank" class="ng-binding ng-hide">: </a>
+            <span ng-show="selectedItem &amp;&amp; !selectedItem['@id']"
+                class="ng-binding ng-hide">: </span>
+            <button class="btn btn-link btn-xs ng-hide" ng-show="selectedItem"
+                    ng-click="selectedItem = undefined">
+                <span class="glyphicon glyphicon-remove-sign text-muted"></span>
+            </button>
+        </span>
+    </div>
+</div>
