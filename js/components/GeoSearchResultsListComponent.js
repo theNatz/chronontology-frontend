@@ -33,7 +33,6 @@ function GeoSearchResultsListController($scope, $location, $routeParams, $http, 
     };
 
     this.initPlaces = function(geojson) {
-        console.log(geojson);
         var html = "";
         var mode = "";
         if (geojson.metadata.searchstring) {
