@@ -1,0 +1,43 @@
+<div class="idai-picker">
+    <script type="text/ng-template" id="geopickerResource_modal.html">
+        <div class="panel panel-default picker-modal">
+            <div class="panel-heading">
+                <form class="input-group">
+                    <select id="gazetteertype">
+                        <option value="dai">idai.gazetteer</option>
+                        <option value="getty" selected>Getty TGN</option>
+                        <option value="geonames">GeoNames</option>
+                        <option value="pleiades">Pleiades</option>
+                    </select>
+                    <input id="gazetteerid" ng-keydown="keydown($event)" ng-keypress="keypress($event)"
+                            type="text" ng-model="query" class="form-control" autofocus>
+                    </input>
+                    <span class="input-group-btn">
+                        <button ng-click="$ctrl.loadPlace('geonames','2874225')" class="btn btn-default">
+                            <span class="glyphicon glyphicon-thumbs-up"></span>
+                        </button>
+                    </span>
+                </form>
+            </div>
+        </div>
+    </script>
+
+    <div class="input-group">
+        <span class="input-group-btn">
+            <button class="btn btn-default" type="button" ng-click="$ctrl.openModal()">
+                <span class="glyphicon glyphicon-map-marker"></span>
+            </button>
+        </span>
+        <span class="form-control">
+            <span ng-show="!selectedItem" class="ng-binding">Wählen Sie einen Eintrag</span>
+            <a ng-show="selectedItem &amp;&amp; selectedItem['@id']" ng-href=""
+                target="_blank" class="ng-binding ng-hide">: </a>
+            <span ng-show="selectedItem &amp;&amp; !selectedItem['@id']"
+                class="ng-binding ng-hide">: </span>
+            <button class="btn btn-link btn-xs ng-hide" ng-show="selectedItem"
+                    ng-click="selectedItem = undefined">
+                <span class="glyphicon glyphicon-remove-sign text-muted"></span>
+            </button>
+        </span>
+    </div>
+</div>
