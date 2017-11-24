@@ -8,8 +8,14 @@ angular.module('chronontology.components')
                 headers: { 'Authorization': undefined }
             }).then(function success(geojson){
                 var uri = geojson.data.properties["@id"];
-                console.log(uri);
+                console.log("URI",uri);
+                _this.onPlaceSelected({place: uri});
+                $uibModalInstance.close();
             });
+        };
+
+        this.onPlaceSelected = function(item) {
+            console.log(item);
         };
 
 });
