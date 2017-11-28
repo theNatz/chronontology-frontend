@@ -5,21 +5,22 @@
                 <form class="input-group">
                     <select id="gazetteertype">
                         <option value="dai">idai.gazetteer</option>
-                        <option value="getty" selected>Getty TGN</option>
-                        <option value="geonames">GeoNames</option>
+                        <option value="getty">Getty TGN</option>
+                        <option value="geonames" selected>GeoNames</option>
                         <option value="pleiades">Pleiades</option>
                     </select>
                     <input id="gazetteerid" ng-keydown="keydown($event)" ng-keypress="keypress($event)"
                             type="text" ng-model="query" class="form-control" autofocus>
                     </input>
                     <span class="input-group-btn">
-                        <button ng-click="$ctrl.loadPlace('geonames','2874225')" class="btn btn-default">
+                        <button ng-click="$ctrl.loadPlace()" class="btn btn-default">
                             <span class="glyphicon glyphicon-thumbs-up"></span>
                         </button>
                     </span>
                 </form>
+                <!--<geosearchresultslist datasource='/spi/place/geonames/2874225'></geosearchresultslist>-->
+                <div id="list"></div>
             </div>
-            <geosearchresultslist datasource="/spi/place/geonames/2874225"></geosearchresultslist>
         </div>
     </script>
 

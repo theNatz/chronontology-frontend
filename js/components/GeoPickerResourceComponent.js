@@ -3,15 +3,22 @@ angular.module('chronontology.components')
 
         var _this = this;
 
-        this.loadPlace = function(type,id) {
-            $http.get("/spi/place/"+type+"/"+id, {
+        this.loadPlace = function() {
+            var e_gazetteertype = document.getElementById("gazetteertype");
+            var type = e_gazetteertype.options[e_gazetteertype.selectedIndex].value;
+            var id = document.getElementById("gazetteerid").value;
+            var html = "";
+            html += "<geosearchresultslist datasource='/spi/place/geonames/2874225'></geosearchresultslist>";
+            document.getElementById("list").insertAdjacentHTML('beforeend', html );
+            console.log(document.getElementById("list"));
+            /*$http.get("/spi/place/"+type+"/"+id, {
                 headers: { 'Authorization': undefined }
             }).then(function success(geojson){
-                var uri = geojson.data.properties["@id"];
-                console.log("URI",uri);
-                _this.onPlaceSelected({place: uri});
-                $uibModalInstance.close();
-            });
+                //var uri = geojson.data.properties["@id"];
+                //console.log("URI",uri);
+                //_this.onPlaceSelected({place: uri});
+                //$uibModalInstance.close();
+            });*/
         };
 
         this.onPlaceSelected = function(item) {
@@ -44,7 +51,7 @@ angular.module('chronontology.components')
     .component('geopickerresource',{
         templateUrl: '../../partials/geo/pickerResource.html',
         bindings: {
-            onPlaceSelected: '&'
+            ds: '<'
         },
         controller: GeoPickerResourceController
     });
