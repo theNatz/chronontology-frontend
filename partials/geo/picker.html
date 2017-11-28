@@ -13,13 +13,13 @@
                             type="text" ng-model="query" class="form-control" autofocus>
                     </input>
                     <span class="input-group-btn">
-                        <button onclick="alert(document.getElementById('searchword').value,document.getElementById('gazetteertype').value)" class="btn btn-default">
+                        <button onclick="$ctrl.loadPlaces()" class="btn btn-default">
                             <span class="glyphicon glyphicon-search"></span>
                         </button>
                     </span>
                 </form>
             </div>
-            <geosearchresultslist datasource="/spi/place?q=Mainz&type=getty"></geosearchresultslist>
+            <!--<geosearchresultslist datasource="/spi/place?q=Mainz&type=getty"></geosearchresultslist>-->
         </div>
     </script>
 
