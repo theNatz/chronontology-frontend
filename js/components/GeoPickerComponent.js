@@ -25,7 +25,8 @@ function GeoPickerController($http, $uibModal) {
             controllerAs: '$ctrl'
 		});
 		modal.result.then(function(item) {
-			_this.onPlaceSelected({place: item});
+            // TODO: set URI in textfield
+            //_this.onPlaceSelected({place: item});
 		});
     }
 
