@@ -8,8 +8,8 @@ angular.module('chronontology.components')
             var type = e_gazetteertype.options[e_gazetteertype.selectedIndex].value;
             var id = document.getElementById("gazetteerid").value;
             var html = "";
-            html += "<geosearchresultslist datasource='/spi/place/geonames/2874225'></geosearchresultslist>";
-            document.getElementById("list").insertAdjacentHTML('beforeend', html );
+            html += "<geosearchresultslist datasource='/spi/place/"+type+"/"+id+"'></geosearchresultslist>";
+            document.getElementById("list").insertAdjacentHTML('beforeend',html);
             console.log(document.getElementById("list"));
             /*$http.get("/spi/place/"+type+"/"+id, {
                 headers: { 'Authorization': undefined }
