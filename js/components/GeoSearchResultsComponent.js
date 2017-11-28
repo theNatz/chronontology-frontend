@@ -97,7 +97,7 @@ function GeoSearchResultsController($scope, $location, $routeParams, $http, $sce
     }
 
     this.onEachFeature = function(feature, layer) {
-        var popupContent = "name: " + feature.properties.names.prefName.name + "<br>" + "uri: <a href='" + feature.properties["@id"] + "' target='_blank'>" + feature.properties["@id"] + "</a>";
+        var popupContent = "name: " + feature.properties.names.prefName.name + "<br>" + "uri: <a href='" + feature.properties["@id"] + "' target='_blank'>" + feature.properties["@id"] + "</a><br><a href='javascript:alert(\"me\")'>select me!</a>";
 		if (feature.properties && feature.properties.popupContent) {
 			popupContent += feature.properties.popupContent;
 		}
