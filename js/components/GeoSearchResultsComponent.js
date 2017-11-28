@@ -1,7 +1,6 @@
 function GeoSearchResultsController($scope, $location, $routeParams, $http, $sce, chronontologySettings, $filter) {
 
     var _this = this;
-    var popupinfo = [];
 
     _this.loading = false;
     _this.empty = false;
