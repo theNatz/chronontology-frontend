@@ -67,8 +67,8 @@ function GeoSearchResultsListController($scope, $location, $routeParams, $http, 
         html += "<tbody>";
         if (mode==="q" || mode==="bbox") {
             for (var item in geojson.features) {
-                html += "<tr>";
-                html += "<td >"+geojson.features[item].properties.names.prefName.name+"</td>";
+                html += "<tr onclick=''>";
+                html += "<td>"+geojson.features[item].properties.names.prefName.name+"</td>";
                 if (mode==="q") {
                     html += "<td>"+geojson.features[item].properties.similarity.normalizedlevenshtein+"</td>";
                 }
