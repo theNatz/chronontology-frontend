@@ -49,7 +49,6 @@ function GeoSearchResultsListController($scope, $location, $routeParams, $http, 
         } else if (mode==="bbox") {
             html += "<p><i>"+geojson.features.length+" Ergebnisse</i></p>";
         } else if (mode==="resource") {
-            console.log(geojson);
             html += "<p><i>1 Ergebnisse</i></p>";
         }
         html += "<div class='table-wrapper'>";
