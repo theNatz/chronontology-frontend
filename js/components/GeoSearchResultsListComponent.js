@@ -35,15 +35,22 @@ function GeoSearchResultsListController($scope, $location, $routeParams, $http, 
     this.initPlaces = function(geojson) {
         var html = "";
         var mode = "";
-        if (geojson.metadata.searchstring) {
-            mode = "q";
+        if (geojson.metadata) {
+            if (geojson.metadata.searchstring) {
+                mode = "q";
+            } else {
+                mode = "bbox";
+            }
         } else {
-            mode = "bbox";
+            mode = "resource";
         }
         if (mode==="q") {
             html += "<p><i>"+geojson.features.length+" Ergebnisse, q="+geojson.metadata.searchstring+"</i></p>";
-        } else {
+        } else if (mode==="bbox") {
             html += "<p><i>"+geojson.features.length+" Ergebnisse</i></p>";
+        } else if (mode==="resource") {
+            console.log(geojson);
+            html += "<p><i>1 Ergebnisse</i></p>";
         }
         html += "<div class='table-wrapper'>";
         html += "<table class='widget' id='searchresultlist'>";
@@ -59,13 +66,20 @@ function GeoSearchResultsListController($scope, $location, $routeParams, $http, 
         html += "</tr>";
         html += "</thead>";
         html += "<tbody>";
-        for (var item in geojson.features) {
-            html += "<tr>";
-            html += "<td >"+geojson.features[item].properties.names.prefName.name+"</td>";
-            if (mode==="q") {
-                html += "<td>"+geojson.features[item].properties.similarity.normalizedlevenshtein+"</td>";
+        if (mode==="q" || mode==="bbox") {
+            for (var item in geojson.features) {
+                html += "<tr>";
+                html += "<td >"+geojson.features[item].properties.names.prefName.name+"</td>";
+                if (mode==="q") {
+                    html += "<td>"+geojson.features[item].properties.similarity.normalizedlevenshtein+"</td>";
+                }
+                html += "<td><a href='"+geojson.features[item].properties["@id"]+"' target='_blank'>"+geojson.features[item].properties.gazetteertype+":"+geojson.features[item].properties.gazetteerid+"</a></td>";
+                html += "</tr>";
             }
-            html += "<td><a href='"+geojson.features[item].properties["@id"]+"' target='_blank'>"+geojson.features[item].properties.gazetteertype+":"+geojson.features[item].properties.gazetteerid+"</a></td>";
+        } else {
+            html += "<tr>";
+            html += "<td >"+geojson.properties.names.prefName.name+"</td>";
+            html += "<td><a href='"+geojson.properties["@id"]+"' target='_blank'>"+geojson.properties.gazetteertype+":"+geojson.properties.gazetteerid+"</a></td>";
             html += "</tr>";
         }
         html += "</tbody>";
