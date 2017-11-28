@@ -1,0 +1,95 @@
+# Geo Components
+
+## Widgets
+
+### GeoMapComponent
+
+Stellt die räumliche Verteilung einer ChronOntology Period dar.
+
+* controller in `js/components/GeoMapComponent.js`
+* template at `partials/geo/map.html`
+* used in `partials/period.html`
+* `<geomap selected-period-id="document.resource.id"></geomap>`
+
+### GeoSearchComponent
+
+Ermöglicht die Suche in einem Gazetteer in einer Bounding Box.
+
+* controller in `js/components/GeoSearchComponent.js`
+* template at `partials/geo/search.html`
+* used in `partials/period.html`
+* `<geosearch datasource="getty"></geosearch>`
+
+#### TODO
+
+* load URL on popup link click
+
+### GeoSearchResultsComponent
+
+Zeit die Ergebnisse einer Suche (q,bbox) in einer Map an.
+
+* controller in `js/components/GeoSearchResultsComponent.js`
+* template at `partials/geo/searchResults.html`
+* used in `partials/period.html`
+* `<geosearchresults datasource="/spi/place?bbox=50.082665;8.161050;50.082665;8.371850;49.903887;8.161050;49.903887;8.371850&type=dai"></geosearchresults>`
+
+#### TODO
+
+* load URL on popup link click
+
+### GeoSearchResultsListComponent
+
+Zeit die Ergebnisse einer Suche (q,bbox) in einer Tabelle an.
+
+* controller in `js/components/GeoSearchResultsListComponent.js`
+* template at `partials/geo/searchResultsList.html`
+* used in `partials/period.html`
+* `<geosearchresultslist datasource="/spi/place?q=Mainz&type=getty"></geosearchresultslist>`
+
+#### TODO
+
+* load URL on name click for frontend
+
+## Picker
+
+### GeoPickerResourceComponent
+
+* Request-Auswahl
+  * Typ
+  * Gazetteer ID
+* Response
+  * GeoSearchResultsListComponent
+     * URI in frontend
+* `<geopickerresource on-place-selected="$ctrl.pickedLocations[relationName].push(place)"></geopickerresource>`
+
+#### TODO
+
+* load GeoSearchResultsListComponent with datasource on button click
+
+### GeoPickerComponent
+
+* Request-Auswahl
+ * Typ
+ * query string
+* Response
+ * GeoSearchResultsListComponent
+   * URI in frontend
+* `<geopicker on-place-selected="$ctrl.pickedLocations[relationName].push(place)"></geopicker>`
+
+#### TODO
+
+* load GeoSearchResultsListComponent with datasource on button click
+
+### GeoPickerMapComponent
+
+* Request-Auswahl
+  * Typ
+  * bbox
+* Response
+  * GeoSearchResultsComponent
+   *  URI in frontend
+* `<geopickermap on-place-selected="$ctrl.pickedLocations[relationName].push(place)"></geopickermap>`
+
+#### TODO
+
+* load GeoSearchResultsComponent with datasource on button click
