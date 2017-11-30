@@ -148,6 +148,10 @@ Zeit die Ergebnisse einer Suche (q,bbox) in einer Tabelle an.
      * URI in frontend
 * `<geopickerresource on-place-selected="$ctrl.pickedLocations[relationName].push(place)"></geopickerresource>`
 
+**Angular Components**
+
+* GeoSearchResultsListComponent
+
 #### TODO
 
 * load GeoSearchResultsListComponent with datasource on button click
@@ -162,6 +166,10 @@ Zeit die Ergebnisse einer Suche (q,bbox) in einer Tabelle an.
    * URI in frontend
 * `<geopicker on-place-selected="$ctrl.pickedLocations[relationName].push(place)"></geopicker>`
 
+**Angular Components**
+
+* GeoSearchResultsListComponent
+
 #### TODO
 
 * load GeoSearchResultsListComponent with datasource on button click
@@ -175,6 +183,10 @@ Zeit die Ergebnisse einer Suche (q,bbox) in einer Tabelle an.
   * GeoSearchResultsComponent
    *  URI in frontend
 * `<geopickermap on-place-selected="$ctrl.pickedLocations[relationName].push(place)"></geopickermap>`
+
+**Angular Components**
+
+* GeoSearchResultsComponent
 
 #### TODO
 
