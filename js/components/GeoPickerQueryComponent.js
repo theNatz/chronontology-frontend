@@ -1,5 +1,5 @@
 angular.module('chronontology.components')
-.controller('GeoPickerModalController', function($uibModalInstance, $scope) {
+.controller('GeoPickerQueryModalController', function($uibModalInstance, $scope) {
 
     var _this = this;
 
@@ -21,14 +21,14 @@ angular.module('chronontology.components')
 
 });
 
-function GeoPickerController($http, $uibModal) {
+function GeoPickerQueryController($http, $uibModal) {
 
     var _this = this;
 
     this.openModal = function() {
         var modal = $uibModal.open({
-			templateUrl: "geopicker_modal.html",
-			controller: "GeoPickerModalController",
+			templateUrl: "geopickerquery_modal.html",
+			controller: "GeoPickerQueryModalController",
 			bindToController: true,
 			size: 'lg',
             controllerAs: '$ctrl'
@@ -47,10 +47,10 @@ function GeoPickerController($http, $uibModal) {
 }
 
 angular.module('chronontology.components')
-    .component('geopicker',{
-        templateUrl: '../../partials/geo/picker.html',
+    .component('geopickerquery',{
+        templateUrl: '../../partials/geo/pickerQuery.html',
         bindings: {
             onPlaceSelected: '&'
         },
-        controller: GeoPickerController
+        controller: GeoPickerQueryController
     });
