@@ -115,6 +115,23 @@ Zeit die Ergebnisse einer Suche (q,bbox) in einer Tabelle an.
 * used in `partials/period.html`
 * `<geosearchresultslist datasource="/spi/place?q=Mainz&type=getty"></geosearchresultslist>`
 
+**JavaScript libs**
+
+*package.json + gulpfile.js["jsDeps"]*
+
+```json
+"dependencies": {
+  "tablesort": "5.0.2"
+}
+```
+
+*scss/geo/*
+
+```
+* geomap.scss
+* tablesort.scss
+```
+
 #### TODO
 
 * load URL on name click for frontend
