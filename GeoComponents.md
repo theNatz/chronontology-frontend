@@ -11,6 +11,27 @@ Stellt die räumliche Verteilung einer ChronOntology Period dar.
 * used in `partials/period.html`
 * `<geomap selected-period-id="document.resource.id"></geomap>`
 
+**JavaScript libs**
+
+*package.json + gulpfile.js["jsDeps"]*
+
+```json
+"dependencies": {
+  "leaflet": "0.7.7",
+  "leaflet-fullscreen": "1.0.2",
+  "leaflet-geodesy": "0.2.1",
+  "turf": "3.0.14"
+}
+```
+
+*scss/geo/*
+
+```
+* geomap.scss
+* leaflet.scss
+* leaflet-fullscreen.scss
+```
+
 ### GeoSearchComponent
 
 Ermöglicht die Suche in einem Gazetteer in einer Bounding Box.
