@@ -1,7 +1,6 @@
-function GeoSearchController($scope, $location, $routeParams, $http, $sce, chronontologySettings, $filter) {
+function GeoSearchController($scope, $location, $routeParams, $http, $sce, chronontologySettings, $filter, $compile) {
 
     var _this = this;
-    var popupinfo = [];
 
     _this.loading = false;
     _this.empty = false;
@@ -148,12 +147,17 @@ function GeoSearchController($scope, $location, $routeParams, $http, $sce, chron
     }
 
     this.onEachFeature = function(feature, layer) {
-        var popupContent = "name: " + feature.properties.names.prefName.name + "<br>" + "uri: <a href='" + feature.properties["@id"] + "' target='_blank'>" + feature.properties["@id"] + "</a><br><a href='javascript:alert(\"me\")'>select me!</a>";
-		if (feature.properties && feature.properties.popupContent) {
-			popupContent += feature.properties.popupContent;
-		}
-		layer.bindPopup(popupContent);
+        var popupContent = "<div><strong>{{place.properties.names.prefName.name}}</strong><br><a ng-href='{{place.properties['@id']}}' target='_blank'>{{place.properties['@id']}}</a><br><br><button ng-click='selectPlace(place)' class='btn btn-primary btn-xs'><span class='glyphicon glyphicon-map-marker'></span> Select this place</button></div>";
+        var popupScope =  $scope.$new(true);
+        popupScope.place = feature;
+        popupScope.selectPlace = _this.selectPlace;
+        var compiledContent = $compile(popupContent)(popupScope)[0];
+		layer.bindPopup(compiledContent);
     };
+
+    this.selectPlace = function(place) {
+        _this.onPlaceSelected({place: place});
+    }
 
 }
 
@@ -161,7 +165,8 @@ angular.module('chronontology.components')
     .component('geosearch',{
         templateUrl: '../../partials/geo/search.html',
         bindings: {
-            datasource: '@datasource'
+            datasource: '@datasource',
+            onPlaceSelected: '&'
         },
         controller: GeoSearchController
     });
