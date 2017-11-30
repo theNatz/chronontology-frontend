@@ -11,7 +11,12 @@ angular.module('chronontology.components')
     }
 
     this.loadEmptyMap = function() {
-        $scope.datasource = $scope.gazetteerType;
+        if ($scope.view === 'map') {
+            $scope.datasource = $scope.gazetteerType;
+        } else {
+            console.log(_this.latlng);
+            $scope.datasource = "/spi/place?bbox=50.082665;8.161050;50.082665;8.371850;49.903887;8.161050;49.903887;8.371850&type=getty";
+        }
         console.log("GeoPickerMapModalController",$scope.datasource);
     };
 
@@ -50,7 +55,8 @@ angular.module('chronontology.components')
     .component('geopickermap',{
         templateUrl: '../../partials/geo/pickerMap.html',
         bindings: {
-            onPlaceSelected: '&'
+            onPlaceSelected: '&',
+            latlng: '&'
         },
         controller: GeoPickerMapController
     });

@@ -17,7 +17,7 @@
                         </button>
                         <button type="button" class="btn btn-default"
                                 ng-class="{'active': view == 'list'}"
-                                ng-click="$ctrl.setView('list')">
+                                ng-click="$ctrl.setView('list'); $ctrl.loadEmptyMap()">
                             <span class="glyphicon glyphicon-th-list"></span>
                         </button>
                     </div>

@@ -13,7 +13,9 @@ function GeoSearchController($scope, $location, $routeParams, $http, $sce, chron
         _this.loading = true;
         _this.empty = true;
         var bbox = upperleft + ";" + lowerleft + ";" + upperright + ";" + lowerright;
-        $http.get("/spi/place?bbox="+bbox+"&type="+_this.datasource, {
+        var url = "/spi/place?bbox="+bbox+"&type="+_this.datasource;
+        _this.latlng({datasource: url});
+        $http.get(url, {
                 headers: { 'Authorization': undefined }
         }).then(function success(geojson){
             _this.loading = false;
@@ -166,7 +168,8 @@ angular.module('chronontology.components')
         templateUrl: '../../partials/geo/search.html',
         bindings: {
             datasource: '@datasource',
-            onPlaceSelected: '&'
+            onPlaceSelected: '&',
+            latlng: '&'
         },
         controller: GeoSearchController
     });
