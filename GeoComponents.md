@@ -78,6 +78,30 @@ Zeit die Ergebnisse einer Suche (q,bbox) in einer Map an.
 * used in `partials/period.html`
 * `<geosearchresults datasource="/spi/place?bbox=50.082665;8.161050;50.082665;8.371850;49.903887;8.161050;49.903887;8.371850&type=dai"></geosearchresults>`
 
+**JavaScript libs**
+
+*package.json + gulpfile.js["jsDeps"]*
+
+```json
+"dependencies": {
+  "leaflet": "0.7.7",
+  "leaflet-fullscreen": "1.0.2",
+  "leaflet-search": "2.3.7",
+  "leaflet.markercluster": "0.5.0"
+}
+```
+
+*scss/geo/*
+
+```
+* geomap.scss
+* leaflet.scss
+* leaflet-fullscreen.scss
+* leaflet-search.src.scss
+* MarkerCluster.scss
+* MarkerCluster.Default.scss
+```
+
 #### TODO
 
 * load URL on popup link click
