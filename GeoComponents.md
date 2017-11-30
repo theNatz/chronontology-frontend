@@ -41,6 +41,30 @@ Ermöglicht die Suche in einem Gazetteer in einer Bounding Box.
 * used in `partials/period.html`
 * `<geosearch datasource="getty"></geosearch>`
 
+**JavaScript libs**
+
+*package.json + gulpfile.js["jsDeps"]*
+
+```json
+"dependencies": {
+  "leaflet": "0.7.7",
+  "leaflet-fullscreen": "1.0.2",
+  "leaflet-draw": "0.4.12",
+  "leaflet.markercluster": "0.5.0"
+}
+```
+
+*scss/geo/*
+
+```
+* geomap.scss
+* leaflet.scss
+* leaflet-fullscreen.scss
+* leaflet.draw.scss
+* MarkerCluster.scss
+* MarkerCluster.Default.scss
+```
+
 #### TODO
 
 * load URL on popup link click
