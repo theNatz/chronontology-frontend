@@ -1,22 +1,23 @@
 angular.module('chronontology.components')
-.controller('GeoPickerModalController', function($uibModalInstance, $http) {
+.controller('GeoPickerModalController', function($uibModalInstance, $scope) {
 
-        this.loadPlaces = function(bbox) {
-            var e_gazetteertype = document.getElementById("gazetteertype");
-            var type = e_gazetteertype.options[e_gazetteertype.selectedIndex].value;
-            var q = document.getElementById("searchword").value;
-            var html = "";
-            html += "<geosearchresultslist datasource='/spi/place?q="+q+"&type="+type+"'></geosearchresultslist>";
-            document.getElementById("list").insertAdjacentHTML('beforeend',html);
-            console.log(document.getElementById("list"));
+    var _this = this;
 
-            /*$http.get("/spi/place?bbox=50.082665;8.161050;50.082665;8.371850;49.903887;8.161050;49.903887;8.371850&type=getty", {
-                headers: { 'Authorization': undefined }
-            }).then(function success(geojson){
-                 console.log(geojson);
-                _this.places = geojson.data;
-            });*/
-        };
+    $scope.view = 'list';
+    $scope.gazetteerType = 'dai';
+
+    this.setView = function(view) {
+        $scope.view = view;
+    }
+
+    this.loadTable = function() {
+        $scope.datasource = "/spi/place"
+         + "?q=" + $scope.query + "&type=" + $scope.gazetteerType;
+    };
+
+    this.selectPlace = function(place) {
+        $uibModalInstance.close(place);
+    };
 
 });
 
@@ -32,11 +33,16 @@ function GeoPickerController($http, $uibModal) {
 			size: 'lg',
             controllerAs: '$ctrl'
 		});
-		modal.result.then(function(item) {
-            // TODO: set URI in textfield
-            //_this.onPlaceSelected({place: item});
+        modal.result.then(function(place) {
+            _this.selectedItem = place;
+            _this.onPlaceSelected({place: place});
 		});
     }
+
+    _this.deselectPlace = function() {
+        _this.selectedItem = undefined;
+        _this.onPlaceSelected({place: undefined});
+    };
 
 }
 

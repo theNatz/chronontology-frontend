@@ -43,9 +43,10 @@
                     <geosearchresultslist datasource="/spi/place?q=Mainz&type=getty"></geosearchresultslist>
 
                     <!-- Picker -->
-                    <geopicker on-place-selected="$ctrl.pickedLocations[relationName].push(place)"></geopicker>
                     <geopickerresource on-place-selected="testValue = place"></geopickerresource>
                     <pre>{{testValue | json}}</pre>
+                    <geopicker on-place-selected="testValue2 = place"></geopicker>
+                    <pre>{{testValue2 | json}}</pre>
                     <geopickermap on-place-selected="$ctrl.pickedLocations[relationName].push(place)"></geopickermap>
 
                 </div>
