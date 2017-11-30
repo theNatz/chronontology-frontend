@@ -4,5 +4,23 @@
         <span class="glyphicon glyphicon-hourglass"></span>
     </div>
     <div id="map4" style="height:480px;">
+        <div class="table-wrapper">
+            <table class="widget" id="searchresultlist">
+                <thead>
+                    <tr>
+                        <th data-sort-default>prefName</th>
+                        <th ng-show="$ctrl.showLevenshtein">score</th>
+                        <th>URL</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr ng-repeat="result in $ctrl.results">
+                        <td>{{result.properties.names.prefName.name}}</td>
+                        <td ng-show="$ctrl.showLevenshtein">{{result.properties.similarity.normalizedlevenshtein}}</td>
+                        <td>{{result.properties['@id']}}</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
     </div>
 </div>

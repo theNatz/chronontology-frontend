@@ -2,23 +2,40 @@
     <script type="text/ng-template" id="geopickerResource_modal.html">
         <div class="panel panel-default picker-modal">
             <div class="panel-heading">
-                <form class="input-group">
-                    <select id="gazetteertype">
+                <form class="form-inline">
+                    <select id="gazetteertype" ng-model="gazetteerType" class="form-control">
                         <option value="dai">idai.gazetteer</option>
                         <option value="getty">Getty TGN</option>
                         <option value="geonames" selected>GeoNames</option>
                         <option value="pleiades">Pleiades</option>
                     </select>
-                    <input id="gazetteerid" ng-keydown="keydown($event)" ng-keypress="keypress($event)"
-                            type="text" ng-model="query" class="form-control" autofocus>
-                    </input>
-                    <span class="input-group-btn">
-                        <button ng-click="$ctrl.loadPlace()" class="btn btn-default">
-                            <span class="glyphicon glyphicon-thumbs-up"></span>
+                    <div class="input-group">
+                        <input id="gazetteerid" type="text" ng-model="gazetteerId"
+                            class="form-control" autofocus>
+                        </input>
+                        <span class="input-group-btn">
+                            <button ng-click="$ctrl.loadTable()" class="btn btn-default">
+                                <span class="glyphicon glyphicon-search"></span>
+                            </button>
+                        </span>
+                    </div>
+                    <div class="btn-group" role="group">
+                        <button type="button" class="btn btn-default"
+                                ng-class="{'active': view == 'list'}"
+                                ng-click="$ctrl.setView('list')">
+                            <span class="glyphicon glyphicon-th-list"></span>
                         </button>
-                    </span>
+                        <button type="button" class="btn btn-default"
+                                ng-class="{'active': view == 'map'}"
+                                ng-click="$ctrl.setView('map')">
+                            <span class="glyphicon glyphicon-globe"></span>
+                        </button>
+                    </div>
                 </form>
-                <!--<geosearchresultslist datasource='/spi/place/geonames/2874225'></geosearchresultslist>-->
+                <geosearchresultslist ng-if="view == 'list'"
+                    datasource='{{datasource}}'></geosearchresultslist>
+                <geosearchresults ng-if="view == 'map'"
+                    datasource='{{datasource}}'></geosearchresults>
                 <div id="list"></div>
             </div>
         </div>

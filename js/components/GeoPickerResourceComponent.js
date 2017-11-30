@@ -1,24 +1,18 @@
 angular.module('chronontology.components')
-.controller('GeoPickerResourceModalController', function($uibModalInstance, $http) {
+.controller('GeoPickerResourceModalController', function($uibModalInstance, $scope) {
 
         var _this = this;
 
-        this.loadPlace = function() {
-            var e_gazetteertype = document.getElementById("gazetteertype");
-            var type = e_gazetteertype.options[e_gazetteertype.selectedIndex].value;
-            var id = document.getElementById("gazetteerid").value;
-            var html = "";
-            html += "<geosearchresultslist datasource='/spi/place/"+type+"/"+id+"'></geosearchresultslist>";
-            document.getElementById("list").insertAdjacentHTML('beforeend',html);
-            console.log(document.getElementById("list"));
-            /*$http.get("/spi/place/"+type+"/"+id, {
-                headers: { 'Authorization': undefined }
-            }).then(function success(geojson){
-                //var uri = geojson.data.properties["@id"];
-                //console.log("URI",uri);
-                //_this.onPlaceSelected({place: uri});
-                //$uibModalInstance.close();
-            });*/
+        $scope.view = 'list';
+        $scope.gazetteerType = 'dai';
+
+        this.setView = function(view) {
+            $scope.view = view;
+        }
+
+        this.loadTable = function() {
+            $scope.datasource = "/spi/place/"
+             + $scope.gazetteerType + "/" + $scope.gazetteerId;
         };
 
         this.onPlaceSelected = function(item) {
