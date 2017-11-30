@@ -3,14 +3,15 @@
         <div class="panel panel-default picker-modal">
             <div class="panel-heading">
                 <form class="form-inline">
+                    <span class="glyphicon glyphicon-flag"></span>
                     <select id="gazetteertype" ng-model="gazetteerType" class="form-control">
-                        <option value="dai">idai.gazetteer</option>
+                        <option value="dai">DAI Gazetteer</option>
                         <option value="getty">Getty TGN</option>
                         <option value="geonames" selected>GeoNames</option>
                         <option value="pleiades">Pleiades</option>
                     </select>
                     <div class="input-group">
-                        <input id="query" type="text" ng-model="query" ng-change="$ctrl.loadTable()"
+                        <input id="query" type="text" placeholder="query" ng-model="query" ng-change="$ctrl.loadTable()"
                             class="form-control" autofocus>
                         </input>
                     </div>

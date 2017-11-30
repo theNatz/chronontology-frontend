@@ -4,7 +4,7 @@ angular.module('chronontology.components')
     var _this = this;
 
     $scope.view = 'map';
-    $scope.gazetteerType = 'geonames';
+    $scope.gazetteerType = 'getty';
 
     this.setView = function(view) {
         $scope.view = view;

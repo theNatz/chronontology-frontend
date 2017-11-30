@@ -5,12 +5,13 @@
     </div>
     <div id="map4" style="height:480px;">
         <div class="table-wrapper">
-            <table class="widget" id="searchresultlist">
+            <h1 ng-show="$ctrl.empty" class="mapempty">{{ 'no_map_data' | transl8 }}</h1>
+            <table class="widget table-hover" id="searchresultlist" ng-show="$ctrl.results.length > 0">
                 <thead>
                     <tr>
-                        <th data-sort-default>prefName</th>
-                        <th ng-show="$ctrl.showLevenshtein">score</th>
-                        <th>URL</th>
+                        <th data-sort-default><span class="glyphicon glyphicon-tag"></span></th>
+                        <th ng-show="$ctrl.showLevenshtein"><span class="glyphicon glyphicon-record"></span></th>
+                        <th><span class="glyphicon glyphicon-link"></span></th>
                     </tr>
                 </thead>
                 <tbody>

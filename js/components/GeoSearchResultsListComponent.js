@@ -5,6 +5,7 @@ function GeoSearchResultsListController($scope, $location, $routeParams, $http, 
     _this.loading = false;
     _this.showLevenshtein = false;
     _this.results = [];
+    _this.empty = true;
 
     new Tablesort(document.getElementById('searchresultlist'));
 
@@ -15,6 +16,7 @@ function GeoSearchResultsListController($scope, $location, $routeParams, $http, 
     _this.loadData = function() {
         _this.loading = true;
         _this.results = [];
+        _this.empty = true;
 
         $http.get(_this.datasource, {
                 headers: { 'Authorization': undefined }
@@ -22,8 +24,10 @@ function GeoSearchResultsListController($scope, $location, $routeParams, $http, 
             _this.loading = false;
             if (geojson.data.geometry && geojson.data.geometry.type) {
                 _this.results = [geojson.data];
+                _this.empty = false;
             } else if (geojson.data.features && geojson.data.features.length > 1) {
                 _this.results = geojson.data.features;
+                _this.empty = false;
             }
             if (geojson.data.metadata && geojson.data.metadata.searchstring) {
                 _this.showLevenshtein = true;
