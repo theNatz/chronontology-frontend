@@ -8,11 +8,11 @@ function GeoSearchResultsListController($scope, $location, $routeParams, $http, 
 
     new Tablesort(document.getElementById('searchresultlist'));
 
-    this.$onChanges = function() {
+    _this.$onChanges = function() {
         this.loadData();
     };
 
-    this.loadData = function() {
+    _this.loadData = function() {
         _this.loading = true;
         _this.results = [];
 
@@ -25,7 +25,7 @@ function GeoSearchResultsListController($scope, $location, $routeParams, $http, 
             } else if (geojson.data.features && geojson.data.features.length > 1) {
                 _this.results = geojson.data.features;
             }
-            if (geojson.data.metadata.searchstring) {
+            if (geojson.data.metadata && geojson.data.metadata.searchstring) {
                 _this.showLevenshtein = true;
             } else {
                 _this.showLevenshtein = false;
@@ -34,13 +34,19 @@ function GeoSearchResultsListController($scope, $location, $routeParams, $http, 
             console.warn(err) // TODO show error message
         });
     };
+
+    _this.selectPlace = function(place) {
+        _this.onPlaceSelected({place: place});
+    }
+
 }
 
 angular.module('chronontology.components')
     .component('geosearchresultslist',{
         templateUrl: '../../partials/geo/searchResultsList.html',
         bindings: {
-            datasource: '@datasource'
+            datasource: '@datasource',
+            onPlaceSelected: '&'
         },
         controller: GeoSearchResultsListController
     });

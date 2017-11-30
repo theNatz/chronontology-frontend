@@ -15,8 +15,8 @@ angular.module('chronontology.components')
              + $scope.gazetteerType + "/" + $scope.gazetteerId;
         };
 
-        this.onPlaceSelected = function(item) {
-            console.log(item);
+        this.selectPlace = function(place) {
+            $uibModalInstance.close(place);
         };
 
 });
@@ -25,7 +25,7 @@ function GeoPickerResourceController($http, $uibModal) {
 
     var _this = this;
 
-    this.openModal = function() {
+    _this.openModal = function() {
         var modal = $uibModal.open({
 			templateUrl: "geopickerResource_modal.html",
 			controller: "GeoPickerResourceModalController",
@@ -33,11 +33,16 @@ function GeoPickerResourceController($http, $uibModal) {
 			size: 'lg',
             controllerAs: '$ctrl'
 		});
-		modal.result.then(function(item) {
-            // TODO: set URI in textfield
-            //_this.onPlaceSelected({place: item});
+		modal.result.then(function(place) {
+            _this.selectedItem = place;
+            _this.onPlaceSelected({place: place});
 		});
     }
+
+    _this.deselectPlace = function() {
+        _this.selectedItem = undefined;
+        _this.onPlaceSelected({place: undefined});
+    };
 
 }
 
@@ -45,7 +50,7 @@ angular.module('chronontology.components')
     .component('geopickerresource',{
         templateUrl: '../../partials/geo/pickerResource.html',
         bindings: {
-            ds: '<'
+            onPlaceSelected: '&'
         },
         controller: GeoPickerResourceController
     });

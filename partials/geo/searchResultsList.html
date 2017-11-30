@@ -14,7 +14,7 @@
                     </tr>
                 </thead>
                 <tbody>
-                    <tr ng-repeat="result in $ctrl.results">
+                    <tr ng-repeat="result in $ctrl.results" ng-click="$ctrl.selectPlace(result)">
                         <td>{{result.properties.names.prefName.name}}</td>
                         <td ng-show="$ctrl.showLevenshtein">{{result.properties.similarity.normalizedlevenshtein}}</td>
                         <td>{{result.properties['@id']}}</td>

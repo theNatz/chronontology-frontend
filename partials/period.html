@@ -44,7 +44,8 @@
 
                     <!-- Picker -->
                     <geopicker on-place-selected="$ctrl.pickedLocations[relationName].push(place)"></geopicker>
-                    <geopickerresource on-place-selected="$ctrl.pickedLocations[relationName].push(place)"></geopickerresource>
+                    <geopickerresource on-place-selected="testValue = place"></geopickerresource>
+                    <pre>{{testValue | json}}</pre>
                     <geopickermap on-place-selected="$ctrl.pickedLocations[relationName].push(place)"></geopickermap>
 
                 </div>

@@ -33,9 +33,11 @@
                     </div>
                 </form>
                 <geosearchresultslist ng-if="view == 'list'"
-                    datasource='{{datasource}}'></geosearchresultslist>
+                    datasource='{{datasource}}'
+                    on-place-selected="$ctrl.selectPlace(place)"></geosearchresultslist>
                 <geosearchresults ng-if="view == 'map'"
-                    datasource='{{datasource}}'></geosearchresults>
+                    datasource='{{datasource}}'
+                    on-place-selected="$ctrl.selectPlace(place)"></geosearchresults>
                 <div id="list"></div>
             </div>
         </div>
@@ -48,13 +50,12 @@
             </button>
         </span>
         <span class="form-control">
-            <span ng-show="!selectedItem" class="ng-binding">Wählen Sie einen Eintrag</span>
-            <a ng-show="selectedItem &amp;&amp; selectedItem['@id']" ng-href=""
-                target="_blank" class="ng-binding ng-hide">: </a>
-            <span ng-show="selectedItem &amp;&amp; !selectedItem['@id']"
-                class="ng-binding ng-hide">: </span>
-            <button class="btn btn-link btn-xs ng-hide" ng-show="selectedItem"
-                    ng-click="selectedItem = undefined">
+            <span ng-show="!$ctrl.selectedItem" class="ng-binding">Wählen Sie einen Eintrag</span>
+            <a ng-show="$ctrl.selectedItem &amp;&amp; $ctrl.selectedItem.properties['@id']"
+                ng-href="{{$ctrl.selectedItem.properties['@id']}}"
+                target="_blank" class="ng-binding ng-hide">{{$ctrl.selectedItem.properties['@id']}}</a>
+            <button class="btn btn-link btn-xs ng-hide" ng-show="$ctrl.selectedItem"
+                    ng-click="$ctrl.deselectPlace()">
                 <span class="glyphicon glyphicon-remove-sign text-muted"></span>
             </button>
         </span>
