@@ -37,6 +37,7 @@ var jsDeps = [
     paths.lib + 'leaflet-draw/dist/leaflet.draw.js',
     paths.lib + 'leaflet-geodesy/leaflet-geodesy.js',
     paths.lib + 'leaflet-search/dist/leaflet-search.min.js',
+    paths.lib + 'leaflet-minimap/dist/Control.MiniMap.min.js',
     paths.lib + 'turf/turf.min.js',
     paths.lib + 'tablesort/dist/tablesort.min.js',
     paths.lib + 'angular/angular.min.js',
