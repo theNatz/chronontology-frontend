@@ -4,9 +4,12 @@ function GeoSearchResultsMapController($scope, $location, $routeParams, $http, $
 
     _this.loading = false;
     _this.empty = false;
+    _this.init = false;
 
     this.$onChanges = function() {
-        this.initMap();
+        if (!_this.init) {
+            this.initMap();
+        }
         this.loadData();
     };
 
@@ -21,13 +24,15 @@ function GeoSearchResultsMapController($scope, $location, $routeParams, $http, $
             if (geojson.data.geometry && geojson.data.geometry.type) {
                 _this.empty = false;
                 _this.initPlaces(geojson.data);
-            } else if (geojson.data.features) {
-                if (geojson.data.features.length > 0) {
-                    _this.empty = false;
-                    _this.initPlaces(geojson.data);
-                }
+            } else if (geojson.data.features && geojson.data.features.length > 0) {
+                _this.empty = false;
+                _this.initPlaces(geojson.data);
             } else {
                 _this.empty = true;
+                if (_this.init) {
+                    _this.map.removeLayer(_this.markers);
+                    _this.map.setView([_this.mapY, _this.mapX], _this.mapZoom);
+                }
             }
         }, function error(err) {
             console.warn(err) // TODO show error message
@@ -39,7 +44,7 @@ function GeoSearchResultsMapController($scope, $location, $routeParams, $http, $
         _this.mapY = 50.1287762;
         _this.mapX = -5.4532871;
         _this.markersArea = 0;
-        _this.mapZoom = 8;
+        _this.mapZoom = 2;
         _this.baseLayer = L.tileLayer('http://{s}.tiles.mapbox.com/v3/isawnyu.map-knmctlkh/{z}/{x}/{y}.png', {
             maxZoom: 15,
             attribution: "<a href='javascript:alert(\"Tiles (c) MapBox (http://mapbox.com), Data (c) OpenStreetMap (http://www.openstreetmap.org) and contributors, CC-BY-SA, Tiles and Data (c) 2013 AWMC (http://www.awmc.unc.edu) CC-BY-NC 3.0 (http://creativecommons.org/licenses/by-nc/3.0/deed.en_US)\");'>Attribution</a>"
@@ -52,25 +57,12 @@ function GeoSearchResultsMapController($scope, $location, $routeParams, $http, $
         });
         // add scale
         L.control.scale().addTo(_this.map);
-    };
-
-    this.initPlaces = function(geojson) {
-
-        // cluster
+        // init param
+        _this.init = true;
+        // init cluster
         _this.markers = null;
 		_this.markers = L.markerClusterGroup();
-
-        // add markers and polygons
-        _this.orangeBowlIcon = L.icon({iconUrl: 'img/Icone_Boule_Orange.png', iconSize: [30, 30], iconAnchor: [15, 15]}),
-        _this.marker = L.geoJson(geojson, {
-          onEachFeature: _this.onEachFeature,
-          pointToLayer: function (feature, latlng) {
-              return L.marker(latlng, {icon: _this.orangeBowlIcon, name: feature.properties.names.prefName.name});
-            }
-        });
-        _this.markers.addLayer(_this.marker);
-        // add marker as layer
-        _this.map.addLayer(_this.markers);
+        _this.orangeBowlIcon = L.icon({iconUrl: 'img/Icone_Boule_Orange.png', iconSize: [30, 30], iconAnchor: [15, 15]});
         // init search
         _this.controlSearch = new L.Control.Search({
     		position:'topleft',
@@ -84,6 +76,19 @@ function GeoSearchResultsMapController($scope, $location, $routeParams, $http, $
     		e.layer.openPopup();
     	});
         _this.map.addControl(_this.controlSearch);
+    };
+
+    this.initPlaces = function(geojson) {
+        // add markers and polygons
+        _this.marker = L.geoJson(geojson, {
+          onEachFeature: _this.onEachFeature,
+          pointToLayer: function (feature, latlng) {
+              return L.marker(latlng, {icon: _this.orangeBowlIcon, name: feature.properties.names.prefName.name});
+            }
+        });
+        // add marker as layer
+        _this.markers.addLayer(_this.marker);
+        _this.map.addLayer(_this.markers);
         // calc layer center
         _this.mapY = _this.marker.getBounds().getCenter().lat;
         _this.mapX = _this.marker.getBounds().getCenter().lng;
@@ -91,7 +96,6 @@ function GeoSearchResultsMapController($scope, $location, $routeParams, $http, $
         _this.map.setView([_this.mapY, _this.mapX], _this.mapZoom);
         // zoom to bounds
         _this.map.fitBounds(_this.marker.getBounds());
-
         if (_this.map.tap) _this.map.tap.enable();
         document.getElementById('map3').style.cursor='grab';
     }
