@@ -23,12 +23,12 @@
                     <div class="btn-group" role="group">
                         <button type="button" class="btn btn-default"
                                 ng-class="{'active': view == 'list'}"
-                                ng-click="$ctrl.setView('list')">
+                                ng-click="$ctrl.setView('list'); $ctrl.loadTable();">
                             <span class="glyphicon glyphicon-th-list"></span>
                         </button>
                         <button type="button" class="btn btn-default"
                                 ng-class="{'active': view == 'map'}"
-                                ng-click="$ctrl.setView('map')">
+                                ng-click="$ctrl.setView('map'); $ctrl.loadTable();">
                             <span class="glyphicon glyphicon-globe"></span>
                         </button>
                     </div>

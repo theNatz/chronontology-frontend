@@ -18,7 +18,7 @@ function GeoSearchResultsMapController($scope, $location, $routeParams, $http, $
         }).then(function success(geojson){
             _this.loading = false;
             _this.geojson = geojson.data;
-            if (geojson.data.geometry) {
+            if (geojson.data.geometry && geojson.data.geometry.type) {
                 _this.empty = false;
                 _this.initPlaces(geojson.data);
             } else if (geojson.data.features) {

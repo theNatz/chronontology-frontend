@@ -3,6 +3,7 @@
     <div ng-show="$ctrl.loading" class="maploading">
         <span class="glyphicon glyphicon-hourglass"></span>
     </div>
+    <h1 ng-show="$ctrl.empty" class="mapempty">{{ 'no_map_data' | transl8 }}</h1>
     <div id="map3" style="height:480px;">
     </div>
 </div>
