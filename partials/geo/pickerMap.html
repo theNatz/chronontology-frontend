@@ -29,6 +29,9 @@
                 <geosearch ng-if="view == 'map'"
                     datasource='{{datasource}}'
                     on-place-selected="$ctrl.selectPlace(place)"></geosearch>
+                <geosearchresultsmap ng-if="view == 'map2'"
+                    datasource='{{datasource}}'
+                    on-place-selected="$ctrl.selectPlace(place)"></geosearchresultsmap>
             </div>
         </div>
     </script>

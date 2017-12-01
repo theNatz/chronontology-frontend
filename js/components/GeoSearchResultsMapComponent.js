@@ -1,4 +1,4 @@
-function GeoSearchResultsController($scope, $location, $routeParams, $http, $sce, chronontologySettings, $filter, $compile) {
+function GeoSearchResultsMapController($scope, $location, $routeParams, $http, $sce, chronontologySettings, $filter, $compile) {
 
     var _this = this;
 
@@ -112,11 +112,11 @@ function GeoSearchResultsController($scope, $location, $routeParams, $http, $sce
 }
 
 angular.module('chronontology.components')
-    .component('geosearchresults',{
-        templateUrl: '../../partials/geo/searchResults.html',
+    .component('geosearchresultsmap',{
+        templateUrl: '../../partials/geo/searchResultsMap.html',
         bindings: {
             datasource: '@datasource',
             onPlaceSelected: '&'
         },
-        controller: GeoSearchResultsController
+        controller: GeoSearchResultsMapController
     });

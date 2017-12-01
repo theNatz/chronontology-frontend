@@ -36,9 +36,9 @@
                 <geosearchresultslist ng-if="view == 'list'"
                     datasource='{{datasource}}'
                     on-place-selected="$ctrl.selectPlace(place)"></geosearchresultslist>
-                <geosearchresults ng-if="view == 'map'"
+                <geosearchresultsmap ng-if="view == 'map'"
                     datasource='{{datasource}}'
-                    on-place-selected="$ctrl.selectPlace(place)"></geosearchresults>
+                    on-place-selected="$ctrl.selectPlace(place)"></geosearchresultsmap>
             </div>
         </div>
     </script>
