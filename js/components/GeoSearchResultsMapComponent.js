@@ -75,6 +75,9 @@ function GeoSearchResultsMapController($scope, $location, $routeParams, $http, $
     		e.layer.openPopup();
     	});
         _this.map.addControl(_this.controlSearch);
+        // add minimap
+        _this.miniMap = new L.Control.MiniMap(_this.baseLayer);
+        //_this.map.addControl(_this.miniMap);
     };
 
     this.initPlaces = function(geojson) {
