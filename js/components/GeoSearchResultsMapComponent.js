@@ -60,8 +60,7 @@ function GeoSearchResultsMapController($scope, $location, $routeParams, $http, $
         // init param
         _this.init = true;
         // init cluster
-        _this.markers = null;
-		_this.markers = L.markerClusterGroup();
+		_this.markers = new L.markerClusterGroup();
         _this.orangeBowlIcon = L.icon({iconUrl: 'img/Icone_Boule_Orange.png', iconSize: [30, 30], iconAnchor: [15, 15]});
         // init search
         _this.controlSearch = new L.Control.Search({
@@ -79,6 +78,7 @@ function GeoSearchResultsMapController($scope, $location, $routeParams, $http, $
     };
 
     this.initPlaces = function(geojson) {
+		_this.map.removeLayer(_this.markers);
         // add markers and polygons
         _this.marker = L.geoJson(geojson, {
           onEachFeature: _this.onEachFeature,
