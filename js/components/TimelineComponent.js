@@ -287,13 +287,15 @@ function TimelineController(timelineDataService, $location, $element, $scope) {
         startYDomain = [0, barHeight * 20];
     };
 
-    this.zoomIn = function() {
+    this.zoomIn = function(event) {
 
+        event.target.blur();
         this.zoom(true);
     };
 
-    this.zoomOut = function() {
+    this.zoomOut = function(event) {
 
+        event.target.blur();
         this.zoom(false);
     };
 
