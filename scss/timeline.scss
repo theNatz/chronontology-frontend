@@ -109,16 +109,24 @@ $maxGroups: 10;
   z-index: 3;
 }
 
+.timeline-zoom-buttons {
+    position: absolute;
+}
+
 .timeline-container-small {
-    height: 300px;
+  height: 300px;
+
+  .timeline-zoom-buttons {
+    top: 9px;
+    left: 24px;
+  }
 }
 
 .timeline-container-big {
   height: 460px;
-}
 
-#timeline-zoom-buttons {
-  position: absolute;
-  top: 30px;
-  left: 30px;
+  .timeline-zoom-buttons {
+    top: 65px;
+    left: 14px;
+  }
 }
