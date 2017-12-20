@@ -112,6 +112,11 @@ $maxGroups: 10;
 .timeline-zoom-buttons {
     position: absolute;
 
+    .btn {
+      font-size: 24px;
+      padding: 0px 10px;
+    }
+
     .btn:focus,
     .btn:active {
       outline: none;
