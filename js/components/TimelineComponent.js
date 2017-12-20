@@ -323,6 +323,7 @@ function TimelineController(timelineDataService, $location, $element, $scope) {
             return function(time) {
                 zoom.scale(interpolatedScale(time))
                     .translate(interpolatedTranslate(time));
+                axisElement.call(axis);
                 _this.updateBars();
             };
         });
