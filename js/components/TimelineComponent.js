@@ -8,6 +8,7 @@ function TimelineController(timelineDataService, $location, $element, $scope) {
     var minStartYear = -10000;
     var maxStartYear = new Date().getFullYear();
     var barHeight = 20;
+    var buttonZoomFactor = 0.5;
     // -------
 
     var timeline;
@@ -24,6 +25,9 @@ function TimelineController(timelineDataService, $location, $element, $scope) {
     var startXDomain = [];
     var startYDomain = [];
 
+    var width;
+    var height;
+
     var initialized = false;
 
     d3.select(window).on('resize', _this.resize);
@@ -34,8 +38,8 @@ function TimelineController(timelineDataService, $location, $element, $scope) {
 
     this.initialize = function() {
 
-        var width = this.getWidth();                  // Größe des zur Verfügung stehenden Fensters
-        var height = this.getHeight();
+        width = this.getWidth();                  // Größe des zur Verfügung stehenden Fensters
+        height = this.getHeight();
 
         y = d3.scale.linear()                    // y-Skala erstellen
             .domain([0, barHeight * 20])         // Anzahl Hierarchie-Ebenen
@@ -281,6 +285,47 @@ function TimelineController(timelineDataService, $location, $element, $scope) {
             startXDomain[1] = maxStartYear;
 
         startYDomain = [0, barHeight * 20];
+    };
+
+    this.zoomIn = function() {
+
+        this.zoom(true);
+    };
+
+    this.zoomOut = function() {
+
+        this.zoom(false);
+    };
+
+    this.zoom = function(zoomIn) {
+
+        var center = [width / 2, height / 2];
+        var view = { x: zoom.translate()[0], y: zoom.translate()[1], k: zoom.scale() };
+
+        var targetZoom = zoom.scale() * (1 + buttonZoomFactor * (zoomIn ? 1 : -1));
+
+        if (targetZoom < zoom.scaleExtent()[0] || targetZoom > zoom.scaleExtent()[1]) return false;
+
+        view.x += center[0] - (((center[0] - view.x) / view.k) * targetZoom + view.x);
+        view.y += center[1] - (((center[1] - view.y) / view.k) * targetZoom + view.y);
+        view.k = targetZoom;
+
+        this.interpolateZoom([view.x, view.y], view.k);
+    };
+
+    this.interpolateZoom = function(translate, scale) {
+
+        return d3.transition().duration(350).tween('zoom', function() {
+
+            var interpolatedTranslate = d3.interpolate(zoom.translate(), translate),
+                interpolatedScale = d3.interpolate(zoom.scale(), scale);
+
+            return function(time) {
+                zoom.scale(interpolatedScale(time))
+                    .translate(interpolatedTranslate(time));
+                _this.updateBars();
+            };
+        });
     };
 }
 
