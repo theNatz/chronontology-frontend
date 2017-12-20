@@ -147,7 +147,8 @@ gulp.task('copy-partials', function () {
         .pipe(gulp.dest(paths.build + '/partials'));
 });
 
-gulp.task('copy-resources', ['copy-fonts', 'copy-imgs', 'copy-index', 'copy-info', 'copy-config', 'copy-partials']);
+gulp.task('copy-resources', ['copy-fonts', 'copy-imgs', 'copy-index',
+    'copy-info', 'copy-pages', 'copy-config', 'copy-partials']);
 
 // copy index.html to dist and set version
 gulp.task('copy-index', function () {
@@ -165,6 +166,12 @@ gulp.task('copy-info', function () {
 
     return gulp.src('info/**/*', {base: 'info'})
         .pipe(gulp.dest(paths.build + '/info'));
+});
+
+gulp.task('copy-pages', function () {
+
+    return gulp.src('pages/**/*', {base: 'pages'})
+        .pipe(gulp.dest(paths.build + '/pages'));
 });
 
 gulp.task('copy-config', function () {
@@ -210,6 +217,7 @@ gulp.task('server', ['build'], function () {
 
     gulp.watch('scss/**/*.scss', ['compile-css']);
     gulp.watch('js/**/*.js', ['minify-js']);
+    gulp.watch('pages/**/*.html', ['copy-pages']);
     gulp.watch('partials/**/*.html', ['copy-partials']);
     gulp.watch('index.html', ['copy-index']);
 

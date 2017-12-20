@@ -33,6 +33,7 @@ angular.module('chronontology', [
                 .when('/thesaurus/:provenance', {templateUrl: 'partials/thesaurus.html'})
                 .when('/about', {templateUrl: 'partials/about.html'})
                 .when('/contact', {templateUrl: 'partials/contact.html'})
+                .when('/page/:page', {templateUrl: 'partials/page.html'})
                 .when('/404', {templateUrl: 'partials/404.html'})
                 .otherwise({redirectTo: '/404'})
 
