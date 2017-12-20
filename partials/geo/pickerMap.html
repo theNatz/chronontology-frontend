@@ -1,0 +1,60 @@
+<div class="idai-picker">
+    <script type="text/ng-template" id="geopickerMap_modal.html">
+        <div class="panel panel-default picker-modal" width="100%">
+            <div class="panel-heading">
+                <form class="form-inline">
+                    <span class="glyphicon glyphicon-flag"></span>
+                    <select id="gazetteertype" ng-model="gazetteerType" class="form-control" ng-init="$ctrl.loadEmptyMap()" ng-change="$ctrl.loadEmptyMap()">
+                        <option value="dai">DAI Gazetteer</option>
+                        <option value="getty">Getty TGN</option>
+                        <option value="geonames" selected>GeoNames</option>
+                        <option value="pleiades">Pleiades</option>
+                    </select>
+                    <div class="btn-group" role="group">
+                        <button type="button" class="btn btn-default"
+                                ng-class="{'active': view == 'map'}"
+                                ng-click="$ctrl.setView('map')">
+                            <span class="glyphicon glyphicon-globe"></span>
+                        </button>
+                        <button type="button" class="btn btn-default"
+                                ng-class="{'active': view == 'list'}"
+                                ng-click="$ctrl.setView('list'); $ctrl.loadEmptyMap()">
+                            <span class="glyphicon glyphicon-th-list"></span>
+                        </button>
+                        <button type="button" class="btn btn-default"
+                                ng-click="">
+                            <span class="glyphicon glyphicon-chevron-left"></span>
+                        </button>
+                    </div>
+                </form>
+                <geosearchresultslist ng-if="view == 'list'"
+                    datasource='{{datasource}}'
+                    on-place-selected="$ctrl.selectPlace(place)"></geosearchresultslist>
+                <geosearch ng-if="view == 'map'"
+                    datasource='{{datasource}}'
+                    on-place-selected="$ctrl.selectPlace(place)"></geosearch>
+                <geosearchresultsmap ng-if="view == 'map2'"
+                    datasource='{{datasource}}'
+                    on-place-selected="$ctrl.selectPlace(place)"></geosearchresultsmap>
+            </div>
+        </div>
+    </script>
+
+    <div class="input-group">
+        <span class="input-group-btn">
+            <button class="btn btn-default" type="button" ng-click="$ctrl.openModal()">
+                <span class="glyphicon glyphicon-globe"></span>
+            </button>
+        </span>
+        <span class="form-control">
+            <span ng-show="!$ctrl.selectedItem" class="ng-binding">Wählen Sie einen Eintrag</span>
+            <a ng-show="$ctrl.selectedItem &amp;&amp; $ctrl.selectedItem.properties['@id']"
+                ng-href="{{$ctrl.selectedItem.properties['@id']}}"
+                target="_blank" class="ng-binding ng-hide">{{$ctrl.selectedItem.properties['@id']}}</a>
+            <button class="btn btn-link btn-xs ng-hide" ng-show="$ctrl.selectedItem"
+                    ng-click="$ctrl.deselectPlace()">
+                <span class="glyphicon glyphicon-remove-sign text-muted"></span>
+            </button>
+        </span>
+    </div>
+</div>

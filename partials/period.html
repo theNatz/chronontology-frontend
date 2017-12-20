@@ -1,83 +1,108 @@
 <div class="container-fluid">
-    <div ng-controller="PeriodController">
+  <div ng-controller="PeriodController">
 
-        <div ng-if="mode == 'create'">
-            <period-edit create-period="true"
-                         resource-cache="resourceCache"
-                         on-save="saveCreatedPeriod(period)">
-            </period-edit>
-        </div>
-        <div ng-if="mode == 'view'">
+    <div ng-if="viewMode == 'create'">
+      <period-edit create-period="true"
+                   resource-cache="resourceCache"
+                   on-save="saveCreatedPeriod(period)">
+      </period-edit>
+    </div>
+    <div ng-if="viewMode == 'display_and_edit'">
 
-            <h2>{{ period.names | prefName }}
-                <small>{{ period.types.join(", ") }}
-                    <span ng-if="(document|getRegion) != '-'">
+      <h2>{{ period.names | prefName }}
+        <small>{{ period.types.join(", ") }}
+          <span ng-if="(document|getRegion) != '-'">
                         ({{document|getRegion}})
                     </span>
-                </small>
-                <br/>
-                <small>http://chronontology.dainst.org/period/{{ document.resource.id }}</small>
-            </h2>
+        </small>
+        <br/>
+        <small>http://chronontology.dainst.org/period/{{ document.resource.id }}</small>
+      </h2>
 
-            <div class="row">
-                &nbsp;
-            </div>
+      <div class="row">
+        &nbsp;
+      </div>
 
-            <div class="row">
+      <div class="row">
 
-                <div class="col-md-5">
+        <div class="col-md-5">
 
-                    <div class="well well-sm timeline-container-small">
-                        <timeline periods="provenancePeriods" selected-period-id="{{document.resource.id}}"
-                                  axis-ticks="4" inactive="!hasValidTimespan"></timeline>
-                    </div>
-                    <geomap selected-period-id="document.resource.id"></geomap>
+          <div class="well well-sm timeline-container-small">
+            <timeline periods="provenancePeriods" selected-period-id="{{document.resource.id}}"
+                      axis-ticks="4" inactive="!hasValidTimespan"></timeline>
+          </div>
 
-                </div>
+          <!-- GeoWidgets -->
+          <geomap selected-period-id="document.resource.id"></geomap>
+          <!--<geosearch datasource="getty"></geosearch>-->
+          <!--<geosearchresultsmap datasource="/spi/place?bbox=50.082665;8.161050;50.082665;8.371850;49.903887;8.161050;49.903887;8.371850&type=dai"></geosearchresultsmap>-->
+          <!--<geosearchresultslist datasource="/spi/place?q=Mainz&type=getty"></geosearchresultslist>-->
 
-                <div class="col-md-7">
+          <!-- Picker -->
+          <geopickerresource on-place-selected="testValue = place"></geopickerresource>
+          <pre>{{testValue | json}}</pre>
+          <geopickerquery on-place-selected="testValue2 = place"></geopickerquery>
+          <pre>{{testValue2 | json}}</pre>
+          <geopickermap on-place-selected="testValue3 = place"></geopickermap>
+          <pre>{{testValue3 | json}}</pre>
 
-                    <ul class="nav nav-tabs">
-                        <li ng-class="{ 'active': (activeTab == 'info') }">
-                            <a href="#" ng-click="activeTab = 'info'">
-                                {{ "ui_infoTab" | transl8 }}
-                            </a>
-                        </li>
-                        <li ng-show="authService.getUser() != undefined" ng-class="{ 'active': (activeTab == 'edit') }">
-                            <a href="#" ng-click="activeTab = 'edit'">
-                                <span class="glyphicon glyphicon-edit"></span>
-                                {{ "ui_editTab" | transl8 }}
-                            </a>
-                        </li>
-
-                        <li>
-                            <button type="button"
-                                    class="btn btn-primary"
-                                    style="margin-top: 5px;"
-                                    ng-click="exportJSON()">
-                                <span class="glyphicon glyphicon-floppy-disk" aria-hidden="true"></span>Download JSON
-                            </button>
-                        </li>
-                    </ul>
-
-                    <div ng-show="activeTab == 'info'" style="margin: 30px 0;">
-                        <period-information period="period"
-                                            internal-relation-types="internalRelationTypes"
-                                            allen-relation-types="allenRelationTypes"
-                                            gazetteer-relation-types="gazetteerRelationTypes"
-                                            document="document"
-                                            resource-cache="resourceCache">
-                        </period-information>
-                    </div>
-
-                    <div ng-show="activeTab == 'edit'" style="margin: 30px 0;">
-                        <period-edit original-period="period"
-                                     resource-cache="resourceCache"
-                                     on-save="saveUpdatedPeriod(period)">
-                        </period-edit>
-                    </div>
-                </div>
-            </div>
         </div>
+
+        <div class="col-md-7">
+
+          <ul class="nav nav-tabs">
+            <li ng-class="{ 'active': (activeTab == 'info') }">
+              <a href="#" ng-click="activeTab = 'info'">
+                {{ "ui_infoTab" | transl8 }}
+              </a>
+            </li>
+            <li ng-show="authService.getUser() != undefined" ng-class="{ 'active': (activeTab == 'edit') }">
+              <a href="#" ng-click="activeTab = 'edit'">
+                <span class="glyphicon glyphicon-edit"></span>
+                {{ "ui_editTab" | transl8 }}
+              </a>
+            </li>
+
+            <li>
+              <button type="button"
+                      class="btn btn-primary"
+                      style="margin-top: 5px;"
+                      ng-click="exportJSON()">
+                <span class="glyphicon glyphicon-floppy-disk" aria-hidden="true"></span>Download JSON
+              </button>
+            </li>
+          </ul>
+
+          <div ng-show="activeTab == 'info'" style="margin: 30px 0;">
+            <period-information period="period"
+                                internal-relation-types="internalRelationTypes"
+                                allen-relation-types="allenRelationTypes"
+                                gazetteer-relation-types="gazetteerRelationTypes"
+                                document="document"
+                                resource-cache="resourceCache">
+            </period-information>
+          </div>
+
+          <div ng-show="activeTab == 'edit'" style="margin: 30px 0;">
+            <period-edit original-period="period"
+                         resource-cache="resourceCache"
+                         on-save="saveUpdatedPeriod(period)">
+            </period-edit>
+          </div>
+        </div>
+      </div>
     </div>
+    
+    <div ng-if="viewMode == 'please_login'">
+      <div class="page-header" align="center">
+        <h1>401 <small>Please login</small></h1>
+      </div>
+    </div>
+
+    <div ng-if="viewMode == 'loading'">
+      <div>
+        Loading
+      </div>
+    </div>
+  </div>
 </div>

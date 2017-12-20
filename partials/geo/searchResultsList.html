@@ -1,0 +1,27 @@
+<div class="well well-sm timeline-container-small map4-container"
+        ng-class="{'empty': $ctrl.loading || $ctrl.empty}">
+    <div ng-show="$ctrl.loading" class="maploading">
+        <span class="glyphicon glyphicon-hourglass"></span>
+    </div>
+    <div id="map4" style="height:480px;">
+        <div class="table-wrapper">
+            <h1 ng-show="$ctrl.empty" class="mapempty">{{ 'no_map_data' | transl8 }}</h1>
+            <table class="widget table-hover" id="searchresultlist" ng-show="$ctrl.results.length > 0">
+                <thead>
+                    <tr>
+                        <th data-sort-default><span class="glyphicon glyphicon-tag"></span></th>
+                        <th ng-show="$ctrl.showLevenshtein"><span class="glyphicon glyphicon-record"></span></th>
+                        <th><span class="glyphicon glyphicon-link"></span></th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr ng-repeat="result in $ctrl.results" ng-click="$ctrl.selectPlace(result)">
+                        <td>{{result.properties.names.prefName.name}}</td>
+                        <td ng-show="$ctrl.showLevenshtein">{{result.properties.similarity.normalizedlevenshtein}}</td>
+                        <td>{{result.properties['@id']}}</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>

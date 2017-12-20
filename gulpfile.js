@@ -34,7 +34,12 @@ var jsDeps = [
     paths.lib + 'leaflet/dist/leaflet.js',
     paths.lib + 'leaflet-fullscreen/dist/Leaflet.fullscreen.min.js',
     paths.lib + 'leaflet.markercluster/dist/leaflet.markercluster.js',
+    paths.lib + 'leaflet-draw/dist/leaflet.draw.js',
+    paths.lib + 'leaflet-geodesy/leaflet-geodesy.js',
+    paths.lib + 'leaflet-search/dist/leaflet-search.min.js',
+    paths.lib + 'leaflet-minimap/dist/Control.MiniMap.min.js',
     paths.lib + 'turf/turf.min.js',
+    paths.lib + 'tablesort/dist/tablesort.min.js',
     paths.lib + 'angular/angular.min.js',
     paths.lib + 'angular-route/angular-route.min.js',
     paths.lib + 'angular-ui-bootstrap/dist/ui-bootstrap.js',
@@ -142,7 +147,8 @@ gulp.task('copy-partials', function () {
         .pipe(gulp.dest(paths.build + '/partials'));
 });
 
-gulp.task('copy-resources', ['copy-fonts', 'copy-imgs', 'copy-index', 'copy-info', 'copy-config', 'copy-partials']);
+gulp.task('copy-resources', ['copy-fonts', 'copy-imgs', 'copy-index',
+    'copy-info', 'copy-pages', 'copy-config', 'copy-partials']);
 
 // copy index.html to dist and set version
 gulp.task('copy-index', function () {
@@ -160,6 +166,12 @@ gulp.task('copy-info', function () {
 
     return gulp.src('info/**/*', {base: 'info'})
         .pipe(gulp.dest(paths.build + '/info'));
+});
+
+gulp.task('copy-pages', function () {
+
+    return gulp.src('pages/**/*', {base: 'pages'})
+        .pipe(gulp.dest(paths.build + '/pages'));
 });
 
 gulp.task('copy-config', function () {
@@ -205,6 +217,7 @@ gulp.task('server', ['build'], function () {
 
     gulp.watch('scss/**/*.scss', ['compile-css']);
     gulp.watch('js/**/*.js', ['minify-js']);
+    gulp.watch('pages/**/*.html', ['copy-pages']);
     gulp.watch('partials/**/*.html', ['copy-partials']);
     gulp.watch('index.html', ['copy-index']);
 

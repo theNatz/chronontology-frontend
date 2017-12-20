@@ -25,6 +25,7 @@ angular.module('chronontology', [
 
             $httpProvider.defaults.cache = true;
             $httpProvider.interceptors.push('ChronontologyInterceptor');
+
             $routeProvider
                 .when('/', {templateUrl: 'partials/homepage.html'})
                 .when('/search', {templateUrl: 'partials/search.html'})
@@ -32,6 +33,9 @@ angular.module('chronontology', [
                 .when('/thesaurus/:provenance', {templateUrl: 'partials/thesaurus.html'})
                 .when('/about', {templateUrl: 'partials/about.html'})
                 .when('/contact', {templateUrl: 'partials/contact.html'})
+                .when('/page/:page', {templateUrl: 'partials/page.html'})
+                .when('/404', {templateUrl: 'partials/404.html'})
+                .otherwise({redirectTo: '/404'})
 
 	}
 ]).constant('chronontologySettings', {
