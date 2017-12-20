@@ -111,6 +111,11 @@ $maxGroups: 10;
 
 .timeline-zoom-buttons {
     position: absolute;
+
+    .btn:focus,
+    .btn:active {
+      outline: none;
+    }
 }
 
 .timeline-container-small {
