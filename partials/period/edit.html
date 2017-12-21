@@ -300,7 +300,7 @@
 
 <div ng-show="$ctrl.activeEditTab == 'relations'">
   <div class="row form-group">
-    <h4>{{ "ui_relations" | transl8 }}</h4>
+    <h4>{{ "ui_general_relations" | transl8 }}</h4>
 
     <div class="col-md-12" ng-init="relationIndex = $index"
          ng-repeat="relationName in $ctrl.internalRelations">
@@ -342,8 +342,7 @@
 
   </div>
   <div class="row form-group">
-    <h4>{{ "ui_relations" | transl8 }} - <a href="https://en.wikipedia.org/wiki/Allen%27s_interval_algebra"
-                                            target="_blank">Allen</a>
+    <h4>{{ "ui_temporal_relations" | transl8 }} ({{ "ui_temporal_relations_according_to" | transl8 }} <a href="https://en.wikipedia.org/wiki/Allen%27s_interval_algebra" target="_blank">Allen</a>)
     </h4>
     <div class="col-md-12" ng-init="relationIndex = $index"
          ng-repeat="relationName in $ctrl.allenRelationTypes">
@@ -385,7 +384,7 @@
   </div>
 
   <div class="row form-group">
-    <h4>Geo-{{ "ui_relations" | transl8 }}</h4>
+    <h4>{{ "ui_geographic_relations" | transl8 }}</h4>
 
     <div class="col-md-12" ng-init="relationIndex = $index"
          ng-repeat="relationName in $ctrl.gazetteerRelationTypes">
